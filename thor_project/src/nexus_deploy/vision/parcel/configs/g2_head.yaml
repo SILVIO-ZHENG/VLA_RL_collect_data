@@ -1,0 +1,124 @@
+# G2A头部相机固定视角配置，与已复核的640×400视频完全一致。
+# Fixed G2A head-camera calibration matching the reviewed 640×400 videos.
+#
+# 必须固定头部姿态、安装位置、裁剪和FOV；任一项改变都要重新标定下面的多边形。
+# Keep head pose, mount, crop, and FOV fixed. Recalibrate polygons after any change.
+# 所有ROI坐标均归一化到[0,1]，因此相同1.60宽高比的分辨率可以等比例缩放。
+# ROI points are normalized to [0,1], allowing same-aspect resolution scaling.
+rois:
+  # 左侧灰色料箱内部/上沿 / Interior and upper rim of the gray bin on image left.
+  bin:
+    - [0.045, 0.395]
+    - [0.345, 0.395]
+    - [0.370, 0.765]
+    - [0.040, 0.765]
+
+  # 绿色工作台面；状态核心会自动扣除上面的bin区域。
+  # Green work surface; the state core subtracts the bin polygon automatically.
+  # ON_TABLE_LEFT是兼容旧协议的名称，不表示画面只能使用左半边。
+  # ON_TABLE_LEFT is a legacy contract name, not a literal left-half restriction.
+  table_left:
+    - [0.170, 0.405]
+    - [0.750, 0.405]
+    - [0.840, 0.940]
+    - [0.025, 0.940]
+
+rules:
+  # 包裹mask至少有55%落在ROI中才认为属于该区域。
+  # At least 55% of a parcel mask must lie inside an ROI for membership.
+  roi_membership_min: 0.55
+  # mask间距低于画面对角线的2.5%时认为夹爪接触包裹。
+  # Gripper contact threshold as 2.5% of the image diagonal.
+  gripper_contact_distance_ratio: 0.025
+  # 相邻10Hz样本的活动包裹质心允许移动范围，用于防止身份跳到其他包裹。
+  # Maximum active-centroid movement between 10Hz samples before an identity jump.
+  active_continuity_distance_ratio: 0.12
+  # 30FPS源帧编号最多跨6帧（约0.2s）仍允许延续旧轨迹。
+  # Continue a track across at most six native 30FPS frames (about 0.2s).
+  max_track_frame_gap: 6
+  # 料箱中可能已有旧包裹；只有延续中的活动轨迹才能输出IN_BIN。
+  # A bin may contain old parcels; IN_BIN requires continuity with the active track.
+  bin_requires_tracking: true
+  min_tracking_continuity: 0.15
+  # 两个候选得分过近时拒绝猜测，输出UNKNOWN。
+  # Abstain with UNKNOWN when the two best activity scores are too close.
+  active_score_ambiguity_margin: 0.15
+  # 几何歧义时最多短暂保留旧活动轨迹3个样本。
+  # Retain a prior active track for at most three ambiguous samples.
+  track_ambiguity_hold_frames: 3
+  # 几何层先用2帧确认NO_PACKAGE；时序层还会执行下面的5帧确认。
+  # Geometry first confirms NO_PACKAGE over two frames; temporal filtering still uses five.
+  no_package_confirm_frames: 2
+  # 固定视角必须接近640/400=1.60，允许3%相对误差。
+  # Fixed view must stay near 640/400=1.60 with 3% relative tolerance.
+  expected_aspect_ratio: 1.60
+  aspect_ratio_tolerance: 0.03
+  # 原视频审计队列使用的低置信度阈值；实时state/actionable不会用它做拒判。
+  # Low-confidence threshold for offline review queues; it does not gate realtime state/actionable.
+  min_report_confidence: 0.65
+  # 没有合格包裹mask时NO_PACKAGE的规则证据分数。
+  # Evidence score assigned to NO_PACKAGE when no valid parcel mask exists.
+  no_package_confidence: 0.50
+  # 小于20像素的包裹mask视为噪声。
+  # Ignore parcel masks smaller than 20 pixels.
+  min_mask_pixels: 20
+
+  # 活动包裹选择的加权项：夹爪接触优先，其次台面、箱外位置和轨迹连续性。
+  # Active-parcel score weights: contact first, then table, outside-bin, and continuity.
+  active_contact_weight: 4.0
+  active_table_weight: 2.0
+  active_outside_bin_weight: 1.0
+  active_continuity_weight: 1.0
+
+temporal:
+  # 保存最近12个单帧判断，供候选置信度和状态确认使用。
+  # Keep the latest 12 raw decisions for confidence and confirmation history.
+  history_size: 12
+  # 左/右夹爪等普通状态需连续3个10Hz样本，名义约0.3秒。
+  # Gripper/general states require three consecutive 10Hz samples (~0.3s nominal).
+  confirm_frames: 3
+  # 台面/料箱需4个样本，名义约0.4秒。
+  # Table/bin states require four samples (~0.4s nominal).
+  roi_confirm_frames: 4
+  # 无包裹需5个样本，名义约0.5秒。
+  # NO_PACKAGE requires five samples (~0.5s nominal).
+  no_package_confirm_frames: 5
+  # 明确的短时分割漏检最多桥接3个样本。
+  # Bridge an explicit short segmentation dropout for at most three samples.
+  dropout_hold_frames: 3
+  # 每个保留帧把旧稳定置信度乘以0.92。
+  # Multiply held stable confidence by 0.92 on every retained frame.
+  held_confidence_decay: 0.92
+  # 新证据持续摇摆6帧后，旧状态失效为UNKNOWN。
+  # Expire an old state to UNKNOWN after six unconfirmed samples.
+  max_unconfirmed_frames: 6
+  # 衰减后的旧状态低于0.35时不再保留。
+  # Stop retaining a decayed old state below 0.35.
+  min_held_confidence: 0.35
+  # 已确认夹持证据有效30个10Hz样本（约3秒），用于验证随后进入料箱。
+  # Confirmed gripper transport remains valid for 30 samples (~3s) before IN_BIN.
+  transport_evidence_ttl_frames: 30
+
+# Aggregate business gate for later pause/resume shadow mode.  This does not
+# command a robot by itself. The head camera counts only packages in the
+# table or left-bin polygon. Outside gripper contact does not expand this area.
+# Wrist cameras use the full image independently of these head-camera ROIs.
+#
+# If a visible conveyor overlaps table_left in the real head-camera view, add
+# its calibrated polygon under rois (for example rois.conveyor) and add the
+# name below.  Do not guess those coordinates from a different camera view.
+presence_gate:
+  include_rois: [bin, table_left]
+  exclude_rois: []
+  # 主摄像头仅判断桌面和左侧料箱；桌外碰着夹爪的包裹也不计入。
+  allow_gripper_outside_roi: false
+  # 包裹跨越区域边界、尚不能确定归属时，保持不确定而不是报空。
+  ambiguous_roi_is_unknown: true
+  roi_membership_min: 0.55
+  min_mask_pixels: 20
+  gripper_contact_distance_ratio: 0.025
+  # Exactly four actual 10 Hz inference samples are considered as a rolling
+  # window: all present => PACKAGE_PRESENT; all absent => NO_PACKAGE; mixed or
+  # incomplete => UNKNOWN (no pause/resume action).
+  window_frames: 4
+  no_package_confidence: 0.50

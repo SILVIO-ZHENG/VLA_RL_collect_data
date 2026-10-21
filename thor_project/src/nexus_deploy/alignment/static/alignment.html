@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#101b17" />
+    <title>工位对齐</title>
+    <link rel="stylesheet" href="/assets/alignment.css" />
+    <link rel="stylesheet" href="/assets/target-admin.css" />
+    <link rel="stylesheet" href="/assets/visibility.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/alignment" aria-label="工位对齐首页">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span><strong>工位对齐</strong><small>WORKSPACE ALIGNMENT</small></span>
+      </a>
+      <div class="service-state"><span id="service-dot"></span><strong id="service-label">正在连接服务</strong></div>
+    </header>
+
+    <main>
+      <section class="connect-view" id="connect-view">
+        <div class="connect-copy">
+          <p class="eyebrow">APRILTAG GUIDED SETUP</p>
+          <h1>让机器人和工位<br />准确地站在一起</h1>
+          <p>连接机器人后，通过头部相机实时查看目标位置。系统只读取相机和状态，不发送任何运动指令。</p>
+          <div class="principles">
+            <span><b>01</b> 独立运行</span><span><b>02</b> 只读连接</span><span><b>03</b> 毫米级反馈</span>
+          </div>
+        </div>
+        <form class="connect-card" id="connect-form">
+          <div class="card-heading"><span class="step">01</span><div><h2>连接机器人</h2><p>输入机器人管理网络地址</p></div></div>
+          <label>
+            <span>机器人 IP</span>
+            <input id="robot-host" type="text" inputmode="decimal" autocomplete="off" placeholder="例如 10.42.1.102" required />
+          </label>
+          <label>
+            <span>工位配置</span>
+            <select id="profile-select"></select>
+          </label>
+          <details>
+            <summary>高级设置</summary>
+            <div class="advanced-grid">
+              <label><span>连接适配器</span><select id="adapter-select"></select></label>
+              <label><span>接口端口</span><input id="adapter-port" type="number" min="1" max="65535" placeholder="使用适配器默认值" /></label>
+            </div>
+          </details>
+          <div class="form-error" id="connect-error" hidden></div>
+          <button class="primary" id="connect-button" type="submit"><span>连接并检查</span><i aria-hidden="true">→</i></button>
+          <p class="safety-note"><span>只读</span> 不启动模型、不控制关节、不改变相机参数</p>
+        </form>
+      </section>
+
+      <section class="workspace-view" id="workspace-view" hidden>
+        <div class="workspace-heading">
+          <div><p class="eyebrow">LIVE ALIGNMENT</p><h1 id="robot-title">机器人连接检查</h1><p id="session-message">正在读取机器人能力</p></div>
+          <div class="heading-actions"><button class="secondary" id="disconnect-button" type="button">退出连接</button><button class="primary compact" id="start-button" type="button">开始对齐</button></div>
+        </div>
+
+        <section class="preflight" id="preflight-panel">
+          <div class="panel-heading"><div><span class="step">02</span><div><h2>连接检查</h2><p>所有项目通过后才能开始</p></div></div><button class="text-button" id="recheck-button" type="button">重新检查</button></div>
+          <div class="check-grid" id="check-grid"></div>
+        </section>
+
+        <section class="alignment-grid" id="alignment-panel" hidden>
+          <div class="camera-panel">
+            <div class="camera-toolbar">
+              <div><span class="live-dot"></span><strong id="camera-name">头部相机</strong><small id="camera-freshness">等待画面</small></div>
+              <div class="legend"><span><i class="target"></i>标准参考（外扩）</span><span><i class="actual"></i>实际 Tag</span></div>
+            </div>
+            <div class="camera-stage" id="camera-stage">
+              <canvas id="alignment-canvas" width="1280" height="720"></canvas>
+              <div class="camera-empty" id="camera-empty"><span class="scanner"></span><strong>正在获取头部相机画面</strong></div>
+              <div class="stale-cover" id="stale-cover" hidden><strong>实时数据已失效</strong><span>正在重新连接，请勿继续调整</span></div>
+            </div>
+          </div>
+
+          <aside class="guidance-panel">
+            <div class="alignment-state searching" id="alignment-state"><span></span><div><small>当前状态</small><strong>正在寻找 AprilTag</strong></div></div>
+            <div class="tag-detection waiting" id="tag-detection"><strong id="tag-detection-method">等待标签识别</strong><span id="tag-detection-detail">识别方式将在这里持续显示，状态变化不会改变右侧布局。</span></div>
+            <div class="mode-switch" role="group" aria-label="调整对象">
+              <button class="active" type="button" data-mode="table">移动桌子</button>
+              <button type="button" data-mode="robot">移动机器人</button>
+            </div>
+            <div class="measurements">
+              <article><span>前后</span><strong id="forward-value">—</strong><small>mm</small></article>
+              <article><span>左右</span><strong id="lateral-value">—</strong><small>mm</small></article>
+              <article><span>旋转</span><strong id="yaw-value">—</strong><small>deg</small></article>
+            </div>
+            <div class="guidance-copy"><span>调整建议</span><ol id="guidance-list"><li>等待稳定检测结果</li></ol></div>
+            <div class="target-admin">
+              <div class="artifact-row"><span>标准目标位置</span><strong id="target-version">读取中</strong></div>
+              <div class="artifact-row"><span>桌面高度标定</span><strong id="surface-status">读取中</strong></div>
+              <div class="artifact-row"><span>安全配置</span><strong id="safety-profile-status">读取中</strong></div>
+              <button class="secondary target-button" id="set-standard-button" type="button" disabled>将当前位置设为标准</button>
+              <small id="target-admin-hint">AprilTag 稳定识别 2 秒后可设置</small>
+              <small class="artifact-help">“设为标准”只保存目标位置；达到标准后点击“完成对齐”，才会保存桌面高度并生成安全配置。</small>
+            </div>
+            <div class="top-view">
+              <div class="top-view-heading"><span>俯视关系</span><small>箭头为机器人前方</small></div>
+              <svg viewBox="0 0 300 180" aria-label="机器人和桌面俯视关系">
+                <path class="floor-grid" d="M0 45H300M0 90H300M0 135H300M75 0V180M150 0V180M225 0V180" />
+                <g class="robot-shape"><rect x="121" y="111" width="58" height="52" rx="15"/><path d="M150 116V83m0 0-9 12m9-12 9 12"/><text x="150" y="146">ROBOT</text></g>
+                <g class="table-target"><rect x="92" y="20" width="116" height="48" rx="4"/><text x="150" y="49">TARGET</text></g>
+                <g class="table-actual" id="top-table"><rect x="92" y="20" width="116" height="48" rx="4"/><text x="150" y="49">TABLE</text></g>
+              </svg>
+            </div>
+            <button class="complete" id="complete-button" type="button" disabled>完成对齐</button>
+            <button class="text-button stop" id="stop-button" type="button">结束但不保存为通过</button>
+          </aside>
+        </section>
+
+        <section class="done-panel" id="done-panel" hidden>
+          <span class="done-mark">✓</span><div><p class="eyebrow">ALIGNMENT SAVED</p><h2>工位对齐完成</h2><p id="done-copy">检查结果和标注截图已经保存。</p></div><button class="primary compact" id="new-session-button" type="button">连接另一台机器人</button>
+        </section>
+      </section>
+    </main>
+
+    <dialog class="target-dialog" id="target-dialog">
+      <form id="target-form">
+        <div class="dialog-heading"><div><p class="eyebrow">ADMIN CONFIRMATION</p><h2>将当前位置设为标准？</h2></div><button class="dialog-close" id="target-dialog-close" type="button" aria-label="关闭">×</button></div>
+        <p class="dialog-copy">保存后立即成为当前工位的对齐目标。原标准不会被删除，会保留为历史版本。</p>
+        <dl class="target-summary">
+          <div><dt>机器人</dt><dd id="target-robot">—</dd></div>
+          <div><dt>AprilTag</dt><dd id="target-tag">—</dd></div>
+          <div><dt>当前位置</dt><dd id="target-pose">—</dd></div>
+          <div><dt>标定版本</dt><dd id="target-calibration">—</dd></div>
+        </dl>
+        <label class="password-field"><span>管理员密码</span><input id="admin-password" type="password" autocomplete="current-password" required /></label>
+        <div class="form-error" id="target-error" hidden></div>
+        <div class="dialog-actions"><button class="secondary" id="target-cancel" type="button">取消</button><button class="primary compact" id="target-confirm" type="submit">确认保存并启用</button></div>
+      </form>
+    </dialog>
+    <script src="/assets/alignment.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+# Initial fixed-camera ROI example for the current 640x400 held-out test images.
+# Coordinates are normalized [x, y]. Always inspect the drawn ROI outlines in
+# the output before treating rule-derived states as ground truth.
+rois:
+  # Interior/upper rim of the gray bin/tray on the left of the image.
+  bin:
+    - [0.045, 0.395]
+    - [0.345, 0.395]
+    - [0.370, 0.765]
+    - [0.040, 0.765]
+
+  # Green work surface. The engine subtracts the bin ROI from this polygon.
+  # ON_TABLE_LEFT is the legacy state-contract name for this configured ROI.
+  table_left:
+    - [0.170, 0.405]
+    - [0.750, 0.405]
+    - [0.840, 0.940]
+    - [0.025, 0.940]
+
+rules:
+  roi_membership_min: 0.55
+  gripper_contact_distance_ratio: 0.025
+  # At 10 sampled FPS, reject identity jumps much larger than normal motion.
+  active_continuity_distance_ratio: 0.12
+  max_track_frame_gap: 6
+  # The gray bin often already contains parcels from other cycles. Do not call
+  # one of them the active IN_BIN parcel unless it continues an active track.
+  bin_requires_tracking: true
+  min_tracking_continuity: 0.15
+  active_score_ambiguity_margin: 0.15
+  track_ambiguity_hold_frames: 3
+  no_package_confirm_frames: 2
+  expected_aspect_ratio: 1.60
+  aspect_ratio_tolerance: 0.03
+  min_report_confidence: 0.65
+  no_package_confidence: 0.50
+  min_mask_pixels: 20
+
+  # Active-package selection prevents packages left in the source bin from
+  # dominating a frame that also contains the parcel being manipulated.
+  active_contact_weight: 4.0
+  active_table_weight: 2.0
+  active_outside_bin_weight: 1.0
+  active_continuity_weight: 1.0
+
+# Full-video mode uses these history rules after per-frame geometry. At the
+# default 10 sampled FPS, 3 frames are about 0.3 seconds.
+temporal:
+  history_size: 12
+  confirm_frames: 3
+  roi_confirm_frames: 4
+  no_package_confirm_frames: 5
+  dropout_hold_frames: 3
+  held_confidence_decay: 0.92
+  # Never keep displaying an old state forever when raw evidence alternates.
+  max_unconfirmed_frames: 6
+  min_held_confidence: 0.35
+  # At the fixed 10 sampled FPS, gripper evidence remains valid for 3 seconds.
+  transport_evidence_ttl_frames: 30

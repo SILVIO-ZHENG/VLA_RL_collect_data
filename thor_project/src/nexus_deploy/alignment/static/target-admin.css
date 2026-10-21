@@ -1,0 +1,210 @@
+.target-admin {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fafcfb;
+}
+
+.alignment-grid {
+  align-items: start;
+}
+
+.camera-panel {
+  width: 100%;
+  min-width: 0;
+}
+
+.camera-stage {
+  /* The production head stereo stream is 1920x1536 (5:4). JavaScript replaces
+     this once for adapters with a different native aspect ratio. */
+  aspect-ratio: 5 / 4;
+}
+
+.target-admin > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.target-admin .artifact-row {
+  gap: 12px;
+}
+
+.target-admin span,
+.target-admin small {
+  color: var(--soft);
+  font-size: 10px;
+}
+
+.target-admin strong {
+  color: var(--green);
+  font-size: 11px;
+}
+
+.target-button {
+  width: 100%;
+  height: 40px;
+  font-size: 12px;
+}
+
+.target-admin .artifact-help {
+  padding-top: 7px;
+  border-top: 1px solid var(--line);
+  line-height: 1.45;
+}
+
+.tag-detection {
+  display: grid;
+  gap: 3px;
+  min-height: 59px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #f3f6f4;
+  color: var(--soft);
+}
+
+.tag-detection.fallback {
+  border-color: #edc37e;
+  background: #fff7e8;
+  color: #7a4a08;
+}
+
+.tag-detection.standard {
+  border-color: #acd9c5;
+  background: var(--green-bg);
+  color: var(--green);
+}
+
+.tag-detection strong {
+  font-size: 12px;
+}
+
+.tag-detection span {
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.target-button:disabled {
+  cursor: not-allowed;
+  opacity: .48;
+}
+
+.target-dialog {
+  width: min(560px, calc(100vw - 28px));
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  color: var(--ink);
+  box-shadow: 0 30px 90px rgba(5, 20, 14, .28);
+}
+
+.target-dialog::backdrop {
+  background: rgba(8, 20, 15, .58);
+  backdrop-filter: blur(4px);
+}
+
+.target-dialog form {
+  padding: 28px;
+}
+
+.dialog-heading,
+.dialog-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.dialog-heading h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.dialog-heading .eyebrow {
+  margin-bottom: 5px;
+}
+
+.dialog-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #edf2ef;
+  color: var(--soft);
+  font-size: 24px;
+}
+
+.dialog-copy {
+  color: var(--soft);
+  line-height: 1.65;
+}
+
+.target-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  margin: 20px 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--line);
+}
+
+.target-summary div {
+  min-width: 0;
+  padding: 12px;
+  background: #fafcfb;
+}
+
+.target-summary dt {
+  color: var(--soft);
+  font-size: 10px;
+}
+
+.target-summary dd {
+  margin: 4px 0 0;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.password-field {
+  display: grid;
+  gap: 7px;
+}
+
+.password-field span {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.password-field input {
+  width: 100%;
+  height: 48px;
+  padding: 0 13px;
+  border: 1px solid #cbd7d1;
+  border-radius: 9px;
+  background: #fafcfb;
+  outline: 0;
+}
+
+.password-field input:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(25, 116, 81, .1);
+}
+
+.dialog-actions {
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.legend i.target {
+  border-top: 3px dashed #ff5bd6;
+}
+
+@media (max-width: 520px) {
+  .target-dialog form { padding: 20px; }
+  .target-summary { grid-template-columns: 1fr; }
+}
