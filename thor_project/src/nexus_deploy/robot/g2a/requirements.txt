@@ -1,0 +1,5 @@
+# agibot_gdk and NumPy are expected to come from the robot vendor environment.
+# Pillow is expected from the current G2 system Python and is used only for
+# wrist JPEG resize/re-encode. Pass --no-resize-wrist-images if unavailable.
+# Copy a compatible wheel into wheels/ for offline installation.
+websockets>=13,<17

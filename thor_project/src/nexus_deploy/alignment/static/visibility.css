@@ -1,0 +1,4 @@
+/* Author styles such as display:grid must never override HTML's hidden state. */
+[hidden] {
+  display: none !important;
+}

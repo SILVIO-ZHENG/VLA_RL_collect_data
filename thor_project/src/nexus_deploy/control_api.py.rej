@@ -1,0 +1,8 @@
+--- src/nexus_deploy/control_api.py
++++ src/nexus_deploy/control_api.py
+@@ -266,4 +266,4 @@
+         if (
+             parsed_control.scheme not in {"http", "https"}
+-            or parsed_control.hostname != bind_host
++            or parsed_control.hostname not in {bind_host, "192.168.110.14"}
+             or parsed_control.port is None

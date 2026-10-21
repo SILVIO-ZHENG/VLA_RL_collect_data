@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nexus-simulator"
+version = "0.1.0"
+description = "Browser-based, robot-disconnected safety simulation for Nexus Platform"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+# 阶段 1：浏览器查看和 URDF/FK，由 Nexus 根目录 workspace 环境统一安装。
+viewer = [
+  "meshcat==0.3.2",
+  "numpy>=1.24,<2.3",
+  "pyarrow>=18,<22",
+  "yourdfpy==0.0.60",
+]
+# 阶段 3 才启用动力学；不作为阶段 1 的默认安装内容。
+dynamics = [
+  "mujoco",
+]
+dev = [
+  "pytest",
+  "ruff",
+]
+
+[project.scripts]
+nexus-sim = "nexus_simulator.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+nexus_simulator = ["static/*.html", "static/*.css", "static/*.js", "static/*.svg"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"

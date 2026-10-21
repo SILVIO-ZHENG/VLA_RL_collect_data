@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+readonly EXPECTED_AID="G2A0004C201260"
+readonly INTERFACE="enp1s0"
+readonly MANAGEMENT_ADDRESS="10.42.1.102/24"
+readonly MANAGEMENT_MAC="02:11:23:00:12:60"
+readonly VENDOR_MAC="02:11:23:00:00:00"
+
+read_aid() {
+  sed -n 's/^AID:[[:space:]]*//p' /data/version/aid_info.yaml | head -n 1
+}
+
+require_expected_robot() {
+  local observed_aid
+  observed_aid="$(read_aid)"
+  if [[ "${observed_aid}" != "${EXPECTED_AID}" ]]; then
+    echo "Refusing network change: expected AID ${EXPECTED_AID}, observed ${observed_aid:-unavailable}" >&2
+    exit 2
+  fi
+}
+
+start_management_address() {
+  require_expected_robot
+  ip link show dev "${INTERFACE}" >/dev/null
+  ip link set dev "${INTERFACE}" down
+  ip link set dev "${INTERFACE}" address "${MANAGEMENT_MAC}"
+  ip link set dev "${INTERFACE}" up
+  ip address replace "${MANAGEMENT_ADDRESS}" dev "${INTERFACE}"
+  echo "Nexus G2 wired management ready: ${MANAGEMENT_ADDRESS} ${MANAGEMENT_MAC}"
+}
+
+stop_management_address() {
+  require_expected_robot
+  ip address del "${MANAGEMENT_ADDRESS}" dev "${INTERFACE}" 2>/dev/null || true
+  ip link set dev "${INTERFACE}" down
+  ip link set dev "${INTERFACE}" address "${VENDOR_MAC}"
+  ip link set dev "${INTERFACE}" up
+  echo "Nexus G2 wired management removed; restored ${VENDOR_MAC}"
+}
+
+case "${1:-start}" in
+  start) start_management_address ;;
+  stop) stop_management_address ;;
+  *) echo "usage: $0 [start|stop]" >&2; exit 64 ;;
+esac

@@ -1,0 +1,111 @@
+[service]
+default_profile = "standard_table"
+default_adapter = "http"
+default_detector = "opencv"
+default_robot_host = "10.42.1.102"
+reports_directory = "runtime/alignment-reports"
+targets_directory = "runtime/alignment-targets"
+surfaces_directory = "runtime/alignment-surfaces"
+safety_profiles_directory = "runtime/safety-profiles"
+safety_profile_template = "../lerobot/src/nexus_deploy/robot/g2a/G2_DAHUAN_SAFETY_CONFIG_TEMPLATE.json"
+safety_robot_id = "g2a"
+safety_expected_aid = "G2A0004C201260"
+update_hz = 8
+# Keep the last annotated pose visible across short camera/dropout gaps. Stale
+# results are never eligible for publishing.
+tag_loss_grace_s = 1.5
+reconnect_grace_s = 30
+
+[profiles.standard_table]
+display_name = "标准操作桌"
+version = "1"
+target_configured = false
+camera_name = "head_stereo_left"
+tag_family = "tag36h11"
+tag_ids = [0]
+# Black coded square side length. The installed tag is 95 mm; the surrounding
+# white quiet zone is not included in this measurement.
+tag_size_m = 0.095
+# T_base_expected_table: metres followed by degrees.
+# These values are examples and MUST be replaced by a measured site profile.
+expected_table_pose = [0.80, 0.0, 1.0, 0.0, 0.0, 0.0]
+# T_tag_table: pose of the table frame expressed in the Tag frame.
+tag_from_table = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+# AprilTag 平贴在桌面上表面，默认无厚度补偿。
+surface_offset_m = 0.0
+robot_model_id = "G2_dahuan_safety"
+robot_model_sha256 = "d13ba04282ec6c386edee9d1fc56882f0b61e7fbea3184e7f0d2800045e7f9f1"
+# The head-mounted camera extrinsic is sensitive to joint angle. 0.005 rad is
+# about 0.29 degrees and prevents centimetre-scale base-frame drift while still
+# allowing normal encoder noise.
+inspection_joint_tolerance_rad = 0.005
+# 规范 AprilTag 必须由标准检测路径识别；容错结果只用于页面诊断，
+# 不允许生成桌高或安全配置。
+allow_hamming0_fallback_measurement = false
+
+[profiles.standard_table.inspection_joints]
+idx11_head_joint1 = 0.0
+idx12_head_joint2 = 0.0
+idx13_head_joint3 = 0.41756022
+
+[profiles.standard_table.tolerance]
+forward_m = 0.03
+lateral_m = 0.03
+yaw_deg = 3.0
+height_m = 0.04
+tilt_deg = 3.0
+stable_s = 0.6
+window_s = 2.0
+minimum_samples = 4
+minimum_detection_ratio = 0.45
+
+[adapters.http]
+display_name = "机器人 HTTP 只读接口"
+plugin = "nexus_deploy.alignment.adapters:HTTPAlignmentRobotAdapter"
+[adapters.http.settings]
+port = 8080
+# Robot shell health never initializes GDK. Calibration/state/frame lazily start
+# the isolated worker, whose first live read can take 2-4 seconds.
+timeout_s = 8.0
+detector_id = "opencv"
+token_env = "ALIGNMENT_ROBOT_TOKEN"
+info_path = "/api/alignment/info"
+health_path = "/api/alignment/health"
+state_path = "/api/alignment/state"
+calibration_path = "/api/alignment/cameras/{camera}/calibration"
+frame_path = "/api/alignment/cameras/{camera}/frame"
+release_path = "/api/alignment/release"
+
+[adapters.mock]
+display_name = "本地对齐模拟器"
+plugin = "nexus_deploy.alignment.adapters:MockAlignmentRobotAdapter"
+[adapters.mock.settings]
+detector_id = "mock"
+robot_id = "mock-g2"
+camera_name = "head_stereo_left"
+width = 1280
+height = 720
+focal_px = 900
+base_from_camera = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+head_joints = { idx11_head_joint1 = 0.0, idx12_head_joint2 = 0.0, idx13_head_joint3 = 0.0 }
+
+[detectors.opencv]
+plugin = "nexus_deploy.alignment.detectors:OpenCVAprilTagDetector"
+[detectors.opencv.settings]
+good_area_px = 6000
+error_scale_px = 3.0
+# Refine accepted marker corners below one-pixel resolution before solvePnP.
+corner_refinement = "subpix"
+corner_refinement_window_px = 5
+corner_refinement_max_iterations = 30
+corner_refinement_min_accuracy = 0.01
+fallback_minimum_area_px = 120
+fallback_max_hamming = 3
+fallback_corner_refinement = true
+
+[detectors.mock]
+plugin = "nexus_deploy.alignment.detectors:MockAprilTagDetector"
+[detectors.mock.settings]
+actual_table_pose = [0.84, -0.012, 1.0, 0.0, 0.0, 2.8]
+animate = true
+converge_s = 10

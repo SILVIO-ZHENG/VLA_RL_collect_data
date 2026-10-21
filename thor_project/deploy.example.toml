@@ -1,0 +1,98 @@
+# Generic example. Copy this file, then change paths/environments for the site.
+[runtime]
+directory = ".runtime"
+conda = "/opt/conda/bin/conda"
+
+[server]
+bind_host = "0.0.0.0"
+advertise_host = "192.168.1.10"
+
+# Any number of independently isolated model processes may be added.
+[models.mock]
+display_name = "Mock VLA"
+description = "In-memory hold policy for protocol smoke tests."
+supported_modes = ["sync", "async"]
+tags = ["Mock", "2D"]
+repo = "."
+conda_env = "vla-runtime"
+module = "nexus_deploy.server"
+port = 5556
+cuda_visible_devices = "0"
+startup_timeout_s = 30
+base_args = [
+  "--host={bind_host}",
+  "--port={port}",
+  "--adapter=nexus_deploy.adapters.mock_model:MockModelAdapter",
+  '--adapter-config={"joint_names":["joint_1","joint_2"],"camera_names":["front"]}',
+]
+real_args = []
+mock_args = []
+
+# Optional UI-only model inventory. These entries are visible in the model
+# selector, but cannot be selected, started, assigned a GPU, or deployed until
+# a real adapter is registered under [models].
+[ui_models.fastwam]
+display_name = "FastWAM"
+description = "16D dual-arm policy configuration."
+supported_modes = ["sync", "async", "rtc"]
+tags = ["16D", "Absolute", "30 FPS"]
+port = 5559
+cuda_visible_devices = "auto"
+gpu_min_free_memory_mb = 16000
+startup_timeout_s = 600
+default_effector_profile = "dahuan"
+effector_profiles = ["dahuan"]
+compatible_robots = ["example"]
+
+# Any number of robot deployment targets may be added. Each bundle has its own
+# source, manifest, host, and safe destination.
+[robots.example]
+display_name = "Example robot"
+description = "Example SSH deployment target."
+# Fail closed: only set true after a calibrated safety profile is in the manifest.
+execute_enabled = false
+# Physical reset remains locked unless both this flag and --enable-reset are set.
+reset_enabled = false
+compatible_models = ["mock"]
+# Recommended for every physical robot: deployment, observation, and execute
+# fail closed if this hardware AID does not match the selected network address.
+expected_aid = "ROBOT-ASSET-ID-001"
+control_host = "192.168.1.20"
+control_host_label = "有线主链路"
+control_host_transport = "wired"
+policy_host = "192.168.1.10"
+# Optional: bind only the Nexus policy WebSocket to this robot-side address.
+# Use this when the robot keeps a vendor IP and an independent management IP.
+policy_source_host = "192.168.1.20"
+# Endpoints are ordered. Each may override the policy route and SSH credential.
+alternate_endpoints = [
+  { host = "192.168.2.20", ssh_port = 22, label = "无线备用", transport = "wireless", policy_host = "192.168.2.10", policy_source_host = "192.168.2.20" },
+]
+ssh_port = 22
+source_client = "dist/g2a_robot_client/robot_client"
+manifest = "robot_manifest.txt"
+bundle_directory = "dist/example_robot_client"
+ssh_target = "robot@192.168.1.20"
+ssh_key = "/home/user/.ssh/robot_deploy"
+host_key_alias = "example-robot"
+remote_directory = "/home/agi/deploy/g2a_robot_client"
+
+# Optional UI-only robot inventory. These entries are visible in the control
+# console but cannot be used by action-enabled deployments until an adapter is
+# registered under [robots].
+[ui_robots.astribot_s1]
+display_name = "Astribot S1"
+manufacturer = "星尘智能"
+description = "Configured dual-arm robot inventory entry."
+ui_only = true
+adapter_status = "configured"
+urdf_status = "managed"
+official_url = "https://www.astribot.com/product/"
+control_host = ""
+ssh_port = 22
+height_m = 1.70
+arm_span_m = 1.94
+payload_per_arm_kg = 5.0
+endurance_hours = [4, 6]
+arm_dof = 7
+tags = ["Dual arm", "7 DoF / arm", "5 kg / arm"]

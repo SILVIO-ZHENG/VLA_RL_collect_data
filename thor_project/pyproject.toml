@@ -1,0 +1,100 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nexus-deploy-platform"
+version = "1.0.0"
+description = "Plugin-based deployment runtime for heterogeneous robots and VLA models"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "msgpack>=1.0",
+  "numpy>=1.24,<2.3",
+  "fast-simplification==0.2.0",
+  "meshcat==0.3.2",
+  "yourdfpy==0.0.60",
+]
+
+[project.optional-dependencies]
+server = ["websockets>=12"]
+client = ["websockets>=12"]
+dev = ["pytest>=8", "ruff==0.15.22", "websockets>=12"]
+vision = [
+  "ultralytics==8.4.146",
+  "PyYAML>=6,<7",
+  "opencv-python>=4.8,<4.14",
+  "torch==2.11.0",
+  "torchvision==0.26.0",
+  "scipy==1.18.0",
+  "matplotlib==3.11.1",
+]
+offline-simulator = ["nexus-simulator[viewer]"]
+alignment = [
+  "aiohttp>=3.9",
+  "opencv-contrib-python-headless>=4.8",
+  "scipy>=1.10",
+]
+
+[project.scripts]
+g2a-policy-server = "nexus_deploy.server:main"
+g2a-robot-client = "nexus_deploy.client:main"
+g2a-deploy-ui = "nexus_deploy.control_api:main"
+g2a-alignment = "nexus_deploy.alignment.service:main"
+g2a-alignment-robot-agent = "nexus_deploy.alignment.robot_agent:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["nexus_deploy*"]
+
+[tool.setuptools.package-data]
+nexus_deploy = [
+  "static/*",
+  "static/assets/*",
+]
+"nexus_deploy.alignment" = ["static/*"]
+"nexus_deploy.viewer" = [
+  "camera_presets.json",
+  "static/*",
+  "assets/*",
+  "assets/g2/*/*",
+  "assets/g2/*/meshes/*/*",
+  "assets/g2/*/meshes/*/*/*",
+  "assets/g2/*/meshes/*/*/*/*/*",
+  "assets/meshes/*/*",
+]
+"nexus_deploy.robot.g2a" = [
+  "*.json",
+  "*.sh",
+  "requirements.txt",
+  "wheels/*",
+  "assets/*/*",
+  "assets/*/*/*",
+  "assets/*/*/*/*",
+  "assets/*/*/*/*/*",
+  "assets/*/*/*/*/*/*",
+  "assets/*/*/*/*/*/*/*",
+]
+"nexus_deploy.vision.parcel" = ["configs/*"]
+"nexus_deploy.vision.parcel.rules_core" = ["configs/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 119
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+
+[tool.uv.workspace]
+members = ["tools/offline_simulator"]
+
+[tool.uv]
+environments = ["sys_platform == 'linux' and (platform_machine == 'x86_64' or platform_machine == 'aarch64')"]
+
+[tool.uv.sources]
+nexus-simulator = { workspace = true }

@@ -1,0 +1,38 @@
+# /home/anu/.config/systemd/user/nexus-thor-control.service
+[Unit]
+Description=Nexus Thor Control UI
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/path/to/teleoperation/thor_project
+Environment="PYTHONDONTWRITEBYTECODE=1"
+EnvironmentFile=/home/anu/.config/nexus-thor-control.env
+ExecStart=/path/to/teleoperation/thor_project/.venv/bin/python -m nexus_deploy.control_api --config /path/to/teleoperation/thor_project/configs/thor.toml --host 192.168.110.14 --port 21865 --robot-telemetry-url tcp://10.42.1.77:8768 --robot-telemetry-bind-host 10.42.1.77 --password-env NEXUS_UI_PASSWORD --enable-actions --enable-execute --enable-reset --sorting-config /path/to/teleoperation/thor_project/runtime/thor/sorting.json
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target
+
+# /home/anu/.config/systemd/user/nexus-thor-control.service.d/10-unauthenticated.conf
+[Service]
+ExecStart=
+ExecStart=/path/to/teleoperation/thor_project/.venv/bin/python -m nexus_deploy.control_api --config /path/to/teleoperation/thor_project/configs/thor.toml --host 192.168.110.14 --port 21865 --robot-telemetry-url tcp://10.42.1.77:8768 --robot-telemetry-bind-host 10.42.1.77 --password-env NEXUS_UI_PASSWORD_DISABLED_20260929 --allow-unauthenticated-private-lan --enable-actions --enable-execute --enable-reset --sorting-config /path/to/teleoperation/thor_project/runtime/thor/sorting.json
+
+# /home/anu/.config/systemd/user/nexus-thor-control.service.d/20-sorting-token.conf
+[Service]
+EnvironmentFile=/home/anu/.config/nexus-thor-sorting-5090.env
+
+# /home/anu/.config/systemd/user/nexus-thor-control.service.d/40-field-network.conf
+[Service]
+ExecStart=
+ExecStart=/path/to/teleoperation/thor_project/.venv/bin/python -m nexus_deploy.control_api --config /path/to/teleoperation/thor_project/configs/thor.toml --host 10.42.1.77 --port 21865 --robot-telemetry-url tcp://10.42.1.77:8768 --robot-telemetry-bind-host 10.42.1.77 --password-env NEXUS_UI_PASSWORD_DISABLED_20260929 --allow-unauthenticated-private-lan --enable-actions --enable-execute --enable-reset --sorting-config /path/to/teleoperation/thor_project/runtime/thor/sorting.json --optional-host 192.168.110.14 --optional-host 192.168.50.1
+
+# /home/anu/.config/systemd/user/nexus-thor-control.service.d/50-hitl-tablet-start.conf
+[Service]
+WorkingDirectory=/path/to/teleoperation/thor_project
+Environment="PYTHONPATH=/path/to/teleoperation/thor_project/src"
+ExecStart=
+ExecStart=/path/to/teleoperation/thor_project/.venv/bin/python -m nexus_deploy.control_api --config /path/to/teleoperation/thor_project/configs/thor.toml --host 10.42.1.77 --port 21865 --robot-telemetry-url tcp://10.42.1.77:8768 --robot-telemetry-bind-host 10.42.1.77 --password-env NEXUS_UI_PASSWORD_DISABLED_20260929 --allow-unauthenticated-private-lan --enable-actions --enable-execute --enable-reset --sorting-config /path/to/teleoperation/thor_project/runtime/thor/sorting.json --optional-host 192.168.110.14 --optional-host 192.168.50.1

@@ -1,0 +1,47 @@
+# Python environments and build artefacts
+.venv/
+venv/
+*.egg-info/
+build/
+dist/
+__pycache__/
+*.py[cod]
+
+# Test, lint, and coverage caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Local runtime state and generated outputs
+.runtime/
+runtime/
+outputs/
+.logistics_*-staging/
+*.log
+*.pid
+
+# Machine-specific deployment configuration and secrets
+deploy.toml
+alignment.toml
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Editor and operating-system noise
+.idea/
+.DS_Store
+
+# Local GPU environments and weights remain outside the source release.
+.vision-venv/
+.pi05-venv/
+third_party/lerobot/source/
+models/*
+!models/README.md
+*.token
+logs/
+reports/*.xml

@@ -1,0 +1,484 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot name="G2_dahuan_safety">
+  <!-- Generated from the Nexus canonical G2_dahuan URDF; all joint origins/axes and fixed transforms are unchanged. -->
+  <material name="default">
+    <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+  </material>
+  <material name="black">
+    <color rgba="0.0 0.0 0.0 1.0" />
+  </material>
+  <material name="blue">
+    <color rgba="0.0 0.0 0.8 1.0" />
+  </material>
+  <material name="green">
+    <color rgba="0.0 1.0 0.0 1.0" />
+  </material>
+  <material name="grey">
+    <color rgba="0.2 0.2 0.2 1.0" />
+  </material>
+  <material name="orange">
+    <color rgba="1.0 0.4235294117647059 0.0392156862745098 1.0" />
+  </material>
+  <material name="brown">
+    <color rgba="0.8705882352941177 0.8117647058823529 0.7647058823529411 1.0" />
+  </material>
+  <material name="red">
+    <color rgba="0.8 0.0 0.0 1.0" />
+  </material>
+  <material name="white">
+    <color rgba="1.0 1.0 1.0 1.0" />
+  </material>
+  <material name="silver">
+    <color rgba="0.9137254901960784 0.9137254901960784 0.8470588235294118 1.0" />
+  </material>
+  <material name="tips">
+    <color rgba="1 0.16863 0.16863 1" />
+  </material>
+  <material name="metacarpals">
+    <color rgba="0.65098 0.61961 0.58824 1" />
+  </material>
+  <link name="base_link">
+    <collision_checking>
+      <convex name="base_link_coarse_3" />
+      <convex name="base_link_coarse_4" />
+    </collision_checking>
+  </link>
+  <link name="body_link1">
+    </link>
+  <joint name="idx01_body_joint1" type="revolute">
+    <origin rpy="0 0 0" xyz="0.102 0 0.144" />
+    <parent link="base_link" />
+    <child link="body_link1" />
+    <axis xyz="0 1 0" />
+    <limit effort="50" lower="-1.0822" upper="0.0001" velocity="1.21" />
+  </joint>
+  <link name="body_link2">
+    <collision_checking>
+      <convex name="body_link2_convex_0" />
+    </collision_checking>
+  </link>
+  <joint name="idx02_body_joint2" type="revolute">
+    <origin rpy="0 0 0" xyz="0 0 0.36" />
+    <parent link="body_link1" />
+    <child link="body_link2" />
+    <axis xyz="0 1 0" />
+    <limit effort="50" lower="-0.0001" upper="2.653" velocity="1.21" />
+  </joint>
+  <link name="body_link3">
+    <collision_checking>
+      <convex name="body_link3_convex_0" />
+    </collision_checking>
+  </link>
+  <joint name="idx03_body_joint3" type="revolute">
+    <origin rpy="0 0 0" xyz="0 0 0.38" />
+    <parent link="body_link2" />
+    <child link="body_link3" />
+    <axis xyz="0 1 0" />
+    <limit effort="50" lower="-1.907" upper="1.039" velocity="1.21" />
+  </joint>
+  <link name="body_link4">
+    <collision_checking>
+      <convex name="body_link4_convex_1" />
+      <convex name="body_link4_convex_2" />
+      <convex name="body_link4_convex_3" />
+    </collision_checking>
+  </link>
+  <joint name="idx04_body_joint4" type="revolute">
+    <origin rpy="0 0 0" xyz="0 0 0" />
+    <parent link="body_link3" />
+    <child link="body_link4" />
+    <axis xyz="1 0 0" />
+    <limit effort="50" lower="-0.4364" upper="0.4364" velocity="1.21" />
+  </joint>
+  <link name="body_link5">
+    <collision_checking>
+      <convex name="body_link5_convex_0" />
+    </collision_checking>
+  </link>
+  <joint name="idx05_body_joint5" type="revolute">
+    <origin rpy="0 0 0" xyz="0 0 0.149" />
+    <parent link="body_link4" />
+    <child link="body_link5" />
+    <axis xyz="0 0 1" />
+    <limit effort="50" lower="-3.0456" upper="3.0456" velocity="1.21" />
+  </joint>
+  <link name="arm_base_link" />
+  <joint name="idx20_arm_base_joint" type="fixed">
+    <origin rpy="-1.5707963267948966 0 0" xyz="0.0 0.0 0.3085" />
+    <parent link="body_link5" />
+    <child link="arm_base_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <link name="head_base_link" />
+  <joint name="idx10_head_base_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="-0.013 0 0.496" />
+    <parent link="body_link5" />
+    <child link="head_base_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <link name="head_link1">
+    </link>
+  <joint name="idx11_head_joint1" type="revolute">
+    <origin rpy="0 0 0" xyz="-0.013 0 0.496" />
+    <parent link="body_link5" />
+    <child link="head_link1" />
+    <axis xyz="0 0 1" />
+    <limit effort="50" lower="-0.781" upper="0.781" velocity="2.5" />
+  </joint>
+  <link name="head_link2">
+    </link>
+  <joint name="idx12_head_joint2" type="revolute">
+    <origin rpy="0 0 0" xyz="0.03335 0 0.07" />
+    <parent link="head_link1" />
+    <child link="head_link2" />
+    <axis xyz="1 0 0" />
+    <limit effort="50" lower="-0.151" upper="0.151" velocity="2.5" />
+  </joint>
+  <link name="head_link3">
+    <collision_checking>
+      <convex name="head_link3_convex_0" />
+    </collision_checking>
+  </link>
+  <joint name="idx13_head_joint3" type="revolute">
+    <origin rpy="0 0 0" xyz="-0.03035 0 0" />
+    <parent link="head_link2" />
+    <child link="head_link3" />
+    <axis xyz="0 1 0" />
+    <limit effort="50" lower="-0.0181" upper="0.5231" velocity="2.5" />
+  </joint>
+  <joint name="idx100_chassis_base_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0" />
+    <parent link="base_link" />
+    <child link="chassis_link" />
+  </joint>
+  <link name="chassis_link">
+    </link>
+  <link name="chassis_lwheel_front_link1">
+    </link>
+  <joint name="idx111_chassis_lwheel_front_joint1" type="revolute">
+    <origin rpy="0 0 0" xyz="0.23 0.218 0.16675" />
+    <parent link="chassis_link" />
+    <child link="chassis_lwheel_front_link1" />
+    <axis xyz="0 0 1" />
+    <limit effort="15" lower="-2.97" upper="2.97" velocity="4.08" />
+  </joint>
+  <link name="chassis_lwheel_front_link2">
+    </link>
+  <joint name="idx112_chassis_lwheel_front_joint2" type="continuous">
+    <origin rpy="0 0 0" xyz="0 -5E-05 -0.13675" />
+    <parent link="chassis_lwheel_front_link1" />
+    <child link="chassis_lwheel_front_link2" />
+    <axis xyz="0 1 0" />
+    <limit effort="8" lower="0" upper="0" velocity="20.9" />
+  </joint>
+  <link name="chassis_rwheel_front_link1">
+    </link>
+  <joint name="idx131_chassis_rwheel_front_joint1" type="revolute">
+    <origin rpy="0 0 0" xyz="0.23 -0.218 0.16675" />
+    <parent link="chassis_link" />
+    <child link="chassis_rwheel_front_link1" />
+    <axis xyz="0 0 1" />
+    <limit effort="15" lower="-2.97" upper="2.97" velocity="4.08" />
+  </joint>
+  <link name="chassis_rwheel_front_link2">
+    </link>
+  <joint name="idx132_chassis_rwheel_front_joint2" type="continuous">
+    <origin rpy="0 0 0" xyz="0 5E-05 -0.13675" />
+    <parent link="chassis_rwheel_front_link1" />
+    <child link="chassis_rwheel_front_link2" />
+    <axis xyz="0 1 0" />
+    <limit effort="8" lower="0" upper="0" velocity="20.9" />
+  </joint>
+  <link name="chassis_rwheel_rear_link1">
+    </link>
+  <joint name="idx141_chassis_rwheel_rear_joint1" type="revolute">
+    <origin rpy="0 0 0" xyz="-0.23 -0.218 0.16675" />
+    <parent link="chassis_link" />
+    <child link="chassis_rwheel_rear_link1" />
+    <axis xyz="0 0 1" />
+    <limit effort="15" lower="-2.97" upper="2.97" velocity="4.08" />
+  </joint>
+  <link name="chassis_rwheel_rear_link2">
+    </link>
+  <joint name="idx142_chassis_rwheel_rear_joint2" type="continuous">
+    <origin rpy="0 0 0" xyz="0 5E-05 -0.13675" />
+    <parent link="chassis_rwheel_rear_link1" />
+    <child link="chassis_rwheel_rear_link2" />
+    <axis xyz="0 1 0" />
+    <limit effort="8" lower="0" upper="0" velocity="20.9" />
+  </joint>
+  <link name="chassis_lwheel_rear_link1">
+    </link>
+  <joint name="idx121_chassis_lwheel_rear_joint1" type="revolute">
+    <origin rpy="0 0 0" xyz="-0.23 0.218 0.16675" />
+    <parent link="chassis_link" />
+    <child link="chassis_lwheel_rear_link1" />
+    <axis xyz="0 0 1" />
+    <limit effort="15" lower="-2.97" upper="2.97" velocity="4.08" />
+  </joint>
+  <link name="chassis_lwheel_rear_link2">
+    </link>
+  <joint name="idx122_chassis_lwheel_rear_joint2" type="continuous">
+    <origin rpy="0 0 0" xyz="0 -5E-05 -0.13675" />
+    <parent link="chassis_lwheel_rear_link1" />
+    <child link="chassis_lwheel_rear_link2" />
+    <axis xyz="0 1 0" />
+    <limit effort="8" lower="0" upper="0" velocity="20.9" />
+  </joint>
+  <link name="arm_l_link1">
+    <collision_checking>
+      <convex name="arm_l_link1_convex_0" />
+    </collision_checking>
+  </link>
+  <joint name="idx21_arm_l_joint1" type="revolute">
+    <origin rpy="0 0 0" xyz="0 0 0.069" />
+    <parent link="arm_base_link" />
+    <child link="arm_l_link1" />
+    <axis xyz="0 0 1" />
+    <limit effort="108" lower="-3.0718" upper="3.0718" velocity="3.05" />
+  </joint>
+  <link name="arm_l_link2">
+    <collision_checking>
+      <convex name="arm_l_link2_convex_0" />
+    </collision_checking>
+  </link>
+  <joint name="idx22_arm_l_joint2" type="revolute">
+    <origin rpy="1.5708 0 0" xyz="0 0 0.1745" />
+    <parent link="arm_l_link1" />
+    <child link="arm_l_link2" />
+    <axis xyz="0 0 1" />
+    <limit effort="108" lower="-2.0595" upper="2.0595" velocity="3.05" />
+  </joint>
+  <link name="arm_l_link3">
+    <collision_checking>
+      <convex name="arm_l_link3_convex_0" />
+    </collision_checking>
+  </link>
+  <joint name="idx23_arm_l_joint3" type="revolute">
+    <origin rpy="-1.5708 0 0" xyz="0 0 0" />
+    <parent link="arm_l_link2" />
+    <child link="arm_l_link3" />
+    <axis xyz="0 0 1" />
+    <limit effort="35" lower="-3.0718" upper="3.0718" velocity="3.76" />
+  </joint>
+  <link name="arm_l_link4">
+    <collision_checking>
+      <convex name="arm_l_link4_convex_0" />
+    </collision_checking>
+  </link>
+  <joint name="idx24_arm_l_joint4" type="revolute">
+    <origin rpy="1.5708 0 0" xyz="0.0105 0 0.332" />
+    <parent link="arm_l_link3" />
+    <child link="arm_l_link4" />
+    <axis xyz="0 0 1" />
+    <limit effort="35" lower="-2.4959" upper="1.0123" velocity="3.76" />
+  </joint>
+  <link name="arm_l_link5">
+    <collision_checking>
+      <convex name="arm_l_link5_convex_0" />
+    </collision_checking>
+  </link>
+  <joint name="idx25_arm_l_joint5" type="revolute">
+    <origin rpy="-1.5708 0 0" xyz="-0.0105 0 0" />
+    <parent link="arm_l_link4" />
+    <child link="arm_l_link5" />
+    <axis xyz="0 0 1" />
+    <limit effort="35" lower="-3.0718" upper="3.0718" velocity="3.35" />
+  </joint>
+  <link name="arm_l_link6">
+    <collision_checking>
+      <convex name="arm_l_link6_convex_0" />
+    </collision_checking>
+  </link>
+  <joint name="idx26_arm_l_joint6" type="revolute">
+    <origin rpy="1.5708 0 0" xyz="0 0 0.278" />
+    <parent link="arm_l_link5" />
+    <child link="arm_l_link6" />
+    <axis xyz="0 0 1" />
+    <limit effort="18" lower="-1.0123" upper="1.0123" velocity="3.35" />
+  </joint>
+  <link name="arm_l_link7">
+    <collision_checking>
+      <convex name="arm_l_link7_convex_0" />
+    </collision_checking>
+  </link>
+  <joint name="idx27_arm_l_joint7" type="revolute">
+    <origin rpy="1.5708 0 1.5708" xyz="0 0 0" />
+    <parent link="arm_l_link6" />
+    <child link="arm_l_link7" />
+    <axis xyz="0 0 1" />
+    <limit effort="18" lower="-1.5359" upper="1.5359" velocity="3.35" />
+  </joint>
+  <link name="arm_r_link1">
+    <collision_checking>
+      <convex name="arm_r_link1_convex_0" />
+    </collision_checking>
+  </link>
+  <joint name="idx61_arm_r_joint1" type="revolute">
+    <origin rpy="3.141592653589793 0 0" xyz="0 0 -0.069" />
+    <parent link="arm_base_link" />
+    <child link="arm_r_link1" />
+    <axis xyz="0 0 1" />
+    <limit effort="108" lower="-3.0718" upper="3.0718" velocity="3.05" />
+  </joint>
+  <link name="arm_r_link2">
+    <collision_checking>
+      <convex name="arm_r_link2_convex_0" />
+    </collision_checking>
+  </link>
+  <joint name="idx62_arm_r_joint2" type="revolute">
+    <origin rpy="1.5707963267948966 0 0" xyz="0 0 0.1745" />
+    <parent link="arm_r_link1" />
+    <child link="arm_r_link2" />
+    <axis xyz="0 0 1" />
+    <limit effort="108" lower="-2.0595" upper="2.0595" velocity="3.05" />
+  </joint>
+  <link name="arm_r_link3">
+    <collision_checking>
+      <convex name="arm_r_link3_convex_0" />
+    </collision_checking>
+  </link>
+  <joint name="idx63_arm_r_joint3" type="revolute">
+    <origin rpy="-1.5707963267948966 0 0" xyz="0 0 0" />
+    <parent link="arm_r_link2" />
+    <child link="arm_r_link3" />
+    <axis xyz="0 0 1" />
+    <limit effort="35" lower="-3.0718" upper="3.0718" velocity="3.76" />
+  </joint>
+  <link name="arm_r_link4">
+    <collision_checking>
+      <convex name="arm_r_link4_convex_0" />
+    </collision_checking>
+  </link>
+  <joint name="idx64_arm_r_joint4" type="revolute">
+    <origin rpy="1.5707963267948966 0 0" xyz="0.0105 0 0.332" />
+    <parent link="arm_r_link3" />
+    <child link="arm_r_link4" />
+    <axis xyz="0 0 1" />
+    <limit effort="35" lower="-2.4959" upper="1.0123" velocity="3.76" />
+  </joint>
+  <link name="arm_r_link5">
+    <collision_checking>
+      <convex name="arm_r_link5_convex_0" />
+    </collision_checking>
+  </link>
+  <joint name="idx65_arm_r_joint5" type="revolute">
+    <origin rpy="-1.5707963267948966 0 0" xyz="-0.0105 0 0" />
+    <parent link="arm_r_link4" />
+    <child link="arm_r_link5" />
+    <axis xyz="0 0 1" />
+    <limit effort="35" lower="-3.0718" upper="3.0718" velocity="3.35" />
+  </joint>
+  <link name="arm_r_link6">
+    <collision_checking>
+      <convex name="arm_r_link6_convex_0" />
+    </collision_checking>
+  </link>
+  <joint name="idx66_arm_r_joint6" type="revolute">
+    <origin rpy="1.5707963267948966 0 0" xyz="0 0 0.278" />
+    <parent link="arm_r_link5" />
+    <child link="arm_r_link6" />
+    <axis xyz="0 0 1" />
+    <limit effort="18" lower="-1.0123" upper="1.0123" velocity="3.35" />
+  </joint>
+  <link name="arm_r_link7">
+    <collision_checking>
+      <convex name="arm_r_link7_convex_0" />
+    </collision_checking>
+  </link>
+  <joint name="idx67_arm_r_joint7" type="revolute">
+    <origin rpy="1.5707963267948966 0 1.5707963267948966" xyz="0 0 0" />
+    <parent link="arm_r_link6" />
+    <child link="arm_r_link7" />
+    <axis xyz="0 0 1" />
+    <limit effort="18" lower="-1.5359" upper="1.5359" velocity="3.35" />
+  </joint>
+  <link name="gripper_l_base_link">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/gripper/workpiece/L/meshes/base_link.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="gripper_l_inner_link1">
+    <collision name="gripper_l_inner_link1_geom_0">
+      <origin xyz="0.002379287 -0.107474533 0.000033253" rpy="1.660956813 -1.570796273 3.051432170" />
+      <geometry>
+        <mesh filename="meshes/gripper/workpiece/L/meshes/link_003.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="gripper_l_outer_link1">
+    <collision name="gripper_l_outer_link1_geom_0">
+      <origin xyz="-0.002513898 -0.107605557 -0.000035152" rpy="0.568070005 1.570796280 2.138866371" />
+      <geometry>
+        <mesh filename="meshes/gripper/workpiece/L/meshes/link_002.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="gripper_r_base_link">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/gripper/workpiece/R/meshes/base_link.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="gripper_r_inner_link1">
+    <collision name="gripper_r_inner_link1_geom_0">
+      <origin xyz="-0.002070779 -0.107508951 -0.036240476" rpy="0.001264607 -1.570796277 -1.572060979" />
+      <geometry>
+        <mesh filename="meshes/gripper/workpiece/R/meshes/link_003.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="gripper_r_outer_link1">
+    <collision name="gripper_r_outer_link1_geom_0">
+      <origin xyz="0.002070779 -0.107508953 0.036240471" rpy="-0.103546539 1.570796306 1.467249788" />
+      <geometry>
+        <mesh filename="meshes/gripper/workpiece/R/meshes/link_002.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_l_link7_to_gripper_l_base_link" type="fixed">
+    <parent link="arm_l_link7" />
+    <child link="gripper_l_base_link" />
+    <origin xyz="0.290 0 0" rpy="1.5707963 1.5707963 -1.5707963" />
+  </joint>
+  <joint name="arm_r_link7_to_gripper_r_base_link" type="fixed">
+    <parent link="arm_r_link7" />
+    <child link="gripper_r_base_link" />
+    <origin xyz="0.290 0 0" rpy="1.5707963 1.5707963 -1.5707963" />
+  </joint>
+  <joint name="idx31_gripper_l_inner_joint1" type="prismatic">
+    <parent link="gripper_l_base_link" />
+    <child link="gripper_l_inner_link1" />
+    <origin xyz="-3.3252616e-05 -0.0023792871 0.10747454" rpy="1.570796327 0.000000000 1.570796327" />
+    <axis xyz="0 0 1" />
+    <limit lower="0" upper="0.025" effort="30" velocity="0.3" />
+  </joint>
+  <joint name="idx41_gripper_l_outer_joint1" type="prismatic">
+    <parent link="gripper_l_base_link" />
+    <child link="gripper_l_outer_link1" />
+    <origin xyz="-3.5148044e-05 -0.0025138985 0.10760556" rpy="1.570796327 0.000000000 -1.570796327" />
+    <axis xyz="0 0 1" />
+    <limit lower="0" upper="0.025" effort="30" velocity="0.3" />
+    <mimic joint="idx31_gripper_l_inner_joint1" multiplier="1.0" offset="0.0" />
+  </joint>
+  <joint name="idx71_gripper_r_inner_joint1" type="prismatic">
+    <parent link="gripper_r_base_link" />
+    <child link="gripper_r_inner_link1" />
+    <origin xyz="0.036240471 0.0020707794 0.10750896" rpy="1.570796327 0.000000000 1.570796327" />
+    <axis xyz="0 0 1" />
+    <limit lower="0" upper="0.025" effort="30" velocity="0.3" />
+  </joint>
+  <joint name="idx81_gripper_r_outer_joint1" type="prismatic">
+    <parent link="gripper_r_base_link" />
+    <child link="gripper_r_outer_link1" />
+    <origin xyz="0.036240471 0.0020707794 0.10750896" rpy="1.570796327 0.000000000 -1.570796327" />
+    <axis xyz="0 0 1" />
+    <limit lower="0" upper="0.025" effort="30" velocity="0.3" />
+    <mimic joint="idx71_gripper_r_inner_joint1" multiplier="1.0" offset="0.0" />
+  </joint>
+</robot>

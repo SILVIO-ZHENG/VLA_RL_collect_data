@@ -1,0 +1,25 @@
+[Unit]
+Description=Nexus G2 read-only workspace alignment agent
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=60
+StartLimitBurst=20
+
+[Service]
+Type=simple
+User=agi
+Group=agi
+WorkingDirectory=/home/agi/deploy/g2a_robot_client
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/home/agi/deploy/g2a_robot_client/robot_client/debug_python.sh /home/agi/deploy/g2a_robot_client/alignment_agent.py --calibration /home/agi/deploy/g2a_robot_client/alignment-camera.json --host 10.42.1.102 --port 8080 --fps 8 --camera-timeout-ms 1500 --idle-release-s 60 --allow-unauthenticated-private-lan
+Restart=always
+RestartSec=3
+TimeoutStopSec=10
+KillMode=control-group
+NoNewPrivileges=true
+# This must remain false: teleoperation, deployment, reset and alignment use
+# the same /tmp/g2a_pi05_robot_gdk.lock for cross-process exclusion.
+PrivateTmp=false
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,138 @@
+{
+  "schema": "nexus.offline-dataset-limits.v1",
+  "hardware_ready": false,
+  "dataset": "/data/company/data_common/lxl/workspace/datasets/logistics_g2a_dh_20260818_20260824_merged_v30_16d",
+  "info_sha256": "ee78c33754da880a1daef28f1877f388a597bb86c8bbdd68a77e32bdb4678c01",
+  "source_files": [
+    {
+      "path": "data/chunk-000/file-000.parquet",
+      "size": 23129721,
+      "mtime_ns": 1787638773660137000
+    },
+    {
+      "path": "data/chunk-000/file-001.parquet",
+      "size": 23751440,
+      "mtime_ns": 1787638779324302000
+    },
+    {
+      "path": "data/chunk-000/file-002.parquet",
+      "size": 15483759,
+      "mtime_ns": 1787638782884407000
+    },
+    {
+      "path": "data/chunk-000/file-003.parquet",
+      "size": 23452892,
+      "mtime_ns": 1787638788404568000
+    },
+    {
+      "path": "data/chunk-000/file-004.parquet",
+      "size": 9950112,
+      "mtime_ns": 1787638790600632000
+    }
+  ],
+  "training_episode_range": [
+    0,
+    405
+  ],
+  "training_frames": 1030218,
+  "excluded_evaluation_episode_range": [
+    406,
+    427
+  ],
+  "fps": 30,
+  "fit_window_frames": 9,
+  "fit_window_span_s": 0.26666666666666666,
+  "joint_indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "joint_names": [
+    "left_arm_joint1",
+    "left_arm_joint2",
+    "left_arm_joint3",
+    "left_arm_joint4",
+    "left_arm_joint5",
+    "left_arm_joint6",
+    "left_arm_joint7",
+    "right_arm_joint1",
+    "right_arm_joint2",
+    "right_arm_joint3",
+    "right_arm_joint4",
+    "right_arm_joint5",
+    "right_arm_joint6",
+    "right_arm_joint7"
+  ],
+  "units": {
+    "velocity": "rad/s",
+    "acceleration": "rad/s^2",
+    "jerk": "rad/s^3"
+  },
+  "rule": "max(experimental floor [0.6, 2, 10], 1.1 * max(fitted state P99, fitted action P99)), per joint",
+  "limits": {
+    "velocity": [
+      1.29580521714687,
+      1.2313800228834124,
+      1.7674623873233786,
+      1.4884751055240628,
+      1.0674290488958313,
+      0.7179950686097145,
+      1.2344681303501117,
+      0.9504463247656819,
+      0.6,
+      1.2395078396797174,
+      1.8981533851623498,
+      1.5095052598714827,
+      1.0276529728770252,
+      1.2140384396314599
+    ],
+    "acceleration": [
+      4.050791877746575,
+      2.9386911470890014,
+      5.146111184597008,
+      5.345114708423613,
+      4.613651125907893,
+      3.756351445198054,
+      5.092625360965728,
+      3.5238533847331963,
+      2.0,
+      4.1005333671569675,
+      6.712606559276571,
+      6.5633792061805645,
+      5.23873017835617,
+      5.41869684648513
+    ],
+    "jerk": [
+      35.90204622268669,
+      23.913692861556985,
+      44.88229211425781,
+      53.02526728057861,
+      68.01810614776609,
+      58.22609970855711,
+      61.55471215438835,
+      34.94856613540642,
+      16.087698929786583,
+      37.991993896484345,
+      68.14631016921997,
+      87.32683805084221,
+      75.67288690948435,
+      65.50692528533897
+    ]
+  },
+  "warnings": [
+    "Dataset percentiles do not establish hardware-safe limits.",
+    "Filtered derivatives suppress peaks; raw and fitted estimates are both retained.",
+    "No physical commands, no production configuration changes."
+  ]
+}

@@ -1,0 +1,29 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# 仿真运行产物
+artifacts/
+recordings/
+logs/
+outputs/
+
+# G2 模型的本机网格和 URDF；README/manifest 保留在源码中
+assets/g2/G2_omnipicker/*.urdf
+assets/g2/G2_omnipicker/meshes/
+assets/g2/G2_omnipicker/collision/
+assets/g2/G2_omnipicker/LICENSE
+assets/g2/G2_omnipicker/SOURCE.json
+assets/g2/G2_omnipicker/URDF_VIEWER_README.md
+# 本机配置与编辑器文件
+.env
+.idea/
+.vscode/
+*.swp

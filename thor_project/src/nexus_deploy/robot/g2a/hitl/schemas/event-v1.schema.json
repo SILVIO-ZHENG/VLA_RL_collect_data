@@ -1,0 +1,177 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.flowpro/schemas/event-v1.schema.json",
+  "title": "FlowPRO append-only event v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "event_id",
+    "flowpro_session_id",
+    "event_type",
+    "producer",
+    "monotonic_ns",
+    "wall_time_utc",
+    "vendor_timestamp_ns",
+    "payload"
+  ],
+  "properties": {
+    "schema_version": {"const": "flowpro.event/v1"},
+    "event_id": {"type": "string", "format": "uuid"},
+    "flowpro_session_id": {"type": "string", "format": "uuid"},
+    "event_type": {
+      "enum": [
+        "SessionStarted",
+        "LogicalInput",
+        "ObservationCaptured",
+        "PolicyCandidate",
+        "ControlOwnershipChanged",
+        "VRTeleopFrame",
+        "PlanInstalled",
+        "ServoSample",
+        "SafetyDecision",
+        "HumanIntervention",
+        "ExecutedSegmentCaptured",
+        "RollbackRequested",
+        "RollbackPlanned",
+        "RollbackResumed",
+        "RollbackPaused",
+        "RollbackAnchorCrossed",
+        "RollbackInvalidated",
+        "RollbackPlanningFailed",
+        "RollbackCompleted",
+        "SceneRestorationStarted",
+        "SceneRestorationVerified",
+        "HumanCorrectionStarted",
+        "HumanCorrectionCompleted",
+        "EpisodeOutcome",
+        "DataSealed"
+      ]
+    },
+    "producer": {
+      "enum": ["g2_supervisor", "robot_client", "policy_server", "annotation"]
+    },
+    "monotonic_ns": {"type": "integer", "minimum": 0},
+    "wall_time_utc": {"type": "string", "format": "date-time"},
+    "vendor_timestamp_ns": {"type": ["integer", "null"], "minimum": 1},
+    "observation_id": {"type": ["string", "null"], "format": "uuid"},
+    "request_id": {"type": ["string", "null"], "minLength": 1},
+    "candidate_id": {"type": ["string", "null"], "format": "uuid"},
+    "generation_id": {"type": ["string", "null"], "format": "uuid"},
+    "action_id": {"type": ["string", "null"], "format": "uuid"},
+    "control_owner": {"enum": ["policy", "human", "hold", "rollback", null]},
+    "payload": {"type": "object"}
+  },
+  "$defs": {
+    "inferenceImage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "relative_path",
+        "size_bytes",
+        "sha256",
+        "encoding",
+        "camera_key",
+        "vendor_timestamp_ns",
+        "width",
+        "height"
+      ],
+      "properties": {
+        "relative_path": {"type": "string", "minLength": 1},
+        "size_bytes": {"type": "integer", "minimum": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "encoding": {"const": "jpeg"},
+        "camera_key": {"enum": ["cam_head", "cam_left_wrist", "cam_right_wrist"]},
+        "vendor_timestamp_ns": {"type": "integer", "minimum": 1},
+        "width": {"type": "integer", "minimum": 1},
+        "height": {"type": "integer", "minimum": 1}
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "enum": [
+              "ObservationCaptured",
+              "ControlOwnershipChanged",
+              "VRTeleopFrame",
+              "PlanInstalled",
+              "ServoSample",
+              "SafetyDecision",
+              "HumanIntervention",
+              "ExecutedSegmentCaptured",
+              "RollbackRequested",
+              "RollbackPlanned",
+              "RollbackResumed",
+              "RollbackPaused",
+              "RollbackAnchorCrossed",
+              "RollbackInvalidated",
+              "RollbackPlanningFailed",
+              "RollbackCompleted",
+              "SceneRestorationStarted",
+              "SceneRestorationVerified",
+              "HumanCorrectionStarted",
+              "HumanCorrectionCompleted"
+            ]
+          }
+        }
+      },
+      "then": {"properties": {"vendor_timestamp_ns": {"type": "integer"}}}
+    },
+    {
+      "if": {"properties": {"event_type": {"const": "PolicyCandidate"}}},
+      "then": {
+        "required": ["observation_id", "request_id", "candidate_id", "generation_id"],
+        "properties": {
+          "observation_id": {"type": "string", "format": "uuid"},
+          "request_id": {"type": "string", "minLength": 1},
+          "candidate_id": {"type": "string", "format": "uuid"},
+          "generation_id": {"type": "string", "format": "uuid"}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"event_type": {"const": "ObservationCaptured"}}},
+      "then": {
+        "required": ["observation_id"],
+        "properties": {
+          "observation_id": {"type": "string", "format": "uuid"},
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["anchor_timestamp_ns", "state", "task", "images"],
+            "properties": {
+              "anchor_timestamp_ns": {"type": "integer", "minimum": 1},
+              "task": {"type": "string", "maxLength": 4096},
+              "state": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["relative_path", "size_bytes", "sha256", "dtype", "shape", "space"],
+                "properties": {
+                  "relative_path": {"type": "string", "minLength": 1},
+                  "size_bytes": {"const": 96},
+                  "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+                  "dtype": {"const": "float32"},
+                  "shape": {"const": [24]},
+                  "space": {"const": "canonical_hardware_24d"}
+                }
+              },
+              "images": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["cam_head", "cam_left_wrist", "cam_right_wrist"],
+                "properties": {
+                  "cam_head": {"$ref": "#/$defs/inferenceImage"},
+                  "cam_left_wrist": {"$ref": "#/$defs/inferenceImage"},
+                  "cam_right_wrist": {"$ref": "#/$defs/inferenceImage"}
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

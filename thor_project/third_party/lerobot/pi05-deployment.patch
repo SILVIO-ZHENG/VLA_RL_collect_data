@@ -1,0 +1,236 @@
+diff --git a/src/lerobot/policies/factory.py b/src/lerobot/policies/factory.py
+index 36a0de7c..f8527c2c 100644
+--- a/src/lerobot/policies/factory.py
++++ b/src/lerobot/policies/factory.py
+@@ -189,12 +189,21 @@ def make_pre_post_processors(
+                 ),
+             )
+ 
++        preprocessor_overrides = {
++            key: dict(value) for key, value in (kwargs.get("preprocessor_overrides") or {}).items()
++        }
++        tokenizer_name = getattr(policy_cfg, "tokenizer_name", None)
++        if tokenizer_name is not None:
++            preprocessor_overrides.setdefault("tokenizer_processor", {}).setdefault(
++                "tokenizer_name", tokenizer_name
++            )
++
+         preprocessor = PolicyProcessorPipeline.from_pretrained(
+             pretrained_model_name_or_path=pretrained_path,
+             config_filename=kwargs.get(
+                 "preprocessor_config_filename", f"{POLICY_PREPROCESSOR_DEFAULT_NAME}.json"
+             ),
+-            overrides=kwargs.get("preprocessor_overrides", {}),
++            overrides=preprocessor_overrides,
+             to_transition=batch_to_transition,
+             to_output=transition_to_batch,
+             revision=pretrained_revision,
+diff --git a/src/lerobot/policies/pi05/configuration_pi05.py b/src/lerobot/policies/pi05/configuration_pi05.py
+index 124e85cc..0f944012 100644
+--- a/src/lerobot/policies/pi05/configuration_pi05.py
++++ b/src/lerobot/policies/pi05/configuration_pi05.py
+@@ -30,6 +30,7 @@ DEFAULT_IMAGE_SIZE = 224
+ class PI05Config(PreTrainedConfig):
+     paligemma_variant: str = "gemma_2b"
+     action_expert_variant: str = "gemma_300m"
++    tokenizer_name: str = "google/paligemma-3b-pt-224"
+     dtype: str = "float32"  # Options: "bfloat16", "float32"
+ 
+     n_obs_steps: int = 1
+@@ -79,6 +80,11 @@ class PI05Config(PreTrainedConfig):
+ 
+     # Training settings
+     gradient_checkpointing: bool = False  # Enable gradient checkpointing for memory optimization
++    # Training-only provenance flag saved by the G2A OpenPI augmentation
++    # experiment.  Inference must not apply random image augmentation, but the
++    # field remains part of the serialized policy config so augmented
++    # checkpoints can be loaded without dropping metadata.
++    use_openpi_image_augmentation: bool = False
+     compile_model: bool = False  # Whether to use torch.compile for model optimization
+     compile_mode: str = "max-autotune"  # Torch compile mode
+     device: str | None = None  # Device to use for the model (None = auto-detect)
+diff --git a/src/lerobot/policies/pi05/modeling_pi05.py b/src/lerobot/policies/pi05/modeling_pi05.py
+index aabd04c6..e241f223 100644
+--- a/src/lerobot/policies/pi05/modeling_pi05.py
++++ b/src/lerobot/policies/pi05/modeling_pi05.py
+@@ -17,6 +17,7 @@
+ import builtins
+ import logging
+ import math
++import time
+ from collections import deque
+ from pathlib import Path
+ from typing import TYPE_CHECKING, Literal, TypedDict, Unpack
+@@ -954,6 +955,8 @@ class PI05Policy(PreTrainedPolicy):
+         local_files_only: bool = False,
+         revision: str | None = None,
+         strict: bool = True,
++        deployment_fast_load: bool = False,
++        load_device: str | None = None,
+         **kwargs,
+     ) -> T:
+         """Override the from_pretrained method to handle key remapping and display important disclaimer."""
+@@ -979,9 +982,28 @@ class PI05Policy(PreTrainedPolicy):
+                 **kwargs,
+             )
+ 
+-        # Initialize model without loading weights
+-        # Check if dataset_stats were provided in kwargs
+-        model = cls(config, **kwargs)
++        target_device = str(load_device or config.device)
++        load_started_at = time.perf_counter()
++
++        # A deployment process never needs the randomly initialized parameters:
++        # every persistent tensor is replaced by the strict safetensors checkpoint.
++        # Constructing on ``meta`` avoids initializing, casting, and copying several
++        # billion values which are immediately overwritten during a cold start.
++        if deployment_fast_load:
++            original_device = config.device
++            config.device = "meta"
++            try:
++                with torch.device("meta"):
++                    model = cls(config, **kwargs)
++            finally:
++                config.device = original_device
++            print(
++                f"Fast-load: initialized empty PI0.5 model in "
++                f"{time.perf_counter() - load_started_at:.1f}s"
++            )
++        else:
++            # Initialize model without loading weights.
++            model = cls(config, **kwargs)
+ 
+         # Load state dict (expects keys with "model." prefix)
+         try:
+@@ -1002,12 +1024,16 @@ class PI05Policy(PreTrainedPolicy):
+                 )
+                 from safetensors.torch import load_file
+ 
+-                original_state_dict = load_file(resolved_file)
+-                print("✓ Loaded state dict from model.safetensors")
++                checkpoint_device = target_device if deployment_fast_load else "cpu"
++                checkpoint_started_at = time.perf_counter()
++                original_state_dict = load_file(resolved_file, device=checkpoint_device)
++                print(
++                    "✓ Loaded state dict from model.safetensors "
++                    f"to {checkpoint_device} in "
++                    f"{time.perf_counter() - checkpoint_started_at:.1f}s"
++                )
+             except Exception as e:
+-                print(f"Could not load state dict from remote files: {e}")
+-                print("Returning model without loading pretrained weights")
+-                return model
++                raise RuntimeError(f"Could not load PI0.5 safetensors checkpoint: {e}") from e
+ 
+             # First, fix any key differences (see openpi model.py, _fix_pytorch_state_dict_keys)
+             fixed_state_dict = model._fix_pytorch_state_dict_keys(original_state_dict, model.config)
+@@ -1028,7 +1054,12 @@ class PI05Policy(PreTrainedPolicy):
+                 print(f"Remapped {remap_count} state dict keys")
+ 
+             # Load the remapped state dict into the model
+-            missing_keys, unexpected_keys = model.load_state_dict(remapped_state_dict, strict=strict)
++            assign_started_at = time.perf_counter()
++            missing_keys, unexpected_keys = model.load_state_dict(
++                remapped_state_dict,
++                strict=strict,
++                assign=deployment_fast_load,
++            )
+ 
+             if missing_keys:
+                 print(f"Missing keys when loading state dict: {len(missing_keys)} keys")
+@@ -1053,8 +1084,65 @@ class PI05Policy(PreTrainedPolicy):
+             if not missing_keys and not unexpected_keys:
+                 print("All keys loaded successfully!")
+ 
++            if deployment_fast_load:
++                meta_parameters = [
++                    name for name, tensor in model.named_parameters() if tensor.device.type == "meta"
++                ]
++                if meta_parameters:
++                    raise RuntimeError(
++                        "Fast-load left model parameters unmaterialized: "
++                        f"{meta_parameters[:20]}"
++                    )
++                # Buffers marked non-persistent are intentionally absent from
++                # safetensors. Recreate them with the exact Transformers
++                # constructors after parameters have been assigned.
++                for module in model.modules():
++                    for buffer_name in tuple(module._non_persistent_buffers_set):
++                        buffer = module._buffers.get(buffer_name)
++                        if buffer is None or buffer.device.type != "meta":
++                            continue
++                        if buffer_name == "position_ids" and hasattr(module, "num_positions"):
++                            value = torch.arange(
++                                module.num_positions, device=target_device, dtype=buffer.dtype
++                            ).expand((1, -1))
++                        elif buffer_name == "embed_scale" and hasattr(module, "scalar_embed_scale"):
++                            value = torch.tensor(
++                                module.scalar_embed_scale, device=target_device, dtype=buffer.dtype
++                            )
++                        elif buffer_name in {"inv_freq", "original_inv_freq"} and hasattr(
++                            module, "compute_default_rope_parameters"
++                        ):
++                            value, _ = module.compute_default_rope_parameters(
++                                module.config, torch.device(target_device)
++                            )
++                            if buffer_name == "original_inv_freq":
++                                value = value.clone()
++                            value = value.to(dtype=buffer.dtype)
++                        else:
++                            raise RuntimeError(
++                                "Fast-load cannot reconstruct non-persistent buffer "
++                                f"{type(module).__name__}.{buffer_name}"
++                            )
++                        module._buffers[buffer_name] = value
++                meta_buffers = [
++                    name for name, tensor in model.named_buffers() if tensor.device.type == "meta"
++                ]
++                if meta_buffers:
++                    raise RuntimeError(
++                        "Fast-load left model buffers unmaterialized: "
++                        f"{meta_buffers[:20]}"
++                    )
++                model.config.device = target_device
++                model.eval()
++            print(
++                f"Applied PI0.5 state dict in {time.perf_counter() - assign_started_at:.1f}s; "
++                f"total model load {time.perf_counter() - load_started_at:.1f}s"
++            )
++
+         except Exception as e:
+-            print(f"Warning: Could not load state dict: {e}")
++            # Serving an uninitialized policy is more dangerous than refusing to
++            # start. Deployment callers may explicitly retry the legacy loader.
++            raise RuntimeError(f"Could not load PI0.5 state dict: {e}") from e
+ 
+         return model
+ 
+@@ -1112,9 +1200,13 @@ class PI05Policy(PreTrainedPolicy):
+                 key == "model.paligemma_with_expert.paligemma.lm_head.weight"
+                 or key == "paligemma_with_expert.paligemma.lm_head.weight"
+             ):
+-                fixed_state_dict[
++                embedding_key = (
+                     "model.paligemma_with_expert.paligemma.model.language_model.embed_tokens.weight"
+-                ] = value.clone()
++                )
++                # Modern checkpoints already contain this tensor. Avoid cloning
++                # roughly one GiB only to overwrite it a few iterations later.
++                if embedding_key not in state_dict:
++                    fixed_state_dict[embedding_key] = value.clone()
+ 
+             fixed_state_dict[new_key] = value
+ 
+diff --git a/src/lerobot/policies/pi05/processor_pi05.py b/src/lerobot/policies/pi05/processor_pi05.py
+index ac16269a..860d27af 100644
+--- a/src/lerobot/policies/pi05/processor_pi05.py
++++ b/src/lerobot/policies/pi05/processor_pi05.py
+@@ -138,7 +138,7 @@ def make_pi05_pre_post_processors(
+         steps.normalize,
+         Pi05PrepareStateTokenizerProcessorStep(max_state_dim=config.max_state_dim),
+         TokenizerProcessorStep(
+-            tokenizer_name="google/paligemma-3b-pt-224",
++            tokenizer_name=config.tokenizer_name,
+             max_length=config.tokenizer_max_length,
+             padding_side="right",
+             padding="max_length",

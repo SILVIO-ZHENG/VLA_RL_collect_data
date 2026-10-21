@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#f3f5f4" />
+    <title>运行配置 · Nexus</title>
+    <link rel="icon" type="image/png" href="./assets/anu-intelligent-logo.png" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./session.css" />
+  </head>
+  <body>
+    <div class="app-shell session-shell">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="返回 Nexus 工作台">
+          <img class="brand-logo" src="./assets/anu-intelligent-logo.png" alt="安努智能" width="158" height="40" />
+          <span class="brand-copy"><strong>Nexus</strong><small>ROBOT OPERATIONS</small></span>
+        </a>
+        <div class="topbar-meta">
+          <a class="button button--secondary button--small" href="./index.html">模型部署</a>
+          <a class="button button--secondary button--small" id="view-switch" href="./monitor">机器人控制台</a>
+          <a class="button button--secondary button--small" id="alignment-entry" href="#" target="_blank" rel="noopener" hidden>工位对齐 ↗</a>
+          <span class="connection-state is-loading" id="connection-state"><span class="status-dot"></span><span>连接中</span></span>
+        </div>
+      </header>
+
+      <main class="session-workspace">
+        <section class="workstation-panel" id="workstation-panel" aria-label="机器人控制权与任务准入">
+          <div class="workstation-heading">
+            <div><p class="eyebrow">ROBOT CONTROL</p><h2>控制权与任务准入</h2><p id="workstation-status" role="status">正在读取工作站状态…</p></div>
+            <div class="workstation-controls">
+              <button class="button button--primary button--small" id="workstation-handoff" type="button" disabled>人工接管</button>
+              <button class="button button--secondary button--small" id="workstation-admission-action" type="button" disabled>暂停新任务</button>
+            </div>
+          </div>
+          <p id="workstation-help" class="workstation-help"></p>
+          <p id="workstation-robot-state" class="workstation-current-task" role="status"></p>
+          <div class="connection-probe">
+            <span>机器人空闲核实</span>
+            <button class="button button--secondary button--small" id="console-probe-robot" type="button" disabled>检测机器人</button>
+            <small id="console-probe-result">等待检测</small>
+          </div>
+          <a id="workstation-reset-link" class="workstation-records-link" href="#reset-robot" hidden>检测机器人并处理复位</a>
+          <p id="workstation-current-task" class="workstation-current-task" role="status"></p>
+          <p id="workstation-switch-status" class="workstation-switch-status" role="status"></p>
+          <a class="workstation-records-link" href="./history.html">查看任务记录</a>
+        </section>
+
+        <section class="session-hero">
+          <div>
+            <p class="eyebrow">MODEL &amp; TASK SESSION</p>
+            <h1 id="console-title">运行设置</h1>
+            <p id="console-description">模型就绪后保存运行参数；日常控制权交接在机器人控制台。</p>
+          </div>
+          <div class="session-identity">
+            <span id="route-label">正在载入作业…</span>
+            <code id="job-id">—</code>
+          </div>
+        </section>
+
+        <div class="session-error" id="session-error" hidden role="alert">
+          <strong>无法载入任务会话</strong>
+          <p id="session-error-message"></p>
+          <a class="button button--secondary button--small" href="./index.html">返回部署配置</a>
+        </div>
+
+        <section class="ops-card" id="console-empty" hidden>
+          <h2>尚无可用部署</h2>
+          <p>先选择机器人、夹爪、模型和版本，加载模型后完成运行配置。</p>
+          <a class="button button--primary" href="./index.html">准备模型服务</a>
+        </section>
+
+        <section id="monitor-empty" class="monitor-empty" hidden aria-label="监控画面状态">
+          <div class="ops-card monitor-empty-card">
+            <p class="eyebrow">ROBOT STATE</p><h2>机器人三维状态</h2>
+            <p>尚未连接机器人实时遥测。选择一个部署后显示实测姿态和碰撞信息。</p>
+            <a class="button button--primary button--small" href="./index.html">准备模型服务</a>
+          </div>
+          <div class="ops-card monitor-empty-card">
+            <p class="eyebrow">LIVE CAMERAS</p><h2>真实相机图像</h2>
+            <p>暂无来自机器人会话的相机图像；图像会标明采集时间与新鲜度。</p>
+          </div>
+        </section>
+
+        <div class="session-layout" id="session-content" hidden>
+          <div class="session-main" id="session-main">
+            <section class="ops-card model-ops-card" id="model-card" aria-labelledby="model-runtime-title">
+              <div class="ops-heading">
+                <div><p class="eyebrow">MODEL SERVICE</p><h2 id="model-runtime-title">模型加载与服务</h2></div>
+                <span class="runtime-status" id="model-status">等待检查</span>
+              </div>
+              <div class="model-runtime-grid">
+                <div class="model-runtime-primary">
+                  <div class="model-title-row"><strong id="model-name">—</strong><span id="model-endpoint">—</span></div>
+                  <progress class="runtime-progress" id="model-progress" max="100" value="4" aria-label="模型加载进度"></progress>
+                  <ol class="model-stage-list" id="model-stages"></ol>
+                </div>
+                <dl class="model-runtime-metrics">
+                  <div><dt>服务策略</dt><dd id="model-strategy">—</dd></div>
+                  <div><dt>当前阶段</dt><dd id="model-phase">—</dd></div>
+                  <div><dt>已用 / 超时</dt><dd id="model-elapsed">—</dd></div>
+                  <div><dt>服务健康</dt><dd id="model-health">—</dd></div>
+                  <div><dt>夹爪配置</dt><dd id="model-effector-profile">—</dd></div>
+                  <div><dt>归一化</dt><dd id="model-normalization">—</dd></div>
+                </dl>
+              </div>
+              <div class="live-log"><span>最近模型日志</span><code id="model-log">等待模型输出</code></div>
+              <div class="control-actions model-service-actions">
+                <button class="button button--danger-subtle" id="close-model" type="button" disabled>关闭模型服务</button>
+              </div>
+              <p class="ownership-note" id="ownership-note"></p>
+            </section>
+
+            <section class="ops-card twin-card" id="robot-twin-card" aria-labelledby="robot-twin-title">
+              <div class="ops-heading">
+                <div><p class="eyebrow">REALTIME ROBOT STATE</p><h2 id="robot-twin-title">机器人实时三维状态</h2></div>
+                <span class="telemetry-state" id="twin-state">等待机器人状态</span>
+              </div>
+              <p class="ops-description">完整 G2 URDF、网格和原始材质以可缓存 GLB 加载，浏览器根据 GDK 实测关节执行本地 FK 和平滑显示；页面只消费只读遥测。碰撞判定仍在 G2 Client 的 100 Hz 控制路径完成。</p>
+              <div class="twin-toolbar" aria-label="三维渲染说明">
+                <span><i class="model-indicator"></i>完整 G2 模型 · 实测姿态</span>
+                <span id="twin-geometry-note">碰撞几何待确认</span>
+                <div class="twin-view-actions">
+                  <div class="twin-view-switch" role="group" aria-label="三维视角">
+                    <button class="twin-view-button" type="button" data-twin-view="near" aria-pressed="false">双臂近景</button>
+                    <button class="twin-view-button is-active" type="button" data-twin-view="overview" aria-pressed="true">整机远景</button>
+                  </div>
+                  <button class="twin-save-view is-active" id="collision-geometry-toggle" type="button" aria-pressed="true" title="显示安全检测实际使用的双臂胶囊、最近碰撞对和计算距离">隐藏碰撞体</button>
+                  <button class="twin-save-view" id="twin-save-view" type="button" title="将画面当前角度保存为选中视角的初始化位置">保存当前视角</button>
+                </div>
+              </div>
+              <div class="twin-viewport" id="twin-viewport">
+                <iframe id="robot-twin" title="G2 URDF 实时三维模型" sandbox="allow-scripts allow-same-origin" referrerpolicy="no-referrer"></iframe>
+                <div class="safety-distance-panel is-stale" id="safety-distance-panel" aria-label="实时碰撞安全距离">
+                  <div class="safety-distance-row" id="inter-arm-distance-row">
+                    <div class="safety-distance-heading"><span>双臂净距</span><strong id="inter-arm-distance-current">—</strong></div>
+                    <small>预警 <b id="inter-arm-warning-distance">—</b><i></i>硬限制 <b id="inter-arm-hard-distance">—</b></small>
+                  </div>
+                  <div class="safety-distance-row" id="table-distance-row">
+                    <div class="safety-distance-heading"><span>夹爪离桌面</span><strong id="table-distance-current">—</strong></div>
+                    <small><em id="table-distance-side">等待实测姿态</em><i></i>预警 <b id="table-warning-distance">—</b><i></i>硬限制 <b id="table-hard-distance">—</b></small>
+                  </div>
+                </div>
+                <div class="collision-banner" id="collision-banner" hidden role="alert">
+                  <strong id="collision-title">碰撞风险已拦截</strong>
+                  <span id="collision-detail">保持上一安全动作</span>
+                </div>
+                <div class="twin-placeholder is-loading" id="twin-placeholder" aria-label="正在加载完整 G2 模型"></div>
+              </div>
+              <div class="twin-metrics" id="twin-metrics"></div>
+            </section>
+
+            <section class="ops-card" id="vision-card" aria-labelledby="vision-title">
+              <div class="ops-heading">
+                <div><p class="eyebrow">INFERENCE INPUT</p><h2 id="vision-title">真实相机图像 · 最近一次推理输入</h2></div>
+                <span class="telemetry-state" id="telemetry-state">等待遥测</span>
+              </div>
+              <p class="ops-description" id="telemetry-message">产生推理请求后，显示最近一次请求实际使用的三路输入图像；画面按请求更新，不是实时视频。</p>
+              <div class="camera-grid" id="camera-grid"></div>
+            </section>
+
+            <section class="ops-card presence-gate-runtime-card" id="presence-gate-card" aria-labelledby="presence-gate-title">
+              <div class="ops-heading">
+                <div><p class="eyebrow">PACKAGE PRESENCE GATE</p><h2 id="presence-gate-title">包裹检测</h2></div>
+                <span class="telemetry-state" id="presence-gate-state">未启用</span>
+              </div>
+              <p class="ops-description" id="presence-gate-message">启用后，视觉模型以四帧一致结果确认“有包裹 / 无包裹 / 不确定”。只读观测会完整验证相机、模型、门控和客户端暂停／恢复链路，但不会发送机械臂命令；真机执行才调用已审核的暂停、复位或恢复。</p>
+              <div class="presence-gate-runtime-grid">
+                <div class="presence-gate-observation">
+                  <span class="presence-gate-observation__label">当前视觉结果</span>
+                  <strong id="presence-gate-observation">等待检测</strong>
+                  <span class="presence-gate-observation__mode" id="presence-gate-mode">等待任务配置</span>
+                </div>
+                <dl class="presence-gate-metrics">
+                  <div><dt>四帧窗口</dt><dd id="presence-gate-window">—</dd></div>
+                  <div><dt>连续无包裹</dt><dd id="presence-gate-empty-elapsed">—</dd></div>
+                  <div><dt>自动动作</dt><dd id="presence-gate-action">无</dd></div>
+                  <div><dt>数据新鲜度</dt><dd id="presence-gate-freshness">—</dd></div>
+                </dl>
+              </div>
+              <p class="telemetry-boundary" id="presence-gate-boundary">只有操作员点击“开始任务”才会授权一个会话；视觉状态永远不能创建新任务。只读观测不会发送机械臂命令。UNKNOWN、混合窗口、过期或失联数据均不会触发机器人动作。</p>
+            </section>
+
+            <section class="ops-card" id="requests-card" aria-labelledby="requests-title">
+              <div class="ops-heading">
+                <div><p class="eyebrow">REQUEST TELEMETRY</p><h2 id="requests-title">请求与延迟</h2></div>
+                <span class="telemetry-state">按请求更新</span>
+              </div>
+              <div class="request-metrics" id="request-metrics"></div>
+              <p class="telemetry-boundary">Request ID 只来自机器人客户端的真实 timing/trace。推理画面与最近一次请求严格对应；尚未产生请求时明确显示“尚未运行”，不会从模型健康状态推测推理已经发生。</p>
+            </section>
+
+            <details class="ops-card postload-card" id="runtime-config-card" aria-labelledby="runtime-config-title" open>
+              <summary class="ops-heading">
+                <div><p class="eyebrow">POST-LOAD CONFIG</p><h2 id="runtime-config-title">运行配置与预检</h2></div>
+                <span class="config-lock" id="config-lock">等待模型就绪</span>
+              </summary>
+              <p class="ops-description">应用后的参数持续使用；需要调整时展开修改，应用前会重新预检。</p>
+              <form id="runtime-form" class="runtime-form" novalidate>
+                <div class="runtime-form-grid">
+                  <label><span>已冻结机器人实例</span><select id="robot-id" name="robot_id" data-instance-locked disabled></select></label>
+                  <label><span>已冻结机器人 IP</span><input id="robot-host" name="robot_host" data-instance-locked readonly /></label>
+                  <label><span>已冻结 SSH 端口</span><input id="robot-port" name="robot_ssh_port" type="number" data-instance-locked readonly /></label>
+                  <div class="connection-probe"><span>运行前状态</span><button class="button button--secondary button--small" id="probe-robot" type="button">刷新预检</button><small id="probe-result">等待刷新</small></div>
+                </div>
+                <label class="runtime-task"><span>任务指令</span><textarea id="task" name="task" maxlength="4096" rows="3"></textarea><small>使用与训练数据一致的英文指令风格。</small></label>
+                <div class="runtime-completion">
+                  <label for="presence-gate-enabled"><span>任务完成条件</span><select id="presence-gate-enabled" name="presence_gate_enabled">
+                    <option value="disabled">人工结束（仅手动调试）</option>
+                    <option value="enabled">包裹检测自动完成</option>
+                  </select></label>
+                  <p>人工任务与调度任务都可使用包裹检测自动完成；自动调度必须选择包裹检测。头部、左腕、右腕三路相机各连续三帧确认无包裹后，连续无包裹达到 2 秒先软暂停；累计达到 5 秒启动复位，复位成功后结束本次任务，不会自动启动下一单。两个阈值共用同一无包裹计时起点，不是暂停后再等待 5 秒。人工暂停不会触发自动复位；UNKNOWN、有包裹、混合窗口、过期或失联结果均不计入连续无包裹时间。空箱启动也不会立即完成，真机在自动软暂停前可能运动。建议先用只读模式核对视觉状态；只读验证不会执行真机复位。</p>
+                </div>
+                <div class="runtime-form-grid runtime-form-grid--three">
+                  <label><span>推理模式</span><select id="inference-mode" name="inference_mode"></select><small>按权重预选，可手动切换；保存并应用后生效。</small></label>
+                  <label><span>硬件访问</span><select id="hardware-mode" name="hardware_mode"><option value="read-only">只读观测</option><option value="execute">真机执行</option></select><small id="hardware-mode-help">真机执行需要站点开关和已标定安全配置。</small></label>
+                  <label><span>运行时长</span><span class="unit-input"><input id="duration-s" type="number" min="0" step="1" /><em id="duration-unit">秒</em></span></label>
+                  <label><span>执行频率</span><span class="unit-input"><input id="execution-fps" type="number" min="0.1" step="0.1" /><em>FPS</em></span></label>
+                  <label><span>伺服频率</span><span class="unit-input"><input id="servo-fps" type="number" min="0.1" step="0.1" /><em>Hz</em></span></label>
+                  <label><span>轨迹平滑方案</span><select id="chunk-smoothing-mode">
+                    <option value="savgol">7 点 Savitzky–Golay 平滑（默认）</option>
+                    <option value="adaptive-fixed-time">固定时间轴自适应平滑（实验）</option>
+                  </select><small>两种方案互斥；选择结果在启动任务时传给机器人客户端。</small></label>
+                  <label><span>100 Hz 插值方式</span><select id="action-interpolation">
+                    <option value="linear">线性插值（默认）</option>
+                    <option value="monotone-cubic">单调三次插值（实验，可选真机）</option>
+                  </select><small>实验模式保持 30 Hz 节点和夹爪时序，但旧版离线对比未改善跟踪，加速度超限可能更多；默认仍用线性插值。</small></label>
+                  <label><span>手臂跟踪方式</span><select id="arm-tracking-mode"><option value="legacy">当前跟踪（默认）</option><option value="damped">阻尼跟踪（对照测试）</option></select></label>
+                  <label><span>手臂阻尼参数</span><span class="unit-input"><input id="arm-tracking-omega" type="number" min="0.1" step="1" /><em>rad/s</em></span></label>
+                  <label><span>RTC 前缀测试</span><select id="rtc-prefix-mode"><option value="model">当前模型尾部（默认）</option><option value="command-shadow">记录执行前缀作比对</option><option value="command">执行前缀推理（仅只读）</option></select></label>
+                  <label><span>手臂动态限制</span><select id="arm-limit-profile">
+                    <option value="urdf-velocity-uniform-acceleration">当前 URDF 逐关节速度 + 统一加速度（默认）</option>
+                    <option value="urdf-velocity-only">当前 URDF 逐关节限速，不限制手臂软件加速度（实验）</option>
+                    <option value="uniform">统一速度与加速度（按下方数值）</option>
+                    <option value="dataset-v30">训练数据 P95 逐关节限制</option>
+                    <option value="dataset-v30-p99-margin">训练数据 P99×1.1 逐关节限制（实验）</option>
+                    <option value="urdf-velocity-p99-acceleration">旧版 π 速度 + 数据 P99 加速度（回退）</option>
+                  </select><small>默认逐关节速度来自安全配置绑定的 URDF；统一加速度 8 rad/s² 是部署设定。仅限速模式仍保留该值作为安全停车假设，正常手臂跟踪不使用；URDF 未声明加速度。</small></label>
+                  <label><span>手臂全局速度上限</span><span class="unit-input"><input id="max-arm-velocity" type="number" min="0.01" step="0.1" /><em>rad/s</em></span></label>
+                  <label><span>手臂加速度参数</span><span class="unit-input"><input id="max-arm-acceleration" type="number" min="0.01" step="0.1" /><em>rad/s²</em></span><small>仅限速模式不用于正常动作限幅，只保留作可选安全停车计算的假设。</small></label>
+                  <label><span>预测 / 可信步长</span><span class="dual-input"><input id="prediction-horizon" type="number" min="1" /><i>/</i><input id="quality-horizon" type="number" min="1" /></span></label>
+                  <label data-runtime-modes="async rtc"><span>请求提前余量</span><span class="unit-input"><input id="lead-margin" type="number" min="0" /><em>步</em></span></label>
+                  <label data-runtime-modes="rtc"><span>RTC 最小融合</span><span class="unit-input"><input id="rtc-blend" type="number" min="0" /><em>步</em></span></label>
+                  <label><span>请求超时</span><span class="unit-input"><input id="request-timeout" type="number" min="0.1" step="0.5" /><em>秒</em></span></label>
+                </div>
+                <div class="runtime-safety">
+                  <strong>安全配置</strong>
+                  <label><input id="hitl" type="checkbox" /> 人在环路（VR 接管、回退与逐包采集）</label>
+                  <label><input id="workspace-safety" type="checkbox" checked disabled /> 桌面及双臂碰撞危险拦截</label>
+                  <label class="safety-profile-field"><span>检测配置</span><select id="safety-profile" disabled><option value="">加载安全配置…</option></select></label>
+                  <p class="safety-availability" id="safety-availability" role="status" hidden></p>
+                  <label><input type="checkbox" checked disabled /> 通信看门狗</label>
+                  <label><input type="checkbox" checked disabled /> 运动学限制</label>
+                  <label><input type="checkbox" checked disabled /> 跟踪误差保护</label>
+                  <label><input id="low-pass-filter" type="checkbox" /> 手臂低通滤波</label>
+                  <label><input id="effector-low-pass-filter" type="checkbox" /> 末端低通滤波</label>
+                  <label><input id="hold-effectors" type="checkbox" /> 保持末端执行器</label>
+                </div>
+                <div class="runtime-form-actions">
+                  <p id="config-message">模型就绪后可应用运行配置。</p>
+                  <button class="button button--primary" id="save-config" type="submit">保存并应用到工作站</button>
+                </div>
+              </form>
+            </details>
+          </div>
+
+          <aside class="session-sidebar">
+            <section class="ops-card control-card">
+              <div class="ops-heading"><div><p class="eyebrow">TASK CONTROL</p><h2>任务控制</h2></div><span class="runtime-status" id="task-status">等待模型</span></div>
+              <dl class="control-summary">
+                <div><dt>模型服务</dt><dd id="control-model">—</dd></div>
+                <div><dt>模型版本</dt><dd id="control-model-version">—</dd></div>
+                <div><dt>机器人</dt><dd id="control-robot">—</dd></div>
+                <div><dt>推理模式</dt><dd id="control-mode">—</dd></div>
+                <div><dt>硬件模式</dt><dd id="control-hardware">—</dd></div>
+                <div><dt>Safe hold</dt><dd id="safe-hold">尚未接入</dd></div>
+              </dl>
+              <p class="control-note" id="control-note">正在准备模型服务。</p>
+              <div class="execute-gate" id="execute-gate" hidden>
+                <strong>真机执行防误触确认</strong>
+                <p>首次点击“启动真机”后，请确认现场已清场且急停可用；5 秒内再次点击同一按钮才会启动。真机暂停会清空旧动作计划并以 100 Hz 持续保持当前实测位姿。</p>
+              </div>
+              <div class="control-actions">
+                <button class="button button--approve button--large" id="start" type="button" disabled>开始任务</button>
+                <button class="button button--secondary" id="pause" type="button" disabled>暂停任务</button>
+                <button class="button button--approve" id="resume" type="button" disabled>继续任务</button>
+                <button class="button button--danger-subtle" id="stop" type="button" disabled>结束任务</button>
+                <button class="button button--danger-subtle" id="reset-robot" type="button" disabled>机器人复位</button>
+              </div>
+              <p class="robot-reset-status" id="robot-reset-status">复位会先让大寰夹爪松开、夹紧并最终松开，再复位双臂、头部和腰部。</p>
+            </section>
+
+            <details class="ops-card events-card" open>
+              <summary>作业记录</summary>
+              <ul id="events"></ul>
+            </details>
+          </aside>
+        </div>
+      </main>
+    </div>
+    <div class="toast-region" id="toast-region" aria-live="polite"></div>
+    <script type="module" src="./workstation.js?v=20261008-csrf-refresh"></script>
+    <script type="module" src="./session.js?v=20261016-rtc-selector"></script>
+  </body>
+</html>

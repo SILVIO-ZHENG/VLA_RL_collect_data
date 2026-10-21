@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+TOOL_ROOT="$PROJECT_ROOT/tools/offline_simulator"
+WORKSPACE_PYTHON="$PROJECT_ROOT/.venv/bin/python"
+
+if test -x "$WORKSPACE_PYTHON"; then
+  cd "$TOOL_ROOT"
+  exec "$WORKSPACE_PYTHON" -m nexus_simulator.cli "$@"
+fi
+
+if command -v uv >/dev/null 2>&1; then
+  cd "$TOOL_ROOT"
+  exec uv run --project "$PROJECT_ROOT" --extra offline-simulator nexus-sim "$@"
+fi
+
+echo "Nexus workspace 环境尚未安装。" >&2
+echo "请先执行: uv sync --project $PROJECT_ROOT --extra server --extra dev --extra offline-simulator" >&2
+exit 2

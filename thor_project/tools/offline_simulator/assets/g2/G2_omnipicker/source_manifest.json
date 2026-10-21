@@ -1,0 +1,18 @@
+{
+  "description": "G2 OmniPicker 权威来源清单；使用 nexus-sim sync-assets 同步模型资产",
+  "source_root": "../../dist/g2a_robot_client/robot_client/assets/agibot_g2",
+  "files": [
+    {
+      "name": "G2_omnipicker_visual.urdf",
+      "sha256": "e66ad093999c4d9675902def559e5a3a7a42c4ed0cfe5ab2f3efd3b087582814"
+    },
+    {
+      "name": "G2_omnipicker_safety_geometry.urdf",
+      "sha256": "4586e0212dc137c2d9afbc911c21f191c69e6c98f38e2edfe32c8656034d480a"
+    },
+    {
+      "name": "G2_omnipicker_fixed_dual.urdf",
+      "sha256": "eb782de0b6f1faf1fcddfb5e2f7004a39e350c4f297ca51a56003ce8f9ad8319"
+    }
+  ]
+}

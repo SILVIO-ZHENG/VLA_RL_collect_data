@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Nexus Simulator</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Nexus PLATFORM · SAFETY LAB</p>
+        <h1>Nexus Simulator</h1>
+        <p class="subtitle">G2 离线 URDF / FK 可视化验证</p>
+      </div>
+      <div class="isolation-badge" title="本服务不包含机器人访问能力">
+        <span class="status-dot"></span>
+        仿真专用 · 真机指令已禁用
+      </div>
+    </header>
+
+    <main class="workspace">
+      <section class="viewer-panel" aria-label="三维仿真画面">
+        <div class="panel-heading">
+          <div>
+            <p class="section-kicker">BROWSER VIEWER</p>
+            <h2>G2 三维模型</h2>
+          </div>
+          <div class="viewer-actions">
+            <div id="viewer-status" class="connection-state">正在加载资源…</div>
+            <div class="camera-view-switch" aria-label="三维视角">
+              <button class="view-mode-chip is-active" type="button" data-camera-view="near">双臂近景</button>
+              <button class="view-mode-chip" type="button" data-camera-view="overview">整机远景</button>
+            </div>
+          </div>
+        </div>
+        <div class="viewer-wrap">
+          <iframe id="meshcat-frame" title="G2 MeshCat 三维画面"></iframe>
+          <div id="collision-alert" class="collision-alert" role="alert" hidden>
+            <strong id="collision-alert-title">碰撞风险</strong>
+            <span id="collision-alert-detail">正在读取安全状态</span>
+          </div>
+          <div id="viewer-loading" class="viewer-loading">
+            <div class="spinner"></div>
+            <p>正在把 G2 网格发送到浏览器</p>
+            <small>首次加载约 45 MB 资源，请稍候</small>
+          </div>
+        </div>
+        <div class="viewer-legend">
+          <span><i class="legend-table"></i>工作面</span>
+          <span><i class="legend-margin"></i>硬安全余量</span>
+          <span>左键旋转 · 右键平移 · 滚轮缩放</span>
+        </div>
+      </section>
+
+      <aside class="control-panel">
+        <section class="safety-notice">
+          <strong>SIMULATION ONLY</strong>
+          <p>不导入 GDK、不读取机器人、不发送动作。当前高度仅为仿真默认值。</p>
+        </section>
+
+        <section class="control-section">
+          <div class="section-heading-row">
+            <div>
+              <p class="section-kicker">DATASET REPLAY</p>
+              <h2>数据集回放</h2>
+            </div>
+            <span id="episode-chip" class="unit-chip">Episode —</span>
+          </div>
+          <div class="camera-card">
+            <video id="head-video" muted playsinline preload="auto"></video>
+            <span class="camera-label">头部相机 · 原始 640×400</span>
+          </div>
+          <p id="replay-task" class="replay-task">正在读取任务…</p>
+          <div class="replay-toolbar">
+            <button id="replay-play" class="primary-button" type="button" disabled>正在缓冲…</button>
+            <button id="replay-pause" class="secondary-button" type="button" disabled>暂停</button>
+            <button id="replay-reset" class="secondary-button" type="button">机器人复位</button>
+            <select id="replay-source" aria-label="三维轨迹来源">
+              <option value="observation">观测轨迹（作为候选输入）</option>
+              <option value="action">动作轨迹（作为候选输入）</option>
+            </select>
+          </div>
+          <label class="timeline-field">
+            <span>帧 <strong id="replay-frame-label">0 / —</strong></span>
+            <span id="replay-time-label">00:00.0 / —</span>
+            <input id="replay-timeline" type="range" min="0" max="0" step="1" value="0" />
+          </label>
+          <div id="safety-result" class="safety-result is-pending">
+            <strong id="safety-title">等待离线判定</strong>
+            <span id="safety-detail">选择帧或开始回放后显示</span>
+          </div>
+          <p class="field-help">数据、三维更新与安全参考判定均按 30 FPS 同步；仅离线回放，不会发送动作。</p>
+        </section>
+
+        <section class="control-section">
+          <div class="section-heading-row">
+            <div>
+              <p class="section-kicker">WORK SURFACE</p>
+              <h2>工作面</h2>
+            </div>
+            <span class="unit-chip">单位 m</span>
+          </div>
+          <div id="safety-limit-control" class="safety-limit-control">
+            <div>
+              <strong>碰撞安全限制</strong>
+              <span id="safety-limit-state">开启：危险动作将被拦截</span>
+            </div>
+            <label class="toggle-switch" title="关闭后仍检测并显示碰撞，但不限制候选动作">
+              <input id="safety-limit" type="checkbox" role="switch" checked />
+              <span aria-hidden="true"></span>
+              <b id="safety-limit-label">开启</b>
+            </label>
+          </div>
+          <label class="field">
+            <span>工作面高度</span>
+            <output id="surface-height-output">0.750</output>
+            <input id="surface-height" type="range" min="0.2" max="1.5" step="0.005" />
+          </label>
+          <label class="field">
+            <span>硬安全余量</span>
+            <output id="hard-margin-output">0.030</output>
+            <input id="hard-margin" type="range" min="0.005" max="0.2" step="0.005" />
+          </label>
+          <p class="field-help">两种回放轨迹都被当作虚拟机器人的候选输入。开启限制后，危险帧不会直接显示，而是保持最后一次验证安全的姿态；关闭限制只旁路拦截，检测和告警仍保持开启。</p>
+          <p class="field-help">统一使用一个工作面，不区分桌面或传送带；显示区域位于机器人正前方（base_link +X）。</p>
+        </section>
+
+        <section class="control-section joints-section">
+          <div class="section-heading-row">
+            <div>
+              <p class="section-kicker">FORWARD KINEMATICS</p>
+              <h2>关节与 FK</h2>
+            </div>
+            <button id="reset-button" class="secondary-button" type="button" title="仅用于检查 URDF 关节零位，不是数据集 0 帧">URDF 零位</button>
+          </div>
+          <div id="joint-groups" class="joint-groups"></div>
+        </section>
+
+        <section class="diagnostics" aria-label="资源诊断">
+          <div><span>模型</span><strong id="model-name">—</strong></div>
+          <div><span>可调关节</span><strong id="joint-count">—</strong></div>
+          <div><span>几何 / 三角面</span><strong id="geometry-count">—</strong></div>
+          <div><span>资源校验</span><strong id="asset-status">—</strong></div>
+        </section>
+      </aside>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="/app.js" defer></script>
+  </body>
+</html>

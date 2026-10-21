@@ -1,0 +1,6 @@
+{
+  "robot_id": "g2-102",
+  "robot_model": "G2 物流机器人 102",
+  "camera_name": "head_stereo_left",
+  "version": "g2-102-gdk-head-stereo-left-live-2026-09-07"
+}

@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.flowpro/schemas/sidecar-manifest-v1.schema.json",
+  "title": "FlowPRO sidecar manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "flowpro_session_id",
+    "robot_id",
+    "task_id",
+    "created_at_utc",
+    "clock_contract",
+    "policy",
+    "vendor_episode",
+    "sidecar_files"
+  ],
+  "properties": {
+    "schema_version": {"const": "flowpro.sidecar_manifest/v1"},
+    "status": {"enum": ["open", "sealed"]},
+    "flowpro_session_id": {"type": "string", "format": "uuid"},
+    "robot_id": {"type": "string", "minLength": 1},
+    "task_id": {"type": "string", "minLength": 1},
+    "created_at_utc": {"type": "string", "format": "date-time"},
+    "sealed_at_utc": {"type": ["string", "null"], "format": "date-time"},
+    "clock_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["join_clock", "timestamp_unit", "monotonic_scope"],
+      "properties": {
+        "join_clock": {"const": "vendor_timestamp_ns"},
+        "timestamp_unit": {"const": "ns"},
+        "monotonic_scope": {"const": "single_process_only"},
+        "wall_to_vendor_offset_ns": {"type": "integer"}
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "checkpoint_id",
+        "checkpoint_stats_sha256",
+        "native_action_dim",
+        "action_space",
+        "model_fps",
+        "chunk_size",
+        "effector_profile",
+        "processor_version"
+      ],
+      "properties": {
+        "checkpoint_id": {"type": "string", "minLength": 1},
+        "checkpoint_stats_sha256": {"$ref": "#/$defs/sha256"},
+        "native_action_dim": {"enum": [16, 24]},
+        "action_space": {"const": "absolute_unnormalized"},
+        "model_fps": {"type": "number", "exclusiveMinimum": 0},
+        "chunk_size": {"type": "integer", "minimum": 1},
+        "effector_profile": {"enum": ["dh", "dahuan", "omnipicker_legacy"]},
+        "processor_version": {"type": "string", "minLength": 1}
+      }
+    },
+    "collection_manifest": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["schema_version", "collection_round_id", "sha256"],
+          "properties": {
+            "schema_version": {"const": "flowpro.collection_manifest/v1"},
+            "collection_round_id": {"type": "string", "minLength": 1},
+            "sha256": {"$ref": "#/$defs/sha256"}
+          }
+        }
+      ]
+    },
+    "vendor_episode": {
+      "oneOf": [
+        {"type": "null"},
+        {"$ref": "#/$defs/vendorEpisode"}
+      ]
+    },
+    "sidecar_files": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/fileRecord"},
+      "uniqueItems": true
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "fileRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["relative_path", "size_bytes", "sha256"],
+      "properties": {
+        "relative_path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+        },
+        "size_bytes": {"type": "integer", "minimum": 0},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "vendorEpisode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_name",
+        "episode_path",
+        "source_timestamp_start_ns",
+        "source_timestamp_end_ns",
+        "max_camera_skew_ms",
+        "files"
+      ],
+      "properties": {
+        "record_name": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^/]+$"
+        },
+        "episode_path": {
+          "type": "string",
+          "pattern": "^/[^/].*/[^/]+$"
+        },
+        "source_timestamp_start_ns": {"type": "integer", "minimum": 1},
+        "source_timestamp_end_ns": {"type": "integer", "minimum": 1},
+        "max_camera_skew_ms": {"type": "number", "minimum": 0, "maximum": 40},
+        "meta_clip_start_time": {},
+        "meta_clip_end_time": {},
+        "files": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/fileRecord"},
+          "minItems": 2,
+          "uniqueItems": true
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"status": {"const": "sealed"}}},
+      "then": {
+        "required": ["sealed_at_utc"],
+        "properties": {
+          "sealed_at_utc": {"type": "string", "format": "date-time"},
+          "vendor_episode": {"$ref": "#/$defs/vendorEpisode"},
+          "sidecar_files": {"minItems": 1}
+        }
+      }
+    }
+  ]
+}

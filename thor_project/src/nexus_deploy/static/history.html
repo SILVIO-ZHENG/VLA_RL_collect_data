@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>任务记录 · Nexus</title>
+    <link rel="icon" type="image/png" href="./assets/anu-intelligent-logo.png" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="返回 Nexus 工作台">
+          <img class="brand-logo" src="./assets/anu-intelligent-logo.png" alt="安努智能" width="158" height="40" />
+          <span class="brand-copy"><strong>Nexus</strong><small>ROBOT OPERATIONS</small></span>
+        </a>
+        <div class="topbar-meta">
+          <a class="button button--secondary button--small" href="./monitor">实时监控</a>
+          <a class="button button--secondary button--small" href="./index.html">部署管理</a>
+          <a class="button button--secondary button--small" id="alignment-entry" href="#" target="_blank" rel="noopener" hidden>工位对齐 ↗</a>
+        </div>
+      </header>
+      <main class="history-page" id="workstation-records">
+        <div class="page-heading"><div><p class="eyebrow">RECORDS</p><h1>任务记录</h1>
+          <p>已结束任务保留结果与操作记录，不占用当前工作站。</p></div></div>
+        <p id="records-status" role="status">正在读取记录…</p>
+        <section class="workstation-panel" aria-labelledby="records-tasks-title">
+          <h2 id="records-tasks-title">已结束任务</h2>
+          <div id="records-tasks" class="workstation-tasks"></div>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="./workstation.js?v=20261008-csrf-refresh"></script>
+  </body>
+</html>
