@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.flowpro/schemas/preference-pair-v1.schema.json",
+  "title": "FlowPRO preference pair v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "pair_id",
+    "flowpro_session_id",
+    "observation_id",
+    "native_action_dim",
+    "action_space",
+    "fps",
+    "effector_profile",
+    "checkpoint_stats_sha256",
+    "rejected",
+    "preferred",
+    "valid_mask",
+    "same_context",
+    "pair_valid",
+    "invalid_reason",
+    "provenance_event_ids"
+  ],
+  "properties": {
+    "schema_version": {"const": "flowpro.preference_pair/v1"},
+    "pair_id": {"type": "string", "format": "uuid"},
+    "flowpro_session_id": {"type": "string", "format": "uuid"},
+    "observation_id": {"type": "string", "format": "uuid"},
+    "native_action_dim": {"enum": [16, 24]},
+    "action_space": {"const": "absolute_unnormalized"},
+    "fps": {"type": "number", "exclusiveMinimum": 0},
+    "effector_profile": {"enum": ["dh", "dahuan", "omnipicker_legacy"]},
+    "checkpoint_stats_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "rejected": {"$ref": "#/$defs/actionArtifact"},
+    "preferred": {
+      "allOf": [
+        {"$ref": "#/$defs/actionArtifact"},
+        {
+          "type": "object",
+          "required": ["source"],
+          "properties": {
+            "source": {
+              "enum": [
+                "measured_human_trajectory",
+                "smooth_interpolation",
+                "positive_self_pair"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "valid_mask": {"$ref": "#/$defs/tensorArtifact"},
+    "same_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scene_verified", "sensor_skew_ok", "same_anchor"],
+      "properties": {
+        "scene_verified": {"type": "boolean"},
+        "sensor_skew_ok": {"type": "boolean"},
+        "same_anchor": {"type": "boolean"},
+        "robot_state_delta_max": {"type": "number", "minimum": 0},
+        "image_similarity": {"type": ["number", "null"]}
+      }
+    },
+    "pair_valid": {"type": "boolean"},
+    "invalid_reason": {"type": ["string", "null"]},
+    "provenance_event_ids": {
+      "type": "array",
+      "items": {"type": "string", "format": "uuid"},
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "intervention": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "intervention_id",
+        "active_arms",
+        "matching_policy",
+        "matched_positive_index",
+        "match_distance"
+      ],
+      "properties": {
+        "intervention_id": {"type": "string", "format": "uuid"},
+        "active_arms": {
+          "type": "array",
+          "items": {"enum": ["left", "right"]},
+          "minItems": 1,
+          "maxItems": 2,
+          "uniqueItems": true
+        },
+        "matching_policy": {
+          "enum": [
+            "paper_global_weighted_nearest/v1",
+            "fk_contact_phase_nearest/v1",
+            "fk_weighted_nearest/v2",
+            "positive_self_pair"
+          ]
+        },
+        "matched_positive_index": {"type": "integer", "minimum": 0},
+        "match_distance": {"type": "number", "minimum": 0},
+        "contact_alignment": {"type": "object"}
+      }
+    }
+  },
+  "$defs": {
+    "tensorArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["relative_path", "dtype", "shape", "sha256"],
+      "properties": {
+        "relative_path": {"type": "string", "minLength": 1},
+        "dtype": {"enum": ["float32", "bool"]},
+        "shape": {
+          "type": "array",
+          "items": {"type": "integer", "minimum": 1},
+          "minItems": 1,
+          "maxItems": 2
+        },
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "actionArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["relative_path", "dtype", "shape", "sha256", "source_event_id"],
+      "properties": {
+        "relative_path": {"type": "string", "minLength": 1},
+        "dtype": {"const": "float32"},
+        "shape": {
+          "type": "array",
+          "items": {"type": "integer", "minimum": 1},
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "source_event_id": {"type": "string", "format": "uuid"},
+        "candidate_id": {"type": "string", "format": "uuid"},
+        "source": {"type": "string"}
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"pair_valid": {"const": true}}},
+      "then": {
+        "properties": {
+          "invalid_reason": {"type": "null"},
+          "same_context": {
+            "properties": {
+              "scene_verified": {"const": true},
+              "sensor_skew_ok": {"const": true},
+              "same_anchor": {"const": true}
+            }
+          }
+        }
+      },
+      "else": {"properties": {"invalid_reason": {"type": "string", "minLength": 1}}}
+    }
+  ]
+}

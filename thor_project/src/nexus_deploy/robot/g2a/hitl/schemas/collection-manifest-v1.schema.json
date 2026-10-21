@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.flowpro/schemas/collection-manifest-v1.schema.json",
+  "title": "FlowPRO frozen collection manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "status", "collection_round_id", "created_at_utc",
+    "robot_id", "task_id", "task_prompt", "policy", "runtime", "execution", "data_gates"
+  ],
+  "properties": {
+    "schema_version": {"const": "flowpro.collection_manifest/v1"},
+    "status": {"const": "frozen"},
+    "collection_round_id": {"type": "string", "minLength": 1},
+    "created_at_utc": {"type": "string", "format": "date-time"},
+    "robot_id": {"type": "string", "minLength": 1},
+    "task_id": {"type": "string", "minLength": 1},
+    "task_prompt": {"type": "string", "minLength": 1},
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "checkpoint_id", "checkpoint_stats_sha256", "processor_version",
+        "native_action_dim", "chunk_size", "effector_profile"
+      ],
+      "properties": {
+        "checkpoint_id": {"type": "string", "minLength": 1},
+        "checkpoint_stats_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "processor_version": {"type": "string", "minLength": 1},
+        "native_action_dim": {"const": 16},
+        "chunk_size": {"type": "integer", "minimum": 1},
+        "effector_profile": {"type": "string", "minLength": 1}
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "source_sha256"],
+      "properties": {
+        "schema_version": {"const": "flowpro.g2_runtime_provenance/v1"},
+        "source_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "inference_mode", "execution_fps", "servo_fps", "prediction_horizon",
+        "quality_horizon", "min_replan_after_steps", "request_lead_margin_steps",
+        "rtc_enabled", "head_waist_control", "rollback_enabled", "rollback_scope",
+        "x_release_behavior", "rollback_plan_immutable", "collision_safety_enabled"
+      ],
+      "properties": {
+        "inference_mode": {"const": "async"},
+        "execution_fps": {"type": "number", "exclusiveMinimum": 0},
+        "servo_fps": {"type": "number", "exclusiveMinimum": 0},
+        "prediction_horizon": {"type": "integer", "minimum": 1},
+        "quality_horizon": {"type": "integer", "minimum": 1},
+        "min_replan_after_steps": {"type": "integer", "minimum": 1},
+        "request_lead_margin_steps": {"type": "integer", "minimum": 0},
+        "rtc_enabled": {"const": false},
+        "head_waist_control": {"const": false},
+        "rollback_enabled": {"const": true},
+        "rollback_scope": {"const": "current_contiguous_policy_history"},
+        "x_release_behavior": {"const": "same_plan_next_older_inference_anchor"},
+        "rollback_plan_immutable": {"const": true},
+        "collision_safety_enabled": {"type": "boolean"}
+      }
+    },
+    "data_gates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "require_executed_policy", "require_same_anchor", "require_scene_confirmation",
+        "require_zero_queue_underrun", "required_cameras", "max_camera_skew_ms"
+      ],
+      "properties": {
+        "require_executed_policy": {"const": true},
+        "require_same_anchor": {"const": true},
+        "require_scene_confirmation": {"const": true},
+        "require_zero_queue_underrun": {"const": true},
+        "required_cameras": {
+          "const": ["cam_head", "cam_left_wrist", "cam_right_wrist"]
+        },
+        "max_camera_skew_ms": {"type": "number", "exclusiveMinimum": 0, "maximum": 40}
+      }
+    }
+  }
+}
