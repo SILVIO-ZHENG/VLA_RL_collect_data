@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+CONFIG_PATH="${G2A_ALIGNMENT_CONFIG:-${PROJECT_ROOT}/alignment.toml}"
+
+if [[ ! -f "${CONFIG_PATH}" ]]; then
+  echo "Alignment config not found: ${CONFIG_PATH}" >&2
+  echo "Create it from ${PROJECT_ROOT}/alignment.example.toml and calibrate the site values." >&2
+  exit 2
+fi
+
+exec python3 -m nexus_deploy.alignment.service --config "${CONFIG_PATH}" "$@"

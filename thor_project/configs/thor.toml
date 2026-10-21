@@ -1,0 +1,271 @@
+# One source tree; host paths and existing operating parameters only.
+
+["runtime"]
+"robot_rt_cadence" = true
+"robot_pause_on_collision" = false
+"robot_rtc_state_aligned_anchor" = true
+"directory" = "../runtime/thor"
+"conda" = "/home/anu/miniconda3/bin/conda"
+"require_unique_model_gpus" = true
+"robot_session_archive_directory" = "../runtime/thor/robot-sessions"
+"stationary_hold_feedback_max_age_ms" = 100
+
+
+["server"]
+"bind_host" = "0.0.0.0"
+"advertise_host" = "10.42.1.77"
+
+
+["alignment"]
+"url" = "http://192.168.110.14:8775/alignment"
+
+
+["effector_profiles"]
+
+["effector_profiles"."dahuan"]
+"display_name" = "大寰夹爪"
+"default_task" = "Pick a package from the box with the left gripper and place it on the table. Then pick it up with the right gripper and place it on the conveyor belt, keeping the QR code facing upward."
+"unit" = "m"
+"hardware_state_range" = [0.0, 0.025]
+"model_action_range" = [0.0, 0.025]
+"action_mapping" = "invert_about_endpoints"
+"default_max_velocity" = 0.05
+"default_max_acceleration" = 0.2
+"default_tracking_error" = 0.01
+"default_relative_target_warning" = 0.025
+"state_semantics" = "0=闭合，0.025=张开"
+"action_semantics" = "0=张开指令，0.025=闭合指令"
+"gdk_joint_names" = ["idx31_gripper_l_inner_joint1", "idx71_gripper_r_inner_joint1"]
+"collision_geometry" = "g2_dahuan"
+"collision_geometry_status" = "provisional"
+"ui_hidden" = false
+
+
+["effector_profiles"."omnipicker_legacy"]
+"display_name" = "智元原装 Omnipicker 夹爪"
+"default_task" = "Pick up the package and place it on the conveyor belt with the QR code facing up."
+"unit" = "rad"
+"hardware_state_range" = [-0.785, 0.0]
+"model_action_range" = [-0.785, 0.0]
+"action_mapping" = "identity"
+"default_max_velocity" = 1.0
+"default_max_acceleration" = 4.0
+"default_tracking_error" = 0.5
+"default_relative_target_warning" = 0.05
+"state_semantics" = "沿用旧模型/GDK 关节位置语义"
+"action_semantics" = "模型目标与 GDK 目标同向"
+"gdk_joint_names" = ["idx31_gripper_l_inner_joint1", "idx71_gripper_r_inner_joint1"]
+"collision_geometry" = "omnipicker"
+"collision_geometry_status" = "verified"
+"ui_hidden" = false
+
+
+
+["models"]
+
+["models"."pi05"]
+"display_name" = "PI0.5"
+"description" = "G2 16D 双臂策略；根据夹爪选择自动绑定 checkpoint、动作语义和归一化。"
+"supported_modes" = ["sync", "async", "rtc"]
+"rtc_execution_horizon" = 30
+"tags" = ["16D", "Absolute", "30 FPS"]
+"default_effector_profile" = "dahuan"
+"repo" = ".."
+"conda_env" = "lerobot"
+"python_executable" = "../.pi05-venv/bin/python"
+"module" = "nexus_deploy.vla.pi05.server"
+"port" = 5556
+"cuda_visible_devices" = "0"
+"gpu_min_free_memory_mb" = 12000
+"startup_timeout_s" = 600
+"base_args" = ["--host={bind_host}", "--port={port}", "--device=cuda:0", "--float32-matmul-precision=high", "--model-profile=16d_absolute_full", "--model-fps=30", "--execution-horizon=30", "--warmup-requests=1", "--log-file={runtime_dir}/pi05.server.log", "--timing-log-file={runtime_dir}/pi05.timing.jsonl"]
+"mock_args" = ["--mock"]
+"python_paths" = ["../src"]
+
+["models"."pi05"."effector_variants"]
+
+["models"."pi05"."effector_variants"."dahuan"]
+"default_version" = "newdata_training_rtc_004500"
+"normalization_source" = "checkpoint_embedded"
+"normalization_label" = "大寰 checkpoint 内置 Quantiles"
+"common_real_args" = ["--warmup-task=Pick a package from the box with the left gripper and place it on the table. Then pick it up with the right gripper and place it on the conveyor belt, keeping the QR code facing upward.", "--tokenizer-path=models/tokenizers/paligemma-3b-pt-224"]
+
+["models"."pi05"."effector_variants"."dahuan"."versions"."training_rtc_009500"]
+"display_name" = "Batch1024_training RTC · step9500 _10/12"
+"description" = "Training RTC，D=21 / H=50，部署执行窗口 29 步"
+"normalization_label" = "Training RTC Step 9500 checkpoint 内置统计"
+"rtc_execution_horizon" = 29
+"real_args" = ["--checkpoint=models/pi05/dahuan/training_rtc_009500/pretrained_model", "--rtc-inference-mode=trained", "--execution-horizon=29"]
+
+
+["ui_models"]
+
+["ui_models"."fastwam"]
+"display_name" = "FastWAM"
+"description" = "G2 16D 双臂快速策略；根据夹爪选择自动绑定模型配置、动作语义和归一化。"
+"supported_modes" = ["sync", "async", "rtc"]
+"rtc_execution_horizon" = 30
+"rtc_execute_enabled" = true
+"tags" = ["16D", "Absolute", "30 FPS"]
+"port" = 5559
+"cuda_visible_devices" = "auto"
+"gpu_min_free_memory_mb" = 16000
+"startup_timeout_s" = 600
+"default_effector_profile" = "dahuan"
+"effector_profiles" = ["dahuan"]
+"compatible_robots" = ["g2a"]
+
+["ui_models"."fastwam"."effector_variants"]
+
+["ui_models"."fastwam"."effector_variants"."dahuan"]
+"normalization_source" = "checkpoint_embedded"
+"normalization_label" = "大寰 checkpoint 内置 Quantiles"
+
+
+["ui_models"."fastwam"."effector_variants"."omnipicker_legacy"]
+"normalization_source" = "checkpoint_embedded"
+"normalization_label" = "原装夹爪 checkpoint 内置 Quantiles"
+
+
+
+
+
+["robots"]
+
+["robots"."g2a"]
+"display_name" = "G2A Logistics"
+"description" = "双臂物流机器人；GDK、关节与三路相机链路已恢复，支持只读观测和受控真机执行通道。"
+"tags" = ["分拣", "双夹爪", "运行可用"]
+"expected_aid" = "G2A0004C201260"
+"effectors_mode" = "required"
+"effector_profile" = "dahuan"
+"effector_profiles" = ["dahuan"]
+"execute_enabled" = true
+"reset_enabled" = true
+"compatible_models" = ["pi05"]
+"control_host" = "10.42.1.102"
+"control_host_label" = "Nexus 有线管理"
+"control_host_transport" = "wired"
+"policy_host" = "10.42.1.77"
+"policy_source_host" = "10.42.1.102"
+"alternate_endpoints" = []
+"ssh_port" = 22
+"source_client" = "../src/nexus_deploy/robot/g2a"
+"manifest" = "../robot_manifest.txt"
+"source_check" = "g2a"
+"bundle_directory" = "../dist/thor/g2a_robot_client"
+"ssh_target" = "agi@10.42.1.102"
+"ssh_key" = "/home/anu/.ssh/id_ed25519"
+"host_key_alias" = "10.42.1.102"
+"remote_directory" = "/home/agi/deploy/g2a_robot_client_hil_clockbridge_20261019_r10"
+"legacy_remote_directory" = "/home/agi/deploy/g2a_pi05_robot_client"
+"reset_script" = "/home/agi/deploy/g2a_robot_client_hil_clockbridge_20261019_r10/robot_client/reset_all_joints.sh"
+
+
+
+["ui_robots"]
+
+["ui_robots"."astribot_s1"]
+"display_name" = "Astribot S1"
+"manufacturer" = "星尘智能"
+"description" = "双臂人形机器人部署配置，面向通用操作与持续控制任务。"
+"ui_only" = true
+"adapter_status" = "configured"
+"urdf_status" = "managed"
+"official_url" = "https://www.astribot.com/product/"
+"control_host" = ""
+"ssh_port" = 22
+"height_m" = 1.7
+"arm_span_m" = 1.94
+"payload_per_arm_kg" = 5.0
+"endurance_hours" = [4, 6]
+"arm_dof" = 7
+"tags" = ["双臂", "单臂 7 DoF", "5 kg / 臂"]
+
+
+
+["presence_runtime"]
+"project_directory" = "../src/nexus_deploy/vision/parcel"
+"python_executable" = "../.venv/bin/python"
+"weights" = "../models/vision/parcel/yolo26m-seg-final.pt"
+"rules" = "../src/nexus_deploy/vision/parcel/configs/g2_head.yaml"
+"device" = "0"
+"bind_host" = "10.42.1.77"
+"ingress_port" = 8776
+"control_api_url" = "http://10.42.1.77:21865"
+"detect_hz" = 10.0
+"startup_timeout_s" = 90.0
+
+
+["task_defaults"]
+"hardware_mode" = "execute"
+"inference_mode" = "rtc"
+# Initial form value only; saved runtime execution_fps takes precedence.
+"execution_fps" = 30
+"max_arm_velocity" = 3.76
+"max_arm_acceleration" = 8
+"arm_limit_profile" = "urdf-velocity-uniform-acceleration"
+"chunk_smoothing_mode" = "savgol"
+"action_interpolation" = "linear"
+"arm_tracking_mode" = "damped"
+"arm_tracking_omega" = 16.0
+
+["task_defaults"."safety"]
+"low_pass_filter_enabled" = false
+"effector_low_pass_filter_enabled" = false
+"workspace_safety_enabled" = true
+"safety_profile_id" = "G2_dahuan_standard_table_20260922_contact_refined_safety_execute_v2.json"
+
+
+
+["host"]
+"site_id" = "thor"
+"architecture" = "aarch64"
+"web_python" = "../.venv/bin/python"
+"control_host" = "10.42.1.77"
+"control_port" = 8765
+"telemetry_host" = "10.42.1.77"
+"telemetry_port" = 8768
+
+["models"."pi05"."effector_variants"."dahuan"."versions"."training_rtc_024000"]
+"display_name" = "Batch512_training RTC · step24000 _10/15"
+"description" = "Full fine-tune, global batch 512, Training RTC D=21 / H=50; execution horizon 29."
+"normalization_label" = "Step 24000 checkpoint embedded Quantiles"
+"rtc_execution_horizon" = 29
+"real_args" = ["--checkpoint=models/pi05/dahuan/training_rtc_024000/pretrained_model", "--rtc-inference-mode=trained", "--execution-horizon=29"]
+
+["models"."pi05"."effector_variants"."dahuan"."versions"."newdata_training_rtc_001000"]
+"display_name" = "Batch1024_training RTC · step1000 _10/16"
+"description" = "New-data-only fine-tune from original batch1024 step9500; additional 1000 updates. Training RTC D=21 / H=50; trained inference; execution horizon 29."
+"normalization_label" = "New-data FT step 1000 checkpoint embedded Quantiles"
+"rtc_execution_horizon" = 29
+"real_args" = ["--checkpoint=models/pi05/dahuan/newdata_training_rtc_001000/pretrained_model", "--rtc-inference-mode=trained", "--execution-horizon=29"]
+
+["models"."pi05"."effector_variants"."dahuan"."versions"."newdata_training_rtc_004500"]
+"display_name" = "Batch1024_training RTC · step4500 _10/16"
+"description" = "New-data-only fine-tune from original batch1024 step9500; additional 4500 updates. Training RTC D=21 / H=50; trained inference; execution horizon 29."
+"normalization_label" = "New-data FT step 4500 checkpoint embedded Quantiles"
+"rtc_execution_horizon" = 29
+"real_args" = ["--checkpoint=models/pi05/dahuan/newdata_training_rtc_004500/pretrained_model", "--rtc-inference-mode=trained", "--execution-horizon=29"]
+
+["models"."pi05"."effector_variants"."dahuan"."versions"."newdata_training_rtc_009500"]
+"display_name" = "Batch1024_training RTC · step9500 _10/16"
+"description" = "Training RTC D=21 / H=50; new-data-only fine-tune from original B1024 step9500."
+"normalization_label" = "newdata_training_rtc_009500 checkpoint embedded Quantiles"
+"rtc_execution_horizon" = 29
+"real_args" = ["--checkpoint=models/pi05/dahuan/newdata_training_rtc_009500/pretrained_model", "--rtc-inference-mode=trained", "--execution-horizon=29"]
+
+["models"."pi05"."effector_variants"."dahuan"."versions"."mix80new20old_training_rtc_004500"]
+"display_name" = "Batch960_training RTC · step4500 _10/17 (80%新+20%旧)"
+"description" = "Training RTC D=21 / H=50; 80% new + 20% old fine-tune from original B1024 step9500."
+"normalization_label" = "mix80new20old_training_rtc_004500 checkpoint embedded Quantiles"
+"rtc_execution_horizon" = 29
+"real_args" = ["--checkpoint=models/pi05/dahuan/mix80new20old_training_rtc_004500/pretrained_model", "--rtc-inference-mode=trained", "--execution-horizon=29"]
+
+
+["models"."pi05"."effector_variants"."dahuan"."versions"."newdata_training_rtc_003500"]
+"display_name" = "Batch1024_training RTC · step3500 _10/16"
+"description" = "New-data-only fine-tune from original batch1024 step9500; additional 3500 updates. Training RTC D=21 / H=50; trained inference; execution horizon 29."
+"normalization_label" = "New-data FT step 3500 checkpoint embedded Quantiles"
+"rtc_execution_horizon" = 29
+"real_args" = ["--checkpoint=models/pi05/dahuan/newdata_training_rtc_003500/pretrained_model", "--rtc-inference-mode=trained", "--execution-horizon=29"]

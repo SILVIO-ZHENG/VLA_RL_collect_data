@@ -1,0 +1,13 @@
+[Unit]
+Description=Nexus unique wired management address for gripper G2
+After=rhino_start.service
+Before=genie_app.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/nexus-g2-wired-management start
+ExecStop=/usr/local/sbin/nexus-g2-wired-management stop
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

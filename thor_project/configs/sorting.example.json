@@ -1,0 +1,12 @@
+{
+  "token_env": "G2A_SORTING_TOKEN",
+  "callback_url": null,
+  "callback_token_env": "G2A_CALLBACK_TOKEN",
+  "profiles": {
+    "parcel-sort": {
+      "robot_id": "g2a",
+      "model_id": "pi05",
+      "presence_gate": {"enabled": true}
+    }
+  }
+}

@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+readonly PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+readonly PAYLOAD_DIR="${PROJECT_ROOT}/scripts/robot-alignment"
+readonly REMOTE_STAGE="/home/agi/.cache/nexus-g2-alignment-agent"
+readonly REMOTE_CLIENT="/home/agi/deploy/g2a_robot_client"
+readonly ROBOT_HOST="${NEXUS_G2_HOST:-10.42.1.102}"
+readonly EXPECTED_AID="${NEXUS_G2_AID:-G2A0004C201260}"
+readonly IDENTITY_FILE="${NEXUS_G2_IDENTITY:-/home/luoxiaolong/.ssh/id_ed25519_g2_deploy}"
+
+ssh_g2() {
+  ssh -o User=agi -o IdentitiesOnly=yes -o HostKeyAlias=g2 \
+    -i "${IDENTITY_FILE}" "${ROBOT_HOST}" "$@"
+}
+
+scp_g2() {
+  scp -o User=agi -o IdentitiesOnly=yes -o HostKeyAlias=g2 \
+    -i "${IDENTITY_FILE}" "$@"
+}
+
+observed_aid="$(ssh_g2 "sed -n 's/^AID:[[:space:]]*//p' /data/version/aid_info.yaml")"
+if [[ "${observed_aid}" != "${EXPECTED_AID}" ]]; then
+  echo "Refusing install: expected AID ${EXPECTED_AID}, observed ${observed_aid:-unavailable}" >&2
+  exit 2
+fi
+
+ssh_g2 "mkdir -p '${REMOTE_STAGE}' '${REMOTE_CLIENT}'"
+scp_g2 \
+  "${PROJECT_ROOT}/src/nexus_deploy/alignment/robot_agent.py" \
+  "${PAYLOAD_DIR}/alignment-camera.json" \
+  "${PAYLOAD_DIR}/nexus-g2-alignment-agent.service" \
+  "${ROBOT_HOST}:${REMOTE_STAGE}/"
+ssh_g2 "install -m 0644 '${REMOTE_STAGE}/robot_agent.py' '${REMOTE_CLIENT}/alignment_agent.py'; \
+  install -m 0644 '${REMOTE_STAGE}/alignment-camera.json' '${REMOTE_CLIENT}/alignment-camera.json'"
+
+echo "The following remote command needs the G2 agi user's sudo password once."
+ssh -t -o User=agi -o IdentitiesOnly=yes -o HostKeyAlias=g2 \
+  -i "${IDENTITY_FILE}" "${ROBOT_HOST}" \
+  "set -eu; test \"\$(sed -n 's/^AID:[[:space:]]*//p' /data/version/aid_info.yaml)\" = '${EXPECTED_AID}'; \
+   tmux kill-session -t nexus_alignment_agent 2>/dev/null || true; \
+   for obsolete_path in /etc/systemd/system/*-g2-alignment-agent.service; do \
+     test -e \"\$obsolete_path\" || continue; \
+     obsolete_unit=\$(basename \"\$obsolete_path\"); \
+     test \"\$obsolete_unit\" = nexus-g2-alignment-agent.service && continue; \
+     sudo systemctl disable --now \"\$obsolete_unit\" || true; \
+     sudo rm -f -- \"\$obsolete_path\"; \
+   done; \
+   sudo install -o root -g root -m 0644 '${REMOTE_STAGE}/nexus-g2-alignment-agent.service' /etc/systemd/system/nexus-g2-alignment-agent.service; \
+   sudo systemctl daemon-reload; \
+   sudo systemctl enable --now nexus-g2-alignment-agent.service; \
+   sudo systemctl restart nexus-g2-alignment-agent.service"
+
+ssh_g2 "find /home/agi/.cache -mindepth 1 -maxdepth 1 -type d \
+  -name '*-g2-alignment-agent' ! -name 'nexus-g2-alignment-agent' -exec rm -rf -- {} +"
+
+health=""
+ready=0
+for _attempt in {1..20}; do
+  if health="$(curl --noproxy '*' --fail --silent --max-time 2 \
+    "http://${ROBOT_HOST}:8080/api/alignment/health")"; then
+    ready=1
+    break
+  fi
+  sleep 0.5
+done
+if [[ "${ready}" != 1 ]]; then
+  echo "Alignment agent did not become ready within 10 seconds." >&2
+  ssh_g2 "systemctl --no-pager --full status nexus-g2-alignment-agent.service; \
+    journalctl -u nexus-g2-alignment-agent.service -n 50 --no-pager" >&2 || true
+  exit 1
+fi
+
+printf '%s\n' "${health}"
+ssh_g2 "systemctl --no-pager --full status nexus-g2-alignment-agent.service | sed -n '1,14p'"

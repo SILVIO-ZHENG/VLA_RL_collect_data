@@ -1,0 +1,19 @@
+{
+  "profile": "g2_table_sorting_simulation",
+  "simulation_only": true,
+  "calibrated": false,
+  "deployable": false,
+  "work_surface": {
+    "frame": "base",
+    "height": 0.75,
+    "hard_margin": 0.01,
+    "xy_bounds": null
+  },
+  "guard": {
+    "enabled": true,
+    "path_samples": 2,
+    "deadline_ms": 8.0,
+    "max_consecutive_deadline_misses": 3,
+    "collision_response": "hold_previous_safe_action"
+  }
+}

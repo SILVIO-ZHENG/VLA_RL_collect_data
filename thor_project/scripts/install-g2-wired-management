@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+readonly PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+readonly PAYLOAD_DIR="${PROJECT_ROOT}/scripts/robot-network"
+readonly REMOTE_STAGE="/home/agi/.cache/nexus-g2-wired-management"
+readonly WIRELESS_HOST="192.168.110.237"
+readonly WIRED_HOST="10.42.1.102"
+readonly EXPECTED_AID="G2A0004C201260"
+readonly IDENTITY_FILE="/home/luoxiaolong/.ssh/id_ed25519_g2_deploy"
+
+ssh_wireless() {
+  ssh -B wlp68s0 -o User=agi -o IdentitiesOnly=yes -o HostKeyAlias=g2 \
+    -i "${IDENTITY_FILE}" "${WIRELESS_HOST}" "$@"
+}
+
+scp_wireless() {
+  scp -o BindInterface=wlp68s0 -o User=agi -o IdentitiesOnly=yes -o HostKeyAlias=g2 \
+    -i "${IDENTITY_FILE}" "$@"
+}
+
+observed_aid="$(ssh_wireless "sed -n 's/^AID:[[:space:]]*//p' /data/version/aid_info.yaml")"
+if [[ "${observed_aid}" != "${EXPECTED_AID}" ]]; then
+  echo "Refusing install: expected AID ${EXPECTED_AID}, observed ${observed_aid:-unavailable}" >&2
+  exit 2
+fi
+
+ssh_wireless "mkdir -p '${REMOTE_STAGE}'"
+ssh_wireless "chmod u+w '${REMOTE_STAGE}/nexus-network.sudoers' 2>/dev/null || true"
+scp_wireless \
+  "${PAYLOAD_DIR}/nexus-g2-wired-management" \
+  "${PAYLOAD_DIR}/nexus-g2-wired-management.service" \
+  "${PAYLOAD_DIR}/nexus-network.sudoers" \
+  "${WIRELESS_HOST}:${REMOTE_STAGE}/"
+ssh_wireless "chmod 0440 '${REMOTE_STAGE}/nexus-network.sudoers'"
+
+echo "The following remote command needs the G2 agi user's sudo password once."
+ssh -t -B wlp68s0 -o User=agi -o IdentitiesOnly=yes -o HostKeyAlias=g2 \
+  -i "${IDENTITY_FILE}" "${WIRELESS_HOST}" \
+  "set -eu; test \"\$(sed -n 's/^AID:[[:space:]]*//p' /data/version/aid_info.yaml)\" = '${EXPECTED_AID}'; \
+   sudo install -o root -g root -m 0755 '${REMOTE_STAGE}/nexus-g2-wired-management' /usr/local/sbin/nexus-g2-wired-management; \
+   sudo install -o root -g root -m 0644 '${REMOTE_STAGE}/nexus-g2-wired-management.service' /etc/systemd/system/nexus-g2-wired-management.service; \
+   sudo systemctl daemon-reload; \
+   sudo systemctl enable --now nexus-g2-wired-management.service; \
+   sudo systemctl restart nexus-g2-wired-management.service; \
+   sudo systemctl --no-pager --full status nexus-g2-wired-management.service; \
+   sudo rm -f /etc/sudoers.d/nexus-network"
+
+echo "Verifying the new wired address and hardware identity..."
+ssh -o BatchMode=yes -o ConnectTimeout=5 -o User=agi -o IdentitiesOnly=yes \
+  -o HostKeyAlias=g2 -i "${IDENTITY_FILE}" "${WIRED_HOST}" \
+  "test \"\$(sed -n 's/^AID:[[:space:]]*//p' /data/version/aid_info.yaml)\" = '${EXPECTED_AID}'; \
+   printf 'AID=%s wired=%s mac=%s\\n' \
+   \"\$(sed -n 's/^AID:[[:space:]]*//p' /data/version/aid_info.yaml)\" \
+   \"\$(ip -4 -o address show dev enp1s0 | awk '{print \$4}' | tr '\\n' ',')\" \
+   \"\$(cat /sys/class/net/enp1s0/address)\""
