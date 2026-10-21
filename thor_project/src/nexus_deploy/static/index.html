@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#f3f5f4" />
+    <title>Nexus</title>
+    <link rel="icon" type="image/png" href="./assets/anu-intelligent-logo.png" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./rtc-selector.css?v=20261016-rtc-selector" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="返回 Nexus 首页">
+          <img
+            class="brand-logo"
+            src="./assets/anu-intelligent-logo.png"
+            alt="安努智能"
+            width="158"
+            height="40"
+          />
+          <span class="brand-copy">
+            <strong>Nexus</strong>
+            <small>ROBOT DEPLOYMENT CONTROL</small>
+          </span>
+        </a>
+        <div class="topbar-meta">
+          <a class="button button--secondary button--small" href="./session.html">运行配置</a>
+          <a class="button button--secondary button--small" href="./">机器人控制台</a>
+          <a class="button button--secondary button--small" id="alignment-entry" href="#" target="_blank" rel="noopener" hidden>工位对齐 ↗</a>
+          <span class="project-chip">
+            <span class="project-chip__label">协议</span>
+            <strong id="project-protocol">正在载入…</strong>
+          </span>
+          <span class="connection-state is-loading" id="connection-state">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span>连接中</span>
+          </span>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <form class="configuration" id="deployment-form" novalidate>
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">NEW DEPLOYMENT</p>
+              <h1>模型部署</h1>
+              <p>先确认机器人和夹爪硬件，再选择兼容的模型与版本。加载完成后进入运行配置；日常状态与操作在机器人控制台。</p>
+            </div>
+          </div>
+
+          <section class="form-section" id="current-model-card" hidden aria-labelledby="current-model-title">
+            <div class="section-heading">
+              <span class="section-index">●</span>
+              <div><h2 id="current-model-title">当前模型服务</h2><p id="current-model-summary">正在读取当前部署…</p></div>
+            </div>
+            <div class="approval-actions">
+              <a class="button button--secondary" id="current-model-config" href="./session.html">查看运行配置</a>
+              <button class="button button--danger-subtle" id="current-model-close" type="button" disabled>关闭模型服务</button>
+            </div>
+          </section>
+
+          <div class="load-error" id="load-error" hidden role="alert">
+            <div>
+              <strong>无法载入部署配置</strong>
+              <p id="load-error-message">请检查控制服务后重试。</p>
+            </div>
+            <button class="button button--secondary button--small" id="retry-bootstrap" type="button">重新载入</button>
+          </div>
+
+          <div class="simulation-banner" id="simulation-banner" hidden role="status">
+            <span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 4.5 6v5.25c0 4.7 3.1 8.25 7.5 9.75 4.4-1.5 7.5-5.05 7.5-9.75V6L12 3Zm-3 9 2 2 4-4"/></svg></span>
+            <div><strong>安全预览模式</strong><p>当前控制服务未启用部署动作。页面只预览配置计划与审批流程，不会启动或连接运行目标。</p></div>
+          </div>
+
+          <section class="form-section" aria-labelledby="target-title">
+            <div class="section-heading">
+              <span class="section-index">01</span>
+              <div>
+                <h2 id="target-title">硬件与模型预选</h2>
+                <p>按机器人、夹爪、模型、版本的顺序选择，创建作业后冻结；任务和运行参数在模型加载后的控制台配置。</p>
+              </div>
+            </div>
+
+            <fieldset class="field-group">
+              <legend>
+                <span>机器人</span>
+                <span class="field-hint">单选</span>
+              </legend>
+              <div class="selection-grid" id="robot-options" aria-live="polite">
+                <div class="option-skeleton"></div>
+                <div class="option-skeleton"></div>
+              </div>
+              <p class="field-error" data-error-for="robot_id" hidden></p>
+            </fieldset>
+
+            <section class="robot-endpoint" id="robot-endpoint" aria-labelledby="robot-endpoint-title">
+              <div class="robot-endpoint__heading">
+                <div>
+                  <span class="field-hint">机器人实例</span>
+                  <strong id="robot-endpoint-title">配置部署地址</strong>
+                  <small>选择机器人型号后，填写本次部署目标的管理网络地址。</small>
+                </div>
+                <span class="endpoint-status is-idle" id="robot-endpoint-status"><span></span>未检测</span>
+              </div>
+              <div class="robot-endpoint__fields">
+                <label class="form-field" for="robot-host">
+                  <span>机器人 IP <b aria-label="必填">*</b></span>
+                  <input id="robot-host" name="robot_host" type="text" inputmode="decimal" autocomplete="off" list="robot-host-options" placeholder="例如：10.42.1.101" />
+                  <datalist id="robot-host-options"></datalist>
+                  <span class="field-error" data-error-for="robot_host" hidden></span>
+                </label>
+                <label class="form-field" for="robot-ssh-port">
+                  <span>SSH 端口</span>
+                  <input id="robot-ssh-port" name="robot_ssh_port" type="number" min="1" max="65535" step="1" value="22" />
+                  <span class="field-error" data-error-for="robot_ssh_port" hidden></span>
+                </label>
+                <div class="endpoint-action">
+                  <span>实例检查</span>
+                  <button class="button button--secondary endpoint-check" id="check-robot-endpoint" type="button">
+                    <span class="button-label">检测实例</span>
+                    <span class="button-spinner" aria-hidden="true"></span>
+                  </button>
+                </div>
+              </div>
+              <p class="robot-endpoint__note" id="robot-endpoint-note">默认使用已配置的最高优先级地址；依次检测网络、SSH 身份、客户端部署状态和客户端进程。</p>
+              <div class="occupied-session-notice" id="occupied-session-notice" hidden>
+                <div>
+                  <strong>机器人已有运行会话</strong>
+                  <span id="occupied-session-summary">请确认是否为其他操作员正在使用的任务。</span>
+                </div>
+                <button class="button button--danger-subtle" id="open-session-cleanup" type="button">处理占用会话</button>
+              </div>
+            </section>
+
+            <fieldset class="field-group">
+              <legend>
+                <span>夹爪类型</span>
+                <span class="field-hint">由实际硬件决定</span>
+              </legend>
+              <div class="selection-grid selection-grid--compact" id="effector-profile-options" aria-live="polite">
+                <div class="option-skeleton"></div>
+                <div class="option-skeleton"></div>
+              </div>
+              <p class="field-help">平台会据此筛选模型，并绑定对应归一化、行程、开合方向和安全阈值。</p>
+              <p class="field-error" data-error-for="effector_profile" hidden></p>
+            </fieldset>
+
+            <fieldset class="field-group">
+              <legend>
+                <span>策略模型</span>
+                <span class="field-hint">单选</span>
+              </legend>
+              <div class="selection-grid" id="model-options" aria-live="polite">
+                <div class="option-skeleton"></div>
+                <div class="option-skeleton"></div>
+              </div>
+              <p class="field-error" data-error-for="model_id" hidden></p>
+            </fieldset>
+
+            <label class="form-field form-field--full" for="model-version">
+              <span>模型版本 <b aria-label="必填">*</b></span>
+              <select id="model-version" name="model_version" required>
+                <option value="">请先选择兼容的模型</option>
+              </select>
+              <span class="field-help" id="model-version-description">版本来自部署清单白名单，任务创建后不可修改。</span>
+              <span class="field-error" data-error-for="model_version" hidden></span>
+            </label>
+          </section>
+
+          <section class="form-section preload-section" aria-labelledby="task-title">
+            <div class="section-heading">
+              <span class="section-index">02</span>
+              <div>
+                <h2 id="task-title">模型启动方式</h2>
+                <p>这是模型加载前配置。模型与服务策略在当前作业创建后不可修改；模型准备阶段只读，运行页默认建议 RTC 30 Hz 真机并要求保存安全配置。</p>
+              </div>
+            </div>
+
+            <label class="form-field form-field--full" for="task-input" hidden>
+              <span class="field-label-row">
+                <span>任务指令 <b aria-label="必填">*</b></span>
+                <span class="character-count"><span id="task-count">0</span> / <span id="task-limit">4096</span></span>
+              </span>
+              <textarea
+                id="task-input"
+                name="task"
+                rows="4"
+                maxlength="4096"
+                placeholder="Pick a package from the box with the left gripper and place it on the table."
+                required
+              ></textarea>
+              <span class="field-help">使用简洁、可观察且无歧义的动作描述。</span>
+              <span class="field-error" data-error-for="task" hidden></span>
+            </label>
+
+            <fieldset class="field-group" hidden>
+              <legend>
+                <span>推理模式</span>
+                <span class="field-hint" id="mode-support-hint">选择模型后显示能力</span>
+              </legend>
+              <div class="mode-grid" id="inference-mode-options">
+                <label class="mode-card" data-mode-card="sync">
+                  <input type="radio" name="inference_mode" value="sync" />
+                  <span class="mode-card__check" aria-hidden="true"></span>
+                  <strong>同步</strong>
+                  <small>当前动作块结束后请求下一块，稳定但可能产生停顿。</small>
+                  <span class="mode-card__tag">SYNC</span>
+                </label>
+                <label class="mode-card" data-mode-card="async">
+                  <input type="radio" name="inference_mode" value="async" />
+                  <span class="mode-card__check" aria-hidden="true"></span>
+                  <strong>异步</strong>
+                  <small>执行与推理并行，适合大多数持续控制任务。</small>
+                  <span class="mode-card__tag">ASYNC</span>
+                </label>
+                <label class="mode-card" data-mode-card="rtc-trained">
+                  <input type="radio" name="inference_mode" value="rtc-trained" />
+                  <span class="mode-card__check" aria-hidden="true"></span>
+                  <strong>Trained RTC</strong>
+                  <small>使用权重训练时学到的动作前缀衔接，需要 Training RTC 权重。</small>
+                  <span class="mode-card__tag">TRAINED</span>
+                </label>
+                <label class="mode-card" data-mode-card="rtc-guided">
+                  <input type="radio" name="inference_mode" value="rtc-guided" checked />
+                  <span class="mode-card__check" aria-hidden="true"></span>
+                  <strong>Inference RTC</strong>
+                  <small>在推理时引导新旧动作块衔接，也可用于普通权重。</small>
+                  <span class="mode-card__tag">INFERENCE</span>
+                </label>
+              </div>
+              <p class="field-error" data-error-for="inference_mode" hidden></p>
+            </fieldset>
+
+            <section class="resource-panel" aria-label="模型服务与计算资源">
+              <fieldset class="resource-panel__service">
+                <legend><span>模型服务</span></legend>
+                <div class="segmented-control segmented-control--three">
+                  <label>
+                    <input type="radio" name="server_mode" value="reuse" checked />
+                    <span>使用已运行服务<small>跳过权重加载</small></span>
+                  </label>
+                  <label>
+                    <input type="radio" name="server_mode" value="mock" />
+                    <span>Mock 测试<small>仅验证通信链路</small></span>
+                  </label>
+                  <label>
+                    <input type="radio" name="server_mode" value="real" />
+                    <span>启动模型<small>加载真实权重</small></span>
+                  </label>
+                </div>
+                <p class="field-help">复用要求所选模型是平台受管的健康进程。Mock 不加载真实权重，仅用于测试服务启动、协议握手和只读数据链路，不能代表模型推理效果。结束任务不会停止模型服务。</p>
+              </fieldset>
+
+              <div class="resource-panel__compute gpu-field" id="gpu-field" role="group" aria-labelledby="compute-resource-title">
+                <div class="resource-panel__subheading">
+                  <div>
+                    <strong id="compute-resource-title">计算资源</strong>
+                    <small id="compute-resource-note">启动真实模型时选择计算资源；复用与 Mock 将自动沿用对应资源。</small>
+                  </div>
+                <button class="button button--secondary button--small" id="refresh-gpus" type="button">刷新 GPU</button>
+                </div>
+                <div class="resource-mode-summary" id="thor-fixed-gpu" hidden><span class="resource-mode-summary__icon" aria-hidden="true"></span><div><strong>Thor · GPU 0</strong><small>Thor 唯一计算卡；启动真实 PI0.5 时固定使用 cuda:0。</small></div></div>
+                  <div id="gpu-controls">
+                  <label class="form-field" for="gpu-select">
+                    <span>模型加载 GPU</span>
+                    <select id="gpu-select" name="gpu_id">
+                      <option value="auto">自动选择空闲 GPU</option>
+                    </select>
+                    <small id="gpu-selection-help">启动真实模型时重新检测，并优先选择无计算进程、空闲显存充足的卡。</small>
+                  </label>
+                  <div class="gpu-grid" id="gpu-grid" role="radiogroup" aria-label="模型加载 GPU" aria-live="polite"></div>
+                </div>
+                <div class="resource-mode-summary" id="resource-mode-summary" hidden>
+                  <span class="resource-mode-summary__icon" aria-hidden="true"></span>
+                  <div>
+                    <strong id="resource-mode-summary-title">自动分配资源</strong>
+                    <small id="resource-mode-summary-note">所选服务方式不需要配置 GPU。</small>
+                  </div>
+                </div>
+                <p class="field-error" data-error-for="gpu_id" hidden></p>
+              </div>
+            </section>
+
+            <div class="hitl-card hitl-card--compact" id="hitl-card" hidden>
+              <div class="hitl-card__copy">
+                <div class="switch-title">
+                  <div>
+                    <strong>人在环路（VR 接管、回退与逐包采集）</strong>
+                    <span>真机运行时启用 VR 接管、X 键回退与平板录制封存；需已批准的工作区安全配置。</span>
+                  </div>
+                  <label class="switch" aria-label="记录人在环路选项">
+                    <input id="human-in-loop" type="checkbox" />
+                    <span aria-hidden="true"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="form-section" aria-labelledby="parameter-title" hidden>
+            <div class="section-heading">
+              <span class="section-index">03</span>
+              <div>
+                <h2 id="parameter-title">运行参数</h2>
+                <p>默认值来自部署服务，可按任务需要调整。</p>
+              </div>
+              <button class="text-button" id="reset-parameters" type="button">恢复默认</button>
+            </div>
+
+            <div class="parameter-grid parameter-grid--primary">
+              <label class="form-field" for="duration-s">
+                <span>运行时长</span>
+                <span class="number-input"><input id="duration-s" data-config-key="duration_s" type="number" min="0" step="1" /><em id="duration-unit">秒</em></span>
+                <small>0 表示一直执行，直至手动暂停或结束任务。</small>
+              </label>
+              <label class="form-field" for="execution-fps">
+                <span>动作执行频率</span>
+                <span class="number-input"><input id="execution-fps" data-config-key="execution_fps" type="number" min="0.1" step="0.1" /><em>FPS</em></span>
+                <small>客户端消费策略动作的频率。</small>
+              </label>
+              <label class="form-field" for="servo-fps">
+                <span>伺服频率</span>
+                <span class="number-input"><input id="servo-fps" data-config-key="servo_fps" type="number" min="0.1" step="1" /><em>Hz</em></span>
+                <small>机器人底层控制命令频率。</small>
+              </label>
+              <label class="form-field" for="watchdog-timeout-s">
+                <span>看门狗超时</span>
+                <span class="number-input"><input id="watchdog-timeout-s" data-config-key="watchdog_timeout_s" type="number" min="0.1" step="0.1" /><em>秒</em></span>
+                <small>无有效推理响应后进入保持。</small>
+              </label>
+              <label class="form-field" for="prediction-horizon">
+                <span>预测步长</span>
+                <span class="number-input"><input id="prediction-horizon" data-config-key="prediction_horizon" type="number" min="1" step="1" /><em>步</em></span>
+                <small>必须与服务端动作块长度一致。</small>
+              </label>
+              <label class="form-field" for="quality-horizon">
+                <span>可信执行步长</span>
+                <span class="number-input"><input id="quality-horizon" data-config-key="quality_horizon" type="number" min="1" step="1" /><em>步</em></span>
+                <small>不可大于预测步长。</small>
+              </label>
+            </div>
+            <div class="mode-parameter-panel" id="mode-parameter-panel">
+              <div class="mode-parameter-panel__heading">
+                <span class="mode-pill" id="active-mode-pill">ASYNC</span>
+                <span><strong id="mode-parameter-title">异步模式参数</strong><small id="mode-parameter-description">配置提前请求、重规划与延迟统计窗口。</small></span>
+              </div>
+              <div class="parameter-grid mode-parameter-grid">
+                <label class="form-field" data-modes="async rtc" for="min-replan-after-steps">
+                  <span>最小重规划间隔</span>
+                  <span class="number-input"><input id="min-replan-after-steps" data-config-key="min_replan_after_steps" type="number" min="1" step="1" /><em>步</em></span>
+                  <small>执行至少这些步后才接纳新动作块。</small>
+                </label>
+                <label class="form-field" data-modes="async rtc" for="request-lead-margin-steps">
+                  <span>请求提前余量</span>
+                  <span class="number-input"><input id="request-lead-margin-steps" data-config-key="request_lead_margin_steps" type="number" min="0" step="1" /><em>步</em></span>
+                  <small>在动作块耗尽前提前发起下一次请求。</small>
+                </label>
+                <label class="form-field" data-modes="async rtc" for="latency-window-size">
+                  <span>延迟统计窗口</span>
+                  <span class="number-input"><input id="latency-window-size" data-config-key="latency_window_size" type="number" min="1" step="1" /><em>次</em></span>
+                  <small>用于估算请求提前量的最近样本数。</small>
+                </label>
+                <label class="form-field" data-modes="rtc" for="min-rtc-blend-steps">
+                  <span>RTC 最小融合步数</span>
+                  <span class="number-input"><input id="min-rtc-blend-steps" data-config-key="min_rtc_blend_steps" type="number" min="0" step="1" /><em>步</em></span>
+                  <small>不足时安全退化为普通异步请求。</small>
+                </label>
+                <label class="form-field" data-modes="sync async rtc" for="request-timeout-s">
+                  <span>单次请求超时</span>
+                  <span class="number-input"><input id="request-timeout-s" data-config-key="request_timeout_s" type="number" min="0.1" step="0.5" /><em>秒</em></span>
+                  <small>同步模式下直接决定等待上限。</small>
+                </label>
+                <label class="form-field" data-modes="sync" for="sync-preflight-requests">
+                  <span>同步预热请求</span>
+                  <span class="number-input"><input id="sync-preflight-requests" data-config-key="warmup_requests" type="number" min="0" step="1" /><em>次</em></span>
+                  <small>开始逐块请求前完成的模型预热次数。</small>
+                </label>
+              </div>
+            </div>
+            <div class="section-errors" id="parameter-errors" aria-live="polite"></div>
+
+            <details class="advanced-panel" id="advanced-parameters">
+              <summary>
+                <span>
+                  <strong>高级参数</strong>
+                  <small>重规划、滤波、运动与跟踪阈值</small>
+                </span>
+                <span class="summary-chevron" aria-hidden="true"></span>
+              </summary>
+              <div class="advanced-panel__body">
+                <div class="subsection-heading">
+                  <strong>重规划与预检</strong>
+                  <span>影响请求时机和 RTC 连续性</span>
+                </div>
+                <div class="parameter-grid">
+                  <label class="form-field" data-modes="async rtc" for="execution-preflight-requests">
+                    <span>执行预检请求</span>
+                    <span class="number-input"><input id="execution-preflight-requests" data-config-key="execution_preflight_requests" type="number" min="0" step="1" /><em>次</em></span>
+                  </label>
+                </div>
+
+                <div class="subsection-heading">
+                  <strong>动作滤波</strong>
+                  <span>截止频率必须低于伺服频率的一半</span>
+                </div>
+                <div class="parameter-grid">
+                  <label class="form-field" for="chunk-smoothing-mode">
+                    <span>轨迹平滑方案</span>
+                    <select id="chunk-smoothing-mode" data-config-key="chunk_smoothing_mode">
+                      <option value="savgol">7 点 Savitzky–Golay 平滑（默认）</option>
+                      <option value="adaptive-fixed-time">固定时间轴自适应平滑（实验）</option>
+                    </select>
+                    <small>两种方案互斥，只会启用所选的一种；均不改变 30 Hz 动作时间轴，夹爪不参与普通平滑。</small>
+                  </label>
+                  <label class="form-field" for="action-interpolation">
+                    <span>100 Hz 插值方式</span>
+                    <select id="action-interpolation" data-config-key="action_interpolation">
+                      <option value="linear">线性插值（默认）</option>
+                      <option value="monotone-cubic">单调三次插值（实验，可选真机）</option>
+                    </select>
+                    <small>实验插值保持 30 Hz 节点和夹爪目标时序；旧版 004500 离线对比未改善跟踪，加速度超限比例可能更高。默认仍用线性插值。</small>
+                  </label>
+                  <label class="form-field" for="arm-tracking-mode"><span>手臂跟踪方式</span>
+                    <select id="arm-tracking-mode" data-config-key="arm_tracking_mode"><option value="legacy">原跟踪</option><option value="damped">阻尼跟踪（默认）</option></select></label>
+                  <label class="form-field" for="arm-tracking-omega"><span>手臂阻尼参数</span>
+                    <span class="number-input"><input id="arm-tracking-omega" data-config-key="arm_tracking_omega" type="number" min="0.1" step="1" /><em>rad/s</em></span><small>仅用于阻尼跟踪；数值越小越平顺，跟踪滞后可能增加。</small></label>
+                  <label class="form-field" for="rtc-prefix-mode"><span>RTC 前缀测试</span>
+                    <select id="rtc-prefix-mode" data-config-key="rtc_prefix_mode"><option value="model">当前模型尾部（默认）</option><option value="command-shadow">记录执行前缀作比对</option><option value="command">执行前缀推理（仅只读）</option></select></label>
+                  <label class="form-field" for="effector-control-mode">
+                    <span>夹爪目标处理</span>
+                    <select id="effector-control-mode" data-config-key="effector_control_mode">
+                      <option value="device-position">大寰持续位置目标（碰撞按实测开度检查）</option>
+                      <option value="software-trajectory">软件微步轨迹（旧版）</option>
+                    </select>
+                    <small>位置模式按模型帧保持开度目标，100 Hz 重复下发；末端低通与软件速度/加速度参数不参与该模式。手臂限制、夹爪限位及跟踪保护保留。</small>
+                  </label>
+                  <label class="form-field" for="action-low-pass-cutoff-hz">
+                    <span>手臂低通截止</span>
+                    <span class="number-input"><input id="action-low-pass-cutoff-hz" data-config-key="action_low_pass_cutoff_hz" type="number" min="0.01" step="0.1" /><em>Hz</em></span>
+                    <small>真机默认仍为已验证的 4 Hz；新的chunk轨迹重建先在只读模式验收，通过后再切换真机。</small>
+                  </label>
+                  <label class="form-field" for="effector-action-low-pass-cutoff-hz">
+                    <span>末端低通截止</span>
+                    <span class="number-input"><input id="effector-action-low-pass-cutoff-hz" data-config-key="effector_action_low_pass_cutoff_hz" type="number" min="0.01" step="0.1" /><em>Hz</em></span>
+                  </label>
+                </div>
+
+                <div class="subsection-heading">
+                  <strong>运动限制</strong>
+                  <span>最终下发前的速度与加速度上限</span>
+                </div>
+                <div class="parameter-grid">
+                  <label class="form-field" for="arm-limit-profile">
+                    <span>手臂动态限制配置</span>
+                    <select id="arm-limit-profile" data-config-key="arm_limit_profile">
+                      <option value="urdf-velocity-uniform-acceleration">当前 URDF 逐关节速度 + 统一加速度（默认）</option>
+                      <option value="urdf-velocity-only">当前 URDF 逐关节限速，不限制手臂软件加速度（实验）</option>
+                      <option value="uniform">统一速度与加速度（按下方数值）</option>
+                      <option value="dataset-v30">训练数据 P95 逐关节限制</option>
+                      <option value="dataset-v30-p99-margin">训练数据 P99×1.1 逐关节限制</option>
+                      <option value="urdf-velocity-p99-acceleration">旧版 π 速度 + 数据 P99 加速度（回退）</option>
+                    </select>
+                    <small>默认从安全配置绑定的 URDF 读取各关节速度（当前为 3.05 / 3.76 / 3.35 rad/s），加速度统一为 8 rad/s²。实验“仅限速”模式不约束手臂软件加速度，可能产生目标突变；下方加速度值仍是安全停车的假设参数。URDF 未声明加速度。</small>
+                  </label>
+                  <label class="form-field" for="max-arm-velocity">
+                    <span>手臂全局速度上限</span>
+                    <span class="number-input"><input id="max-arm-velocity" data-config-key="max_arm_velocity" type="number" min="0.01" step="0.1" /><em>rad/s</em></span>
+                  </label>
+                  <label class="form-field" for="max-arm-acceleration">
+                    <span>手臂加速度参数</span>
+                    <span class="number-input"><input id="max-arm-acceleration" data-config-key="max_arm_acceleration" type="number" min="0.01" step="0.1" /><em>rad/s²</em></span>
+                    <small>默认模式用于软件限幅；仅限速模式不限制正常手臂动作，此值只保留作可选安全停车计算的假设。</small>
+                  </label>
+                  <label class="form-field" for="max-effector-velocity">
+                    <span>末端最大速度</span>
+                    <span class="number-input"><input id="max-effector-velocity" data-config-key="max_effector_velocity" type="number" min="0.001" step="0.01" /><em>m/s</em></span>
+                  </label>
+                  <label class="form-field" for="max-effector-acceleration">
+                    <span>末端最大加速度</span>
+                    <span class="number-input"><input id="max-effector-acceleration" data-config-key="max_effector_acceleration" type="number" min="0.01" step="0.05" /><em>m/s²</em></span>
+                  </label>
+                  <label class="form-field" for="max-head-waist-velocity">
+                    <span>头腰最大速度</span>
+                    <span class="number-input"><input id="max-head-waist-velocity" data-config-key="max_head_waist_velocity" type="number" min="0.01" step="0.1" /><em>rad/s</em></span>
+                  </label>
+                  <label class="form-field" for="max-head-waist-acceleration">
+                    <span>头腰最大加速度</span>
+                    <span class="number-input"><input id="max-head-waist-acceleration" data-config-key="max_head_waist_acceleration" type="number" min="0.01" step="0.1" /><em>rad/s²</em></span>
+                  </label>
+                </div>
+
+                <div class="subsection-heading">
+                  <strong>跟踪误差</strong>
+                  <span>命令与反馈偏差超过阈值时停止任务</span>
+                </div>
+                <div class="parameter-grid">
+                  <label class="form-field" for="max-arm-tracking-error">
+                    <span>手臂误差阈值</span>
+                    <span class="number-input"><input id="max-arm-tracking-error" data-config-key="max_arm_tracking_error" type="number" min="0.001" step="0.1" /><em>rad</em></span>
+                  </label>
+                  <label class="form-field" for="max-effector-tracking-error">
+                    <span>末端误差阈值</span>
+                    <span class="number-input"><input id="max-effector-tracking-error" data-config-key="max_effector_tracking_error" type="number" min="0.001" step="0.005" /><em>m</em></span>
+                  </label>
+                  <label class="form-field" for="max-head-waist-tracking-error">
+                    <span>头腰误差阈值</span>
+                    <span class="number-input"><input id="max-head-waist-tracking-error" data-config-key="max_head_waist_tracking_error" type="number" min="0.001" step="0.1" /><em>rad</em></span>
+                  </label>
+                </div>
+              </div>
+            </details>
+          </section>
+
+          <section class="form-section" aria-labelledby="safety-title" hidden>
+            <div class="section-heading">
+              <span class="section-index">04</span>
+              <div>
+                <h2 id="safety-title">安全策略</h2>
+                <p>核心安全防护在当前部署协议中强制开启。</p>
+              </div>
+              <span class="required-badge">3 项强制</span>
+            </div>
+
+            <div class="safety-list">
+              <div class="safety-item safety-item--locked">
+                <span class="safety-item__icon"><svg viewBox="0 0 24 24"><path d="M12 3 4.5 6v5.25c0 4.7 3.1 8.25 7.5 9.75 4.4-1.5 7.5-5.05 7.5-9.75V6L12 3Zm-3 9 2 2 4-4"/></svg></span>
+                <span><strong>通信看门狗</strong><small>推理超时后立即进入动作保持。</small></span>
+                <label class="switch switch--locked"><input type="checkbox" data-safety-key="watchdog_enabled" checked disabled /><span></span></label>
+              </div>
+              <div class="safety-item safety-item--locked">
+                <span class="safety-item__icon"><svg viewBox="0 0 24 24"><path d="M5 18 9 6h6l4 12M7 13h10M9 18h6"/></svg></span>
+                <span><strong>运动学限制</strong><small>限制关节位置、速度与加速度。</small></span>
+                <label class="switch switch--locked"><input type="checkbox" data-safety-key="kinematic_limits_enabled" checked disabled /><span></span></label>
+              </div>
+              <div class="safety-item safety-item--locked">
+                <span class="safety-item__icon"><svg viewBox="0 0 24 24"><path d="M4 17h3l2.25-8 3.5 10L15 12l1.5 5H20"/></svg></span>
+                <span><strong>跟踪误差保护</strong><small>连续偏差超过阈值时中止下发。</small></span>
+                <label class="switch switch--locked"><input type="checkbox" data-safety-key="tracking_error_enabled" checked disabled /><span></span></label>
+              </div>
+              <div class="safety-item">
+                <span class="safety-item__icon"><svg viewBox="0 0 24 24"><path d="M4 12h3l2-5 3 10 2.5-7 2 4H20"/></svg></span>
+                <span><strong>手臂低通滤波（可选）</strong><small>默认使用连续轨迹规划；需要时再启用低通。</small></span>
+                <label class="switch"><input type="checkbox" data-safety-key="low_pass_filter_enabled" /><span></span></label>
+              </div>
+              <div class="safety-item">
+                <span class="safety-item__icon"><svg viewBox="0 0 24 24"><path d="M5 8h4v8H5m10-8h4v8h-4M9 12h6"/></svg></span>
+                <span><strong>末端低通滤波（可选）</strong><small>默认保留夹爪事件时序，仅按需启用。</small></span>
+                <label class="switch"><input type="checkbox" data-safety-key="effector_low_pass_filter_enabled" /><span></span></label>
+              </div>
+              <div class="safety-item">
+                <span class="safety-item__icon"><svg viewBox="0 0 24 24"><path d="M7 11V7a1.5 1.5 0 0 1 3 0v3-5a1.5 1.5 0 0 1 3 0v5-3a1.5 1.5 0 0 1 3 0v4-2a1.5 1.5 0 0 1 3 0v4.5A6.5 6.5 0 0 1 12.5 20H11a6 6 0 0 1-4.8-2.4L4 14.7A1.5 1.5 0 0 1 6.3 13L8 14"/></svg></span>
+                <span><strong>保持末端执行器</strong><small>夹爪保持启动时测得的位置。</small></span>
+                <label class="switch"><input type="checkbox" data-safety-key="hold_effectors" /><span></span></label>
+              </div>
+              <div class="safety-item safety-item--workspace" id="workspace-safety-item">
+                <span class="safety-item__icon"><svg viewBox="0 0 24 24"><path d="M4 16h16M6 16v4m12-4v4M8 12l4-8 4 8"/></svg></span>
+                <span>
+                  <strong>碰撞危险拦截</strong>
+                  <small id="workspace-safety-help">已选择 G2 默认工作区检测配置。</small>
+                </span>
+                <label class="switch"><input id="workspace-safety-enabled" type="checkbox" data-safety-key="workspace_safety_enabled" checked disabled /><span></span></label>
+                <label class="profile-select" id="profile-select-wrap">
+                  <span>检测配置</span>
+                  <select id="safety-profile" disabled><option value="__display_default__">G2 桌面工作区（默认）</option></select>
+                </label>
+              </div>
+            </div>
+            <p class="field-error" data-error-for="safety.safety_profile_id" hidden></p>
+          </section>
+
+          <section class="postload-config-notice" aria-label="下一步运行配置">
+            <span class="postload-config-notice__step">下一步</span>
+            <div>
+              <strong>模型就绪后配置运行安全</strong>
+              <p>硬件访问、碰撞检测配置、危险拦截、人在环路和动作滤波统一在运行页面设置。未完成运行预检时，平台不会开始机器人任务。</p>
+            </div>
+          </section>
+
+          <div class="mobile-submit">
+            <button class="button button--primary" type="submit" data-submit-deployment disabled>
+              <span class="button-label">准备模型服务</span>
+              <span class="button-spinner" aria-hidden="true"></span>
+            </button>
+          </div>
+        </form>
+
+        <aside class="summary-column" aria-label="部署摘要">
+          <div class="summary-sticky">
+            <section class="summary-card">
+              <div class="summary-card__heading">
+                <div>
+                  <p class="eyebrow">MODEL PREPARATION</p>
+                  <h2>模型准备摘要</h2>
+                </div>
+                <span class="summary-status is-draft" id="summary-status">待配置</span>
+              </div>
+
+              <div class="route-preview" aria-label="部署链路">
+                <div class="route-node">
+                  <span class="route-node__icon route-node__icon--robot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 6V4m8 2V4M6 9h12v9H6zM4 12H2m20 0h-2M9 13h.01M15 13h.01M9 17h6"/></svg></span>
+                  <span><small>机器人</small><strong id="summary-robot">未选择</strong></span>
+                </div>
+                <span class="route-line"><i></i></span>
+                <div class="route-node">
+                  <span class="route-node__icon route-node__icon--model" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 3h8v4H8zM5 9h14v11H5zM9 13h2m2 0h2m-6 4h6"/></svg></span>
+                  <span><small>策略模型</small><strong id="summary-model">未选择</strong></span>
+                </div>
+              </div>
+
+              <dl class="summary-list">
+                <div><dt>机器人地址</dt><dd id="summary-endpoint">—</dd></div>
+                <div><dt>末端执行器</dt><dd id="summary-effector">—</dd></div>
+                <div><dt>模型版本</dt><dd id="summary-version">—</dd></div>
+                <div><dt>模型归一化</dt><dd id="summary-normalization">—</dd></div>
+                <div hidden><dt>任务</dt><dd id="summary-task">尚未填写</dd></div>
+                <div hidden><dt>推理模式</dt><dd id="summary-inference">异步</dd></div>
+                <div hidden><dt>硬件访问</dt><dd id="summary-hardware">只读观测</dd></div>
+                <div><dt>模型服务</dt><dd id="summary-server">使用已运行服务</dd></div>
+                <div><dt>计算资源</dt><dd id="summary-gpu">自动选择</dd></div>
+                <div hidden><dt>人在环路</dt><dd id="summary-hitl">关闭</dd></div>
+                <div hidden><dt>运行时长</dt><dd id="summary-duration">—</dd></div>
+              </dl>
+
+              <div class="summary-divider" hidden></div>
+              <div class="summary-metrics" hidden>
+                <div><span>执行 / 伺服</span><strong id="summary-fps">—</strong></div>
+                <div><span>预测 / 可信</span><strong id="summary-horizon">—</strong></div>
+                <div><span>安全策略</span><strong id="summary-safety">—</strong></div>
+              </div>
+
+              <details class="changes-panel" id="changes-panel" hidden>
+                <summary><span>已修改参数</span><strong id="changed-count">0</strong></summary>
+                <ul id="changes-list"><li>当前使用全部默认值</li></ul>
+              </details>
+            </section>
+
+            <section class="validation-card" id="validation-card" aria-live="polite">
+              <div class="validation-heading">
+                <span class="validation-icon" id="validation-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M12 8v5m0 3h.01M4.9 19h14.2a1.5 1.5 0 0 0 1.3-2.25L13.3 4.5a1.5 1.5 0 0 0-2.6 0L3.6 16.75A1.5 1.5 0 0 0 4.9 19Z"/></svg>
+                </span>
+                <span><strong id="validation-title">等待配置</strong><small id="validation-subtitle">选择机器人和模型后开始检查</small></span>
+              </div>
+              <ul class="validation-messages" id="validation-messages"></ul>
+              <div class="server-summary" id="server-summary" hidden></div>
+            </section>
+
+            <section class="job-card" id="job-card" hidden aria-live="polite">
+              <div class="job-heading">
+                <div>
+                  <p class="eyebrow">ACTIVE JOB</p>
+                  <h2>模型部署与任务会话</h2>
+                </div>
+                <span class="job-status" id="job-status">准备中</span>
+              </div>
+              <div class="job-id-row"><span>任务 ID</span><code id="job-id">—</code></div>
+              <div class="runtime-phase-card runtime-phase-card--model">
+                <div class="runtime-phase-heading">
+                  <span><small>01</small><strong>模型服务</strong></span>
+                  <span class="runtime-status" id="model-service-status">等待检查</span>
+                </div>
+                <dl class="runtime-metrics">
+                  <div><dt>服务策略</dt><dd id="model-service-strategy">—</dd></div>
+                  <div><dt>当前阶段</dt><dd id="model-service-phase">等待检查</dd></div>
+                  <div><dt>已用 / 超时</dt><dd><span id="model-service-elapsed">0 秒</span> / <span id="model-service-timeout">—</span></dd></div>
+                  <div><dt>GPU / 端口</dt><dd id="model-service-target">—</dd></div>
+                </dl>
+                <progress class="progress-track" id="job-progress" max="100" value="4" aria-label="模型加载进度"></progress>
+                <ol class="job-stages" id="job-stages"></ol>
+                <div class="model-log-line"><span>最近日志</span><code id="model-last-log">等待模型服务检查</code></div>
+              </div>
+              <div class="runtime-phase-card runtime-phase-card--task">
+                <div class="runtime-phase-heading">
+                  <span><small>02</small><strong>机器人任务</strong></span>
+                  <span class="runtime-status" id="task-session-status">尚未开始</span>
+                </div>
+                <p class="task-session-note" id="task-session-note">模型服务就绪后，前往机器人控制台操作任务。</p>
+                <a class="button button--secondary button--small" id="job-console-link" href="./monitor">在机器人控制台查看任务</a>
+              </div>
+              <p class="job-message" id="job-message"></p>
+              <details class="job-events" id="job-events-wrap" hidden>
+                <summary>查看详细运行记录</summary>
+                <ul id="job-events"></ul>
+              </details>
+            </section>
+
+            <div class="action-panel">
+              <button class="button button--secondary" id="validate-button" type="button" disabled>
+                <span class="button-label">验证配置</span>
+                <span class="button-spinner" aria-hidden="true"></span>
+              </button>
+              <button class="button button--primary" type="submit" form="deployment-form" data-submit-deployment disabled>
+                <span class="button-label">准备模型服务</span>
+                <span class="button-spinner" aria-hidden="true"></span>
+              </button>
+              <p id="action-scope-note"><svg aria-hidden="true" viewBox="0 0 20 20"><path d="M10 2.5 4 5v4.2c0 3.75 2.5 6.6 6 7.8 3.5-1.2 6-4.05 6-7.8V5l-6-2.5Z"/></svg><span>这里只准备模型服务；任务启动与控制在机器人控制台。</span></p>
+            </div>
+          </div>
+        </aside>
+      </main>
+    </div>
+
+    <dialog class="session-cleanup-dialog" id="session-cleanup-dialog" aria-labelledby="session-cleanup-title">
+      <div class="session-cleanup-dialog__header">
+        <span class="session-cleanup-dialog__icon" aria-hidden="true">!</span>
+        <div>
+          <p class="eyebrow">OCCUPIED ROBOT</p>
+          <h2 id="session-cleanup-title">检测到机器人会话占用</h2>
+        </div>
+        <button class="session-cleanup-dialog__close" id="session-cleanup-close" type="button" aria-label="取消并关闭">×</button>
+      </div>
+      <p class="session-cleanup-dialog__lead">当前机器人已有 Nexus 客户端会话。请先确认它不是其他操作员正在使用的任务，再决定是否强制关闭。</p>
+      <dl class="session-cleanup-target">
+        <div><dt>机器人</dt><dd id="cleanup-robot">—</dd></div>
+        <div><dt>部署地址</dt><dd id="cleanup-endpoint">—</dd></div>
+        <div><dt>运行模式</dt><dd id="cleanup-mode">—</dd></div>
+        <div><dt>进程 PID</dt><dd id="cleanup-pid">—</dd></div>
+        <div class="session-cleanup-target__session"><dt>Session</dt><dd><code id="cleanup-session">—</code></dd></div>
+      </dl>
+      <section class="session-cleanup-step is-active" id="cleanup-step-one" aria-labelledby="cleanup-step-one-title">
+        <span class="session-cleanup-step__index">确认 1 / 2</span>
+        <h3 id="cleanup-step-one-title">重新核验目标会话</h3>
+        <p>平台将重新读取机器人身份、客户端完整性、PID、session 与运行模式，并生成 60 秒内有效的一次性确认。</p>
+        <div class="session-cleanup-actions">
+          <button class="button button--secondary" id="cleanup-cancel-one" type="button">暂不关闭</button>
+          <button class="button button--danger-subtle" id="cleanup-review" type="button">
+            <span class="button-label">我已核对，继续</span>
+            <span class="button-spinner" aria-hidden="true"></span>
+          </button>
+        </div>
+      </section>
+      <section class="session-cleanup-step" id="cleanup-step-two" aria-labelledby="cleanup-step-two-title" hidden>
+        <span class="session-cleanup-step__index">确认 2 / 2</span>
+        <h3 id="cleanup-step-two-title">输入确认文字</h3>
+        <p>请输入 <code id="cleanup-phrase">—</code>。真机执行会话会先进入安全暂停；本操作只关闭机器人客户端，不关闭模型服务。</p>
+        <label class="form-field" for="cleanup-confirmation-input">
+          <span>确认文字</span>
+          <input id="cleanup-confirmation-input" type="text" autocomplete="off" spellcheck="false" />
+        </label>
+        <div class="session-cleanup-actions">
+          <button class="button button--secondary" id="cleanup-back" type="button">返回上一步</button>
+          <button class="button button--danger" id="cleanup-confirm" type="button" disabled>
+            <span class="button-label">强制关闭会话</span>
+            <span class="button-spinner" aria-hidden="true"></span>
+          </button>
+        </div>
+      </section>
+    </dialog>
+
+    <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
+    <script type="module" src="./app.js?v=20261016-rtc-selector"></script>
+  </body>
+</html>
