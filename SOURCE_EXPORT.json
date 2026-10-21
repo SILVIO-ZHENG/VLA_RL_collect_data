@@ -1,0 +1,2099 @@
+{
+  "schema_version": "vla_rl.source_export/v1",
+  "source_capture_date": "2026-10-19",
+  "publication_date": "2026-10-21",
+  "export_type": "project_source_only",
+  "source_authority": "thor_project/src",
+  "original_files_modified": false,
+  "files": [
+    {
+      "path": "deployment_templates/nexus-thor-control.service.example",
+      "size": 3040,
+      "sha256": "93f1bee1f7a87f0abda2cd82a14623475457265c8a6171d195faf1989489d097"
+    },
+    {
+      "path": "deployment_templates/sorting.site.example.json",
+      "size": 2401,
+      "sha256": "f7a19e2fc57edbe9749e4db44d8a9ecaf1bf3222689128eb46f07363b5686447"
+    },
+    {
+      "path": "thor_project/.gitignore",
+      "size": 675,
+      "sha256": "2b0574db2ba1cdf680e99061493a406212a1e3f88d60813e97fb68039add0c19"
+    },
+    {
+      "path": "thor_project/.python-version",
+      "size": 5,
+      "sha256": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d"
+    },
+    {
+      "path": "thor_project/alignment.example.toml",
+      "size": 3965,
+      "sha256": "b14832a8f6696f2d85a16121e9be3790fa36f6a661d100011b76bd1177792b40"
+    },
+    {
+      "path": "thor_project/configs/5090.toml",
+      "size": 13244,
+      "sha256": "1449ae522a072d271523b0591ab2237fe57fb85b676041aa6a007775770cf1b9"
+    },
+    {
+      "path": "thor_project/configs/deploy.test.toml",
+      "size": 12067,
+      "sha256": "552873f1c51ccfe050ead01bcf4a2fd3b4f9fb989f14b79a732e832f7fdc7028"
+    },
+    {
+      "path": "thor_project/configs/sorting.example.json",
+      "size": 249,
+      "sha256": "53f3863ec8fdb0a6c9d283fb11d4e7c947a0f32f1c501e567dcd951485de4b20"
+    },
+    {
+      "path": "thor_project/configs/thor.toml",
+      "size": 11241,
+      "sha256": "64d670875f366805a839cb271d37b8f4a081cb7809b97dde5086c2d2db8e62aa"
+    },
+    {
+      "path": "thor_project/deploy.example.toml",
+      "size": 3560,
+      "sha256": "b02264040efc8a304e4f0caf8b00535cbac982704f138b5c09797fcc52dba1db"
+    },
+    {
+      "path": "thor_project/docs/agent-handoff.md",
+      "size": 13173,
+      "sha256": "d812f3cffdce2e0a56e4487fd977f23659ae2fc20f72f6b5ccb248b9e7647b68"
+    },
+    {
+      "path": "thor_project/docs/architecture.md",
+      "size": 23892,
+      "sha256": "b5033b453ac819068a210b9868d83f1bbff613929c96dd2f60d0c4ee4609f214"
+    },
+    {
+      "path": "thor_project/docs/code-structure.md",
+      "size": 2809,
+      "sha256": "bd3521ba57a4552e1d3582ea3c956769ac63a95a73bc2c1a66b9389b196d9f64"
+    },
+    {
+      "path": "thor_project/docs/environment-migration.md",
+      "size": 4187,
+      "sha256": "defdecadb541d657170672d3092c87a372b27543776500b98e44b9d7dfa04adc"
+    },
+    {
+      "path": "thor_project/docs/parcel-vision.md",
+      "size": 15156,
+      "sha256": "43215b504c3c3ffb8eb8bee3eca55ee5cbb9a048292ce4d5430d3a316bf95992"
+    },
+    {
+      "path": "thor_project/docs/robot/g2a/CURRENT_RTC_CONFIG.md",
+      "size": 5933,
+      "sha256": "37ef91c5d76acc3f675cc6636fe7d80f085e56ae134b6dd1d5f01f2b7b66eb99"
+    },
+    {
+      "path": "thor_project/docs/robot/g2a/G2\u673a\u5668\u4eba\u5ba2\u6237\u7aef\u4f7f\u7528\u8bf4\u660e.md",
+      "size": 15924,
+      "sha256": "efb3a1b7b98eb779e5483ace15d0415a9af7afb5d41bb24508a939999eb9cdae"
+    },
+    {
+      "path": "thor_project/docs/robot/g2a/HITL_DEPLOYMENT_20261016.md",
+      "size": 2157,
+      "sha256": "01e9627f45c39220e19bb596179aae619d71105817ff0cf12f29a55e58470762"
+    },
+    {
+      "path": "thor_project/docs/robot/g2a/HITL_TABLET_COLLECTION.md",
+      "size": 6219,
+      "sha256": "341576673717accc732b6d85e56ff1ca1b1f328403d73f528a58557d9f700449"
+    },
+    {
+      "path": "thor_project/docs/robot/g2a/README.md",
+      "size": 4192,
+      "sha256": "945c5de486c230e73a7530a72f5b6ca2f41d3fb88382cf5e727fb673e057c83f"
+    },
+    {
+      "path": "thor_project/docs/robot/g2a/RUN_CLIENT.md",
+      "size": 5979,
+      "sha256": "34e804a1f3b690f712db766ce711fd5275dcc3f38995f36f9fd451a68f99f384"
+    },
+    {
+      "path": "thor_project/docs/robot/g2a/THREE_INFERENCE_MODES.md",
+      "size": 4306,
+      "sha256": "c9b8a4265f85c535938e9bc128434fa9aeb0025301a8ecbb912fabea69580afe"
+    },
+    {
+      "path": "thor_project/docs/robot/g2a/URDF_VIEWER_README.md",
+      "size": 1576,
+      "sha256": "926740cc3eb0b247b6eb585eec67ee12958b2c25c22c21e49da93886a74e3c9a"
+    },
+    {
+      "path": "thor_project/docs/safety-comparison.md",
+      "size": 4977,
+      "sha256": "ba2ad98ff6fdff292ac46f50633cae1f30589983acc9f27696a38ee352fd70ac"
+    },
+    {
+      "path": "thor_project/docs/scheduler-api.md",
+      "size": 13138,
+      "sha256": "b30b2fd92c01681756caeb857db6877cbfeb157057a5dd40e2d73b71b7a0658b"
+    },
+    {
+      "path": "thor_project/docs/vla/pi05/ASYNC_RTC.md",
+      "size": 8280,
+      "sha256": "d101e75f297f263f896fc5fa294c1767d4e14874ee191b47ce40a7fedf126ead"
+    },
+    {
+      "path": "thor_project/docs/vla/pi05/LATENCY_DIAGNOSIS.md",
+      "size": 4505,
+      "sha256": "c59b72bd83c854b136776c5a54884ed82ac1823a27639c82889d728d1cf04c52"
+    },
+    {
+      "path": "thor_project/docs/vla/pi05/README.md",
+      "size": 41068,
+      "sha256": "a2801245b8da11563b4e9b0e1032ef77906ffe2005c68f3dd3427d92ef44cdcb"
+    },
+    {
+      "path": "thor_project/docs/vla/pi05/REAL_ROBOT_COMPARISON_16D.md",
+      "size": 6121,
+      "sha256": "db3c752d15af26807199f77cd7e75ea172338209d56c70d44f0e9ecdaf8303f2"
+    },
+    {
+      "path": "thor_project/docs/vla/pi05/REAL_ROBOT_RUN.md",
+      "size": 8945,
+      "sha256": "e9c3dfa2db061e49f75de64643688997eb1e560610e4ca542276c43bee45a53c"
+    },
+    {
+      "path": "thor_project/docs/vla/pi05/START_COMMANDS.md",
+      "size": 10144,
+      "sha256": "7e455d9c760091f6532bfeeb393d4e5222ecf6a415e7e2fb53565b8b6398d720"
+    },
+    {
+      "path": "thor_project/pyproject.toml",
+      "size": 2313,
+      "sha256": "b6cf06c3d896e8e96c18e169deb358fbe980f6e52069d3a68fb55e18c360fe3f"
+    },
+    {
+      "path": "thor_project/README.md",
+      "size": 51924,
+      "sha256": "11a718a4575d2cbaeb45765bc7613d21ee59f9291494dfbcac51703917b2182c"
+    },
+    {
+      "path": "thor_project/robot_manifest.txt",
+      "size": 4966,
+      "sha256": "19316cb414615254e951d561eb8ccd99c7191344c97a1a4729bfe39bee333c81"
+    },
+    {
+      "path": "thor_project/scripts/build_pi05_env.sh",
+      "size": 1452,
+      "sha256": "c4d74d4242b1b81779cd97d7611f2e9d4f18f7a4fe19a495be679b273576d604"
+    },
+    {
+      "path": "thor_project/scripts/build_runtime_env.sh",
+      "size": 848,
+      "sha256": "78c3c7363594e3af25db2afb212c600eb58d23d209e1f6e44e46f30ae636b97b"
+    },
+    {
+      "path": "thor_project/scripts/g2a-alignment",
+      "size": 498,
+      "sha256": "63b4fabb643aa4757448cc89b9216c2a2185d172556162d937f4e90c8edfb7e1"
+    },
+    {
+      "path": "thor_project/scripts/g2a-deploy",
+      "size": 261,
+      "sha256": "eec6cd4f1111e62e80e1a20b6d39349212f7af3f88f03250cf049778c153f3f4"
+    },
+    {
+      "path": "thor_project/scripts/gripper_servo_probe.py",
+      "size": 7699,
+      "sha256": "36bb316f16af1785a1d03668225b043ac764504f253a0607724a2114608a9a49"
+    },
+    {
+      "path": "thor_project/scripts/gripper_step_benchmark.py",
+      "size": 12185,
+      "sha256": "06e18ed658dbdbe3840f9f8d6a3dfa0a679b3629d96700da5b6cd52498972ee8"
+    },
+    {
+      "path": "thor_project/scripts/install-g2-alignment-agent",
+      "size": 3255,
+      "sha256": "eeaedd9a7029d22b105ab53f50f6c59738d1ffc6e380685466c04d216153a571"
+    },
+    {
+      "path": "thor_project/scripts/install-g2-wired-management",
+      "size": 2770,
+      "sha256": "709e0a15f47539a365124f02cbf00585952dd93f609cb7eb81e6f711cf78b9be"
+    },
+    {
+      "path": "thor_project/scripts/nexus-sim",
+      "size": 661,
+      "sha256": "878d992cf65eb2dd52f56ff3a6408e6470da73d517adee8befd7ea5b009d42b6"
+    },
+    {
+      "path": "thor_project/scripts/prepare_pi05_lerobot.py",
+      "size": 3505,
+      "sha256": "f9bc6ffc393d48cab9b5790223683869a0564e4292ff156cd313ef1a37d30b8a"
+    },
+    {
+      "path": "thor_project/scripts/robot-alignment/alignment-camera.json",
+      "size": 167,
+      "sha256": "64db4fdc6399609b0d2a8d11fdb8a1cde364034275850c3c0658acdad4a65c78"
+    },
+    {
+      "path": "thor_project/scripts/robot-alignment/nexus-g2-alignment-agent.service",
+      "size": 895,
+      "sha256": "728174879c63dc161a00f0a487119264cef95848799700c462cab12d4235484d"
+    },
+    {
+      "path": "thor_project/scripts/robot-network/nexus-g2-wired-management",
+      "size": 1453,
+      "sha256": "c901dd8947dcce4721d3c5c18859e3f32245cddff22bd07dca41ab666c7e72cb"
+    },
+    {
+      "path": "thor_project/scripts/robot-network/nexus-g2-wired-management.service",
+      "size": 319,
+      "sha256": "196d1e644cdb9908b135dfdbcbba5e209426d26a12101d24402363274d901fdc"
+    },
+    {
+      "path": "thor_project/scripts/robot-network/nexus-network.sudoers",
+      "size": 575,
+      "sha256": "73a88da33975eb0452aef8802ea94f68efaa86ec44937ee67020e53c774bcc19"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/__init__.py",
+      "size": 359,
+      "sha256": "27448ed085bfa39aba3e5f09c36e5e1632c3ae3f75dcb8f9b509f176c14b0ba0"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/adapters/__init__.py",
+      "size": 59,
+      "sha256": "41d61b9d1d7408e0ef991639a3fc55b8acf0778c07391e06abee3c63db06acb5"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/adapters/mock_model.py",
+      "size": 1498,
+      "sha256": "1319ce18dbbb31cb6b18f538b1ea409dfc0358fcb632862eed28775911cd7f84"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/adapters/mock_robot.py",
+      "size": 1851,
+      "sha256": "b4eba6c354f7e074236edcda5990b718e2fae84ec71878554028a3233109418a"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/alignment/__init__.py",
+      "size": 376,
+      "sha256": "c413c42e0696ae1a75ce5efb24d0023cee7e5eb8d67a66f67bf73605089a711e"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/alignment/adapters.py",
+      "size": 9614,
+      "sha256": "a773fac48b7243dfd1b582167ec0f93a6d1d56f83694fda154deed33b0fd193f"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/alignment/config.py",
+      "size": 11616,
+      "sha256": "64d7f5b4385815284b06052ca9ceee93e9a11172c58120926fe4f2b4c5b68baa"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/alignment/core.py",
+      "size": 40588,
+      "sha256": "0a953a8ce65b1395196e6e09acad85d198e9abad66245cc008ed985532d9d3cc"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/alignment/detectors.py",
+      "size": 13628,
+      "sha256": "9c7f5ae24395ea4fa9955dbb5315603b9fbce6ef22f4f67d90496b4b2a41e9cc"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/alignment/extrinsic_calibration.py",
+      "size": 12207,
+      "sha256": "042a84b03aa187ee065636969c66d61c0ac0357fc1cb33a572337eb64c0d53ed"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/alignment/geometry.py",
+      "size": 4152,
+      "sha256": "39a7cdaff177cb25b02ee5bf6ebc7db27badb49f480e8151a0ef27c1cc43bba7"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/alignment/robot_agent.py",
+      "size": 27976,
+      "sha256": "dc00cde3084819d411ee9db66f0fbcf8fb1de551c1c07ea257f8affac54bad46"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/alignment/service.py",
+      "size": 24517,
+      "sha256": "d6f87e30da625f43bd4781834edf7a59fbfb4820eb7718217a05f588cfd20b2a"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/alignment/static/alignment.css",
+      "size": 10070,
+      "sha256": "3000ac7d0ff6ba56b4015d404d614091d960193176124ceff677083c964fa573"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/alignment/static/alignment.html",
+      "size": 9403,
+      "sha256": "9bb7a5a67afe134626cc72321dda768a7a4573d6d1fac7a0ecd40fc2542e656e"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/alignment/static/alignment.js",
+      "size": 28420,
+      "sha256": "4a1eb80b003a3840e10ec4a9451d7d9bf527fb4aaa898091bbaaab5fa39335f1"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/alignment/static/target-admin.css",
+      "size": 3346,
+      "sha256": "d1e49dd3364c0f18b7670f86d3586dff55cc6c892e1c12e48cc231d26f1b2145"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/alignment/static/visibility.css",
+      "size": 123,
+      "sha256": "213f7e159c7b311bf197f355bf74025f0b111706f94706f0e5c277e3eab65907"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/alignment/surfaces.py",
+      "size": 4323,
+      "sha256": "77e1bf15ad83eee4a96ad4994b0771c70eae956eaa9fec7db7cc9ae33e9ce88c"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/alignment/targets.py",
+      "size": 7231,
+      "sha256": "974e81730920486b511b4be4eb1154d0f0416ee61127ae081b03ec7c17daf76e"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/alignment/types.py",
+      "size": 982,
+      "sha256": "fd7c59a2986ad2e0b49bf9ef776ae0d3fc129a28ab284a7dda8dc3e362d60e0a"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/client.py",
+      "size": 4534,
+      "sha256": "effa246d008a34ca641e2488d8494ecfa687b02db0ef1c7a6fb9707deafd1e8a"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/contracts.py",
+      "size": 11445,
+      "sha256": "9a3c68e6d5bdabe36fc44676434f4699ab3235e5ad1c82676660a261d63ee434"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/control/__init__.py",
+      "size": 221,
+      "sha256": "e2dca0f03917d8818f7dd1adc4a0e0124e130d1261a0aa920f1c6663f63c4fcf"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/control/cli.py",
+      "size": 13427,
+      "sha256": "182a8ecc1a21162d5f8a07f1e875fd73998a7cefd704881ff9101bdcb59385f7"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/control/defaults.py",
+      "size": 4062,
+      "sha256": "050447bfae276878f7a47738210d2bc57f77d27918aa74d21cd943a3bf68a2c5"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/control/errors.py",
+      "size": 511,
+      "sha256": "379b3ca381225ed18a5af9d8bc83ac2f0c8aff2778eb98fc2dec1d3baf0cc766"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/control/http_api.py",
+      "size": 25686,
+      "sha256": "4703da89d4420269b92853515e08d74dc9fd2ebb503dffa830d534144afaf6dc"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/control/models.py",
+      "size": 5086,
+      "sha256": "d639eba355e6b656cecb4a5f429451e24772909592680b41eda12cb94a6bce44"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/control/robot.py",
+      "size": 5220,
+      "sha256": "042e0634ee484dc2889b2c752c5d90c71b668f1295b77e90a8a4c4ff614a5124"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/control/tablet_start.py",
+      "size": 5907,
+      "sha256": "1aec922466f5531149c1e460550b8f5c6f53d49f89c0025cdfc4c5ac84ec2364"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/control/tasks.py",
+      "size": 54700,
+      "sha256": "258d954112e55db146571556c74671c940751e0696c90e9c0a01c6f596810247"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/control/telemetry.py",
+      "size": 2218,
+      "sha256": "775c689eb32d3bd9015f18e103b3bfe0f50da0bcbb72b454036598bc41c0cd29"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/control/vision.py",
+      "size": 18039,
+      "sha256": "a843bd2459cfe69b5d78321fc61f72599dfe7a86dd66f99ecbd1cffda958a2e3"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/control_api.py",
+      "size": 325775,
+      "sha256": "f08b9cf6e14eee6df3b19d188b22a3bd09b31ac31ed2d290349e8a336b7e93ff"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/control_api.py.rej",
+      "size": 340,
+      "sha256": "e2e5cdb973e336c0814906d5686225b30609ec95e3ac8032f00686156253dc75"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/deployment.py",
+      "size": 152679,
+      "sha256": "4983d13ebab3f1e5c71a4e36ce44a4f6961d62a1cafe9ae19decacc2361ccf9d"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/plugins.py",
+      "size": 2436,
+      "sha256": "94e7bc8d1d6bae2940f1c538021531baf494157026f1206fb017f008abb3a032"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/presence_gate.py",
+      "size": 16849,
+      "sha256": "72efdcd4c7c2009ebb9575ee51beac5946b3a81fa29822f77c775ea9280663fd"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/__init__.py",
+      "size": 46,
+      "sha256": "c041b0c76572c78027db7e583b7cd3999c2465024803711179de6a0b3fa38cf5"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/__init__.py",
+      "size": 197,
+      "sha256": "7138f11bb02b3ee33181d7162ef3ac218871368019fa55849c29918b85e24f91"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/__main__.py",
+      "size": 523,
+      "sha256": "8f49e25b8c342bfdab98d15598a90c73953c776ae88993b9a0ae5024170d28b0"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/action_filter.py",
+      "size": 28408,
+      "sha256": "3802b0ad58060885f8f8b763e5361355e0314e7efee4d6fde85fb69505329506"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/action_plan.py",
+      "size": 36816,
+      "sha256": "ea7abc228f9e1c93e0e700cae5d03bdafa53825835939a16b4695c3379e5acfb"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/action_trace.py",
+      "size": 14758,
+      "sha256": "389c59478cccc6e8a8926c484e0a90d77777df9363a58b573cb1643165a89430"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/assets/agibot_g2/G2_dahuan_safety.urdf",
+      "size": 17906,
+      "sha256": "d13ba04282ec6c386edee9d1fc56882f0b61e7fbea3184e7f0d2800045e7f9f1"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/assets/agibot_g2/G2_omnipicker_fixed_dual.urdf",
+      "size": 67256,
+      "sha256": "eb782de0b6f1faf1fcddfb5e2f7004a39e350c4f297ca51a56003ce8f9ad8319"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/assets/agibot_g2/G2_omnipicker_safety_geometry.urdf",
+      "size": 46160,
+      "sha256": "4586e0212dc137c2d9afbc911c21f191c69e6c98f38e2edfe32c8656034d480a"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/assets/agibot_g2/G2_omnipicker_visual.urdf",
+      "size": 44157,
+      "sha256": "e66ad093999c4d9675902def559e5a3a7a42c4ed0cfe5ab2f3efd3b087582814"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/assets/agibot_g2/LICENSE",
+      "size": 16725,
+      "sha256": "7974b7355e0e25611d24b3471d38fcaf7697b70f6b6343f6282ee76abd351d39"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/assets/agibot_g2/SOURCE.json",
+      "size": 766,
+      "sha256": "10e56b59929107b769d0d4b6f7fbad952dd9733492358bd2bfe9a55a0fb8f183"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/async_safety.py",
+      "size": 43175,
+      "sha256": "1fd7e6132b5a82ff3180e0e177558cb665286bf565f91ffa295e43aa8b385ac4"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/benchmark_table_safety.py",
+      "size": 5040,
+      "sha256": "7f71d981512076e603688f877bcdb62dd3190082822e5e6cd5d5a03519665903"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/check_reset_pose.py",
+      "size": 7107,
+      "sha256": "7a7e9d8cc75c297e81e2910e3377011e82448819fbb61dff09993124e9913199"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/client.py",
+      "size": 185674,
+      "sha256": "a8099bab33c448f6d2c9e1c8a60417acfb31f23989e2482bccab63c7718a1407"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/codec.py",
+      "size": 9608,
+      "sha256": "6db94422dd76c10cbc85217c59262f6b0d629dfb64e436e0770cf25a15f3ced8"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/command_prefix.py",
+      "size": 4614,
+      "sha256": "4c0a1ebb3ebf8b5616f01231583a082dda0721f2818554e0b283483358dcfb91"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/constants.py",
+      "size": 4920,
+      "sha256": "fac1483e455ecb54e5a320dfb24fe43683cc113432a614c15d447429ea8f37b2"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/debug_python.sh",
+      "size": 879,
+      "sha256": "27173891c2c20b92d7a2b51a169923e6cbe3c692e1e003c09e45b84fad476eed"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/effector_command.py",
+      "size": 3104,
+      "sha256": "c86b429f8cfa31ff46210a86226f37ee83f69773158631e3832bb43d73e63ef7"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/effector_profiles.py",
+      "size": 6700,
+      "sha256": "3a068f811cabc98eb70626a098574d7b21f284180a06a181466826c8f86dab44"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/G2_DAHUAN_SAFETY_CONFIG_TEMPLATE.json",
+      "size": 42663,
+      "sha256": "39dd07e9ee3f34c867fa805b207ceb4c4e9770d9335afd1d6f157290d82b3b77"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/G2_dahuan_standard_table_20260922_contact_refined_safety_execute.json",
+      "size": 32117,
+      "sha256": "652eaf326d1cfc356038787f0cf8a1aa8c2bf12141eb8a7cdc1004296d910309"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/G2_dahuan_standard_table_20260922_contact_refined_safety_execute_v2.json",
+      "size": 44579,
+      "sha256": "1596634e164161fa0aebe583efc6898fec622154953d18415a8b8203a9eccb94"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/G2_dahuan_standard_table_20260922_contact_refined_safety_readonly_v2.json",
+      "size": 44179,
+      "sha256": "3e557367cdbe9ff89f528c8f7a4455ad9f28ebc3509bffe26bbb108057e620ed"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/gdk_adapter.py",
+      "size": 181926,
+      "sha256": "3bffcc2dff4f578da69019b78c600163a0adf907b10fea9370f71ee85e6bb7bd"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/grasp_coordinator.py",
+      "size": 12796,
+      "sha256": "759b12701ca35c2adfb587c0bc67d7cddd84049210ee09039f7525cc751ce28b"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/__init__.py",
+      "size": 68,
+      "sha256": "19d47c02bcae745f3795a29e4f8436a75740e0e16315e5512230e1a159bdf2f1"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/common/__init__.py",
+      "size": 68,
+      "sha256": "19d47c02bcae745f3795a29e4f8436a75740e0e16315e5512230e1a159bdf2f1"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/common/collection_manifest.py",
+      "size": 11630,
+      "sha256": "02267e2b39e598cfe1aea62bd99210d22619ebcde9ca8359f4b0c4e749e5c392"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/common/compat.py",
+      "size": 475,
+      "sha256": "5c338a4b9f38663bd033f399517c07a2b7ef550493f82ea7de97c8a9efc34e3b"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/common/contract.py",
+      "size": 46773,
+      "sha256": "ce0090b04c566cf50db3dc199950a5deff89fa9055b4b1dc883fda8af724816b"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/common/runtime_provenance.py",
+      "size": 3705,
+      "sha256": "7aa3292cce376807d6468b4e3c581b8e21e2a488f77afabf3910c9d1a04ed65c"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/common/sidecar.py",
+      "size": 52590,
+      "sha256": "16cb5f9e3fd969a75d39d814d0494691eee13ac9fc369357227ed5f42472b7c6"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/g2_runtime/__init__.py",
+      "size": 133,
+      "sha256": "c31f87964a3fd3cf21d87fe6ae20043297f9ea5ea4af0978416382df5ad4ab8d"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/g2_runtime/adapters.py",
+      "size": 2136,
+      "sha256": "12379ec2172c990dbcb0d5aebb8ae9dc087fb48b0fe9feafb92629bca51582d0"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/g2_runtime/app.py",
+      "size": 51971,
+      "sha256": "87d371937bdbdc857a299907abb966f27b96e92d1e4334dfe233f656f39172e2"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/g2_runtime/dds_runtime.py",
+      "size": 20901,
+      "sha256": "064f33fd334a02f4e906d51bc11dfe8c98c5e6cb9cd075db1ac5da4ecb14274b"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/g2_runtime/dispatch_ledger.py",
+      "size": 12252,
+      "sha256": "b83b104cbf6660001947cdcda924e4e12b399b7f832ac05b4f698bb1bd724346"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/g2_runtime/executed.py",
+      "size": 27886,
+      "sha256": "95896ab1c6f3ea801f1b3edb537c7ed7b57c8446cfae5aa5e08019efd51dfd67"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/g2_runtime/feedback.py",
+      "size": 6664,
+      "sha256": "36fed4772d1a37b0b8385939aea6f7b775f252abbaba1a8b98b44e58e277acda"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/g2_runtime/g2_dds.py",
+      "size": 43511,
+      "sha256": "811724fdc3d385ada8cd955c49915fe499c98c5a0e4686d5174e5420b1f0f0a3"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/g2_runtime/intervention.py",
+      "size": 43180,
+      "sha256": "719a0025d3abfe3496e1709e80ab56fce0a006c61e5ee854816f33b63ea01606"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/g2_runtime/paper_runtime.py",
+      "size": 67284,
+      "sha256": "6f3960af41cf50d67d5af7ac3fb65afc1f63f3b6024cb8b9fa9444dca92d0860"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/g2_runtime/rollback.py",
+      "size": 60022,
+      "sha256": "db65bdca6218b7895fbf66b2c0e618564a1b454d511a3a58fef000b8d57b9650"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/g2_runtime/runner_mixin.py",
+      "size": 42643,
+      "sha256": "7378e17fd97abd4e5bde7514e0007601bfb8f17bd6a6648768fde13d380fe8c6"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/g2_runtime/runtime.py",
+      "size": 19725,
+      "sha256": "f7a1a446fe3d91e751be10771bdbf92de216c7de56ff69a79fe395ec2c6566d6"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/g2_runtime/service.py",
+      "size": 30411,
+      "sha256": "358c2ceaf79a2e76dfdc3b230d23a1827ef4619694cdc0534090eaf5f8d1cc48"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/g2_runtime/supervisor.py",
+      "size": 70313,
+      "sha256": "b93e98f8e8e7a71337517a51921a546c1d4410a320e32babc7dc1de814e6b698"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/g2_runtime/tablet_start.py",
+      "size": 2035,
+      "sha256": "b70575bfecbee41353358690402f5f03e6b7e1b10f177f700f2a25add0e8f9fc"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/g2_runtime/vendor_ee_gate.py",
+      "size": 12457,
+      "sha256": "1ff09082c7504bc79d21f9802c4952829d949105fe73a743416c0c6cd62d751c"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/offline/__init__.py",
+      "size": 68,
+      "sha256": "19d47c02bcae745f3795a29e4f8436a75740e0e16315e5512230e1a159bdf2f1"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/offline/__main__.py",
+      "size": 4713,
+      "sha256": "fc196978d51118bea2219547a8fa0bf0dd2095d07b5b4d41192c919ac94d8e45"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/offline/ingest.py",
+      "size": 13722,
+      "sha256": "f8aa7e095dcc41df89d6f12c1ddf677d6db55e4ffd2244af18efde9f2d87c683"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/schemas/collection-manifest-v1.schema.json",
+      "size": 3847,
+      "sha256": "2e24cecb663aae4ba8737e8369c7e05b52957ba3f035b67a39ff4f54b3e62fde"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/schemas/event-v1.schema.json",
+      "size": 6104,
+      "sha256": "c3b31bb45ef563a7c727ab4eb630072b17aa49d1aebf91f9796e9fba3acec5c8"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/schemas/preference-pair-v1.schema.json",
+      "size": 5093,
+      "sha256": "57867690a5dfbb3987da2cd2c3cb6e343651f779e11ce27b21060649c351757e"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/schemas/sidecar-manifest-v1.schema.json",
+      "size": 4763,
+      "sha256": "76874294ce8e0c5c583c4b471452898e210bce286e8827b367e3aa9c8c312f61"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/hitl/SOURCE.md",
+      "size": 2135,
+      "sha256": "ce643d59ee50d4f4294fb30219426be8faec7ac98ee31eaea487a16bfb405412"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/install_offline.sh",
+      "size": 876,
+      "sha256": "81c61b0dac87df18782e3ead8b106412d920ccfd5236ee278fd0d24b752ad1c7"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/presence_stream.py",
+      "size": 14445,
+      "sha256": "617c82e33c787c996582335bc979103914d2bca4e170d838d7b62dcdb7ecba0c"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/realtime_cadence.py",
+      "size": 3694,
+      "sha256": "0c62c6595bbc47a5569af4811b4ae9a9396e01f479a39f4d68eb2f26fed4b157"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/requirements.txt",
+      "size": 316,
+      "sha256": "7e4472634b2b24bce56595f1d417acf49bcbd9d51af612e72cfc402415dd1df5"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/reset_all_joints.sh",
+      "size": 1276,
+      "sha256": "7aa3042eb17aa6ae5cc840a0807086ceca61b90d5a833b653ea8a7b73fb37c80"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/reset_to_dataset_start.py",
+      "size": 47487,
+      "sha256": "8eb82fbbf5594da1d4e70a3debad3b4572b08867409022fb1d27e840490bad57"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/robot_lock.py",
+      "size": 1693,
+      "sha256": "216d37a4a30c9ee6379092a8351f2a8370d6edc9612df0f7dd94a0f67335c409"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/run.sh",
+      "size": 1101,
+      "sha256": "03717cc9009791aff5dbe6df117403bebd3166f72d86fef29f644fc7a7ad26d5"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/SAFETY_CONFIG_TEMPLATE.json",
+      "size": 8345,
+      "sha256": "a14a628512e45bed0eb4506068c75bae2390e100e1559b81e5b9494b436cf92d"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/safety_layer.py",
+      "size": 90529,
+      "sha256": "1fc47d1ad9ea103ddb4caad13ede47dc05b7fb35d0bc929abfb65bde91e6af14"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/telemetry.py",
+      "size": 12698,
+      "sha256": "a533fc8386739d25ae6b1b8142b07b5287b1bba1989e3a48357dda845a6df190"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/test_dahuan_gripper.py",
+      "size": 12316,
+      "sha256": "54dd69d10e7d9dc7229c37b735f2e971075e1614f11bb248aacfa4b9a2cf4a85"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/test_gdk_readonly.py",
+      "size": 7019,
+      "sha256": "c26285ab74eb6fc336f6aa1d6e13f88e8712d060dc1ad2d8b37b079f8d3a291a"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/robot/g2a/transport.py",
+      "size": 6054,
+      "sha256": "45548598e698af735f454c6e846283611ac2fb15b6b9a4bf49763b869d053851"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/rtc_modes.py",
+      "size": 3535,
+      "sha256": "a10fedb34d610d194cf72a7f63bec7ed4c62aa809f4e6e687122d625842a83da"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/safety_profiles.py",
+      "size": 13849,
+      "sha256": "e5d88f83a5ec801e9b094ac0055da8cbc2314a6a8ff4b6dea23106788b9088bf"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/server.py",
+      "size": 5374,
+      "sha256": "b98431df14587bec9848ee3c487861a9f72edeec22c820609a8991b471d25f81"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/site.py",
+      "size": 4097,
+      "sha256": "cd13e522067f8d86dbace843d869b436cfeaebe4b724b93b119d12b201ad0a7b"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/sorting_api.py",
+      "size": 30891,
+      "sha256": "37a860708fcf0d90b264a285b37c705c946117d30fe4cd73b47add4621d23115"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/static/alignment-link.js",
+      "size": 886,
+      "sha256": "f892d96db14a9652a36832a14bfff7f6c15a67563ca739a0744a0e331843a53a"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/static/app.js",
+      "size": 111699,
+      "sha256": "a56bfd7f9133b32d18bcbb5cb5709af4d8ae0a28e893eb25a2aefad3443f0f2d"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/static/assets/anu-intelligent-logo.png",
+      "size": 155073,
+      "sha256": "bdbc39d23fd7dabc0abf2f571513fe9ae63fdcadbff17d86ce97eaccf8e6bbe9"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/static/history.html",
+      "size": 1831,
+      "sha256": "625d97c98f4cf5444403e25ad3d8f7ff09cba302b34a149c41e7e852700c7323"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/static/index.html",
+      "size": 49031,
+      "sha256": "baa3a7f7452a9c96a176d038caeccc0866f2e844ac4387e138756b9689c1b3d7"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/static/rtc-labels.js",
+      "size": 2692,
+      "sha256": "d14529fab73dc9fcf20021ca5e52bad79cb6e1127ebdf04b3295c852d58be6a3"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/static/rtc-model-metadata.js",
+      "size": 324,
+      "sha256": "ae07a0c66ed99b238f2c104032c97f751274b80cce999621d61ec133014b6377"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/static/rtc-selector.css",
+      "size": 175,
+      "sha256": "f7f01802f9f182e75d82a81b19969747689610900d2a146962ecadab1f7867ff"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/static/session.css",
+      "size": 25010,
+      "sha256": "6d2c0cb62345a26ba4548461d6dccfef6a09b57a7a636fbd3ab1e054df9c51f6"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/static/session.html",
+      "size": 25557,
+      "sha256": "6dd746c838904891fef74f467e54737914063c7f0ad8ca4465ecfc81bc329315"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/static/session.js",
+      "size": 95264,
+      "sha256": "5b92200eb382fcf98266a7ec3b49ade158230f2a75ee95f121970314f1b72aab"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/static/styles.css",
+      "size": 55560,
+      "sha256": "b235e4026fc732c8a132a447bde5c4d7ea1990850f700a3a0bf2ef44cdc03e59"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/static/ui-session.js",
+      "size": 1269,
+      "sha256": "c5eedd6ecc374fc84b6cc86d0f9d3931d4bdee7beb6ab944e0afadca4e32b3b8"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/static/workstation.js",
+      "size": 11788,
+      "sha256": "0b95e5e2a0b7bfb8f6c9d67c6f1f71dc5da592ec1a8401b72459100d1a272d79"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/viewer/__init__.py",
+      "size": 451,
+      "sha256": "06f7b6ac4e43bc26b5bc56b1c4bacc2b55c786c61671dc54b55f17eebf242ab5"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/viewer/assets/g2/G2_dahuan/collision_overlay.json",
+      "size": 16201,
+      "sha256": "c11a0af47f314474c95eec50d4d2a41dab3b00a346057d18f4123f0c2b82f62c"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/viewer/assets/g2/G2_dahuan/G2_dahuan.urdf",
+      "size": 42187,
+      "sha256": "be60ec05409e87e2426e0f0156cfa3a8dc11995a4a13e319a7ac112dc0246316"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/viewer/assets/g2/G2_dahuan/G2_dahuan_vendor.urdf",
+      "size": 40331,
+      "sha256": "e46974fc86a73acf322283a33b2473c671edea6659f125d8e94982461cbc7799"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/viewer/assets/g2/G2_dahuan/G2_t2_crsB_factory.urdf",
+      "size": 60176,
+      "sha256": "8017d5c6b20dcc9be4741dd69c83eb5b2752ed6058af00fe04f6503bafe6acf5"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/viewer/assets/g2/G2_dahuan/manifest.json",
+      "size": 2790,
+      "sha256": "54ece7a3e2e6a30a475e7bcc02808b70f74cfa8214d8afa80835c44b8ef1dac4"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/viewer/assets/g2/G2_dahuan/README.md",
+      "size": 4341,
+      "sha256": "33ae035df1b1cd2dd6af629f48af70ab4bf6d67fa8eb6088f31743c133f3b9a9"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/viewer/assets/G2_omnipicker_visual.urdf",
+      "size": 44150,
+      "sha256": "2adb31029c6cfda4098f08ab92906fa5aa00d48880093518d51fdc7d4b29a173"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/viewer/assets/LICENSE",
+      "size": 16725,
+      "sha256": "7974b7355e0e25611d24b3471d38fcaf7697b70f6b6343f6282ee76abd351d39"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/viewer/assets/SOURCE.json",
+      "size": 766,
+      "sha256": "10e56b59929107b769d0d4b6f7fbad952dd9733492358bd2bfe9a55a0fb8f183"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/viewer/camera_presets.json",
+      "size": 441,
+      "sha256": "cb52fec217a9e4b58f5b3c365761d1ed0207741648502ba02f200f9c9918d3ff"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/viewer/model.py",
+      "size": 10539,
+      "sha256": "c17f0c9d201b0cff8cbaac51d4786137444caabe31130ea22a9f1f1809acde10"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/viewer/runtime.py",
+      "size": 24956,
+      "sha256": "3643b9f27bd38647b61a0e624dccdc1434553253e7e580490729fdbdab73dad3"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/viewer/scene.py",
+      "size": 10740,
+      "sha256": "dd4d9abe3049f1db3a2c58fdddee538321d3023bebee8b269d893e8aacb3cfa1"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/viewer/service.py",
+      "size": 4643,
+      "sha256": "4219242b77585c59fb74437fca3cee39e7a53d41b15879c7aea0e37b88f0ec5c"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/viewer/static/viewer.css",
+      "size": 592,
+      "sha256": "f75ac1fe1d71134c4d19e0f578110ec53233cdc63d6c7950fd99c2d9e82cb032"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/viewer/static/viewer.html",
+      "size": 527,
+      "sha256": "f68d820e2cc36f03ebdc18a4e223fe641494b7a03796f9c654493e50a2799aeb"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/viewer/static/viewer.js",
+      "size": 27723,
+      "sha256": "305ee9f3ad583a843fe6561ad0b8489d3d4c18c811dbb37d23ed1abdf25dec35"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vision/__init__.py",
+      "size": 49,
+      "sha256": "62f9c7c894fa34a3ca9c28485b9a0edf2a45bac8d35b8da8e29cb27ee6db0535"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vision/parcel/__init__.py",
+      "size": 59,
+      "sha256": "0815cb5b7995226406920cdb93db9ce07b45d226f196daaf914c4be63e7e1f39"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vision/parcel/configs/g2_head.yaml",
+      "size": 6379,
+      "sha256": "1716bd0af1f5d28cbf0b2ddbb34a390de6f947c4fe1591608c1183f64cf58cfc"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vision/parcel/rules_core/__init__.py",
+      "size": 52,
+      "sha256": "9aacfedc0d52a262df5824d0ebde86ee4fa9ecfbe883d1f2806dcc74172d0c45"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vision/parcel/rules_core/configs/test_rois.yaml",
+      "size": 2137,
+      "sha256": "328492e291275eca96e545c5b4ed4986110e7e418a4eb9f7eed8ece4e891b5dd"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vision/parcel/rules_core/dataset_io.py",
+      "size": 6040,
+      "sha256": "cc5172d124c1404b221719d228480add5a1f32ffeb804fc4c266f146e6ee6fea"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vision/parcel/rules_core/model_adapter.py",
+      "size": 3425,
+      "sha256": "c5a9a5353e0e46eadd348619fd5a0b7c1038fc21c6983f0437cd2ad61ad756e8"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vision/parcel/rules_core/state_engine.py",
+      "size": 27897,
+      "sha256": "1128e277ac29c3a04f7afec09632dea6a23c34026fc825d97386ce6e57efb2a0"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vision/parcel/rules_core/temporal_filter.py",
+      "size": 10938,
+      "sha256": "01540d03a1a72eed13ef9372e7ae426155b20957e146c1464d0810bf03536f08"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vision/parcel/rules_core/visualization.py",
+      "size": 6123,
+      "sha256": "dad7a912d922087c0edd89ed7777a53ef53cf00c736c64092123c59bf4befb0d"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vision/parcel/run_g2_head.py",
+      "size": 5398,
+      "sha256": "136349e228c8d785e0f8e80aff5e63dc4a5572fa749fa48c80349353230797b8"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vision/parcel/run_nexus_presence_sidecar.py",
+      "size": 21076,
+      "sha256": "e538e7fe8b047235f9a8eb7e38b1f48ac6e17edc214120ebb5b09a36a0bb5331"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vision/parcel/run_presence_shadow.py",
+      "size": 7788,
+      "sha256": "4892c84946905726a77ffe30c2647d7ffeee08ee5d8f903f65a6c87ece365b5a"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vision/parcel/run_video.py",
+      "size": 11537,
+      "sha256": "ac5af618dedea18bc7ce0017bd9d433e4e922069a4d21fd3186a03ef4d88984e"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vision/parcel/runtime/__init__.py",
+      "size": 2107,
+      "sha256": "cc85168cf566a91fb8691edf9cae1dc6c9a34e637fe24767ebbafea6bcfd85b6"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vision/parcel/runtime/config.py",
+      "size": 5332,
+      "sha256": "e3f98c798fe57b5e989d2caa85c7888df95acfbac976b6c8055dc1a7fe107ea2"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vision/parcel/runtime/core_bridge.py",
+      "size": 3570,
+      "sha256": "796519f68d39ed484e0df4f2366f0d91c75566d84fe71bb4b516ed459870f810"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vision/parcel/runtime/estimator.py",
+      "size": 22740,
+      "sha256": "7c574c3b46db56c264e24a1e225c1e8ae6efc00adf650d2efc8f68a7355c3e66"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vision/parcel/runtime/g2_head.py",
+      "size": 14264,
+      "sha256": "38248eeb0e6345afcbf60db176215a7ee858090d1e371a08a8b8abbdeb9cccd3"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vision/parcel/runtime/nexus_frame_stream.py",
+      "size": 14931,
+      "sha256": "ff7620ea580495564b264798b6b17260faf7322fd546840ef6a23891ecd1a029"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vision/parcel/runtime/presence.py",
+      "size": 20360,
+      "sha256": "a76c734750fd2e83be0750db0b10a1f306aa90de367acf547eac80ffa9ab8d82"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vision/parcel/runtime/presence_control.py",
+      "size": 556,
+      "sha256": "8959e722f9d0973a432fedaf13451ebb7eca366ec60f43bc2ce4a5af6200525e"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vision/parcel/runtime/schema.py",
+      "size": 5539,
+      "sha256": "b68996826fc98bcdc3ad1c7fd0927ea444a30e28c22bcc4ef1c491a8b707d833"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vision/parcel/runtime/service.py",
+      "size": 5028,
+      "sha256": "d5edbacac366d60e5e78790fdf35f424087d5642609894c46b3835c1c552dd17"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vision/parcel/verify_install.py",
+      "size": 6084,
+      "sha256": "576d9dbd6fc1498ff1074c04c44bcbb6b6963b8b2abe723fae4481f28f7e2e8d"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vla/__init__.py",
+      "size": 38,
+      "sha256": "1fed4ac72f227d6c8756dd517e39b7bff5f0c187341eec4d4bcb8a19f6e80a55"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vla/pi05/__init__.py",
+      "size": 58,
+      "sha256": "3270189b58d5a1b9d467915a4dc4424ef448aea9657b840be8fdd35218c300e9"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vla/pi05/dataset_start_state.py",
+      "size": 4036,
+      "sha256": "5e280087ad7c19e8e28705705819eb00a285328266580ca09fda37bd9548e75f"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vla/pi05/policy.py",
+      "size": 37963,
+      "sha256": "11310bb6b9313f748cbb251394422115a06b65101b7448bcb5b31bc6100b63a5"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vla/pi05/profiles.py",
+      "size": 2881,
+      "sha256": "c5b1f31c730401f40f758b86a0f0fbb99eb6e00128bbd9f2ae0d8522077ca7b3"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vla/pi05/protocol.py",
+      "size": 8585,
+      "sha256": "2fc6d40891cc0a7e5b70de3157238e63e96627cda2b3f66ca69c0673181fbeca"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/vla/pi05/server.py",
+      "size": 26804,
+      "sha256": "e61d40b90ea85bbf1af5a5744d046de7f72048d809274bf79bd00292ca66da03"
+    },
+    {
+      "path": "thor_project/src/nexus_deploy/wire.py",
+      "size": 3041,
+      "sha256": "35187f0cee91e2875c326ba1c7d73b742cb73b00904b8d892a00debbd6ef8d53"
+    },
+    {
+      "path": "thor_project/tests/fixtures/trajectory_moving_boundaries.json",
+      "size": 54836,
+      "sha256": "89d7ad9d5e4c3663afb875bc04fcba09f1dcf3a75657efd25561521943c54632"
+    },
+    {
+      "path": "thor_project/tests/frontend_cpu.test.cjs",
+      "size": 11492,
+      "sha256": "8bf274dc2f2e84ab190219ac62bc8d583f59c997a12a1c1177694c2a26a384f7"
+    },
+    {
+      "path": "thor_project/tests/frontend_workstation.test.cjs",
+      "size": 14452,
+      "sha256": "b67f963217ee010a53374e6179a2fefc862c7f4dc36c29af7b0c854302374333"
+    },
+    {
+      "path": "thor_project/tests/test_alignment.py",
+      "size": 34937,
+      "sha256": "fb3c179c114d13eb56b27169171f858ac6888f5a1b86110457313ef0c85ae2b1"
+    },
+    {
+      "path": "thor_project/tests/test_certified_braking.py",
+      "size": 10091,
+      "sha256": "60885cc9a80899f5fb4c4d3645b1d94f10d98a1de41256571caef1399468e7af"
+    },
+    {
+      "path": "thor_project/tests/test_chunk_join_offline.py",
+      "size": 4188,
+      "sha256": "62cc2a26cec105356ee3e89ab2b366fca4c72d7df6306d9e480cc48fe8e5f43f"
+    },
+    {
+      "path": "thor_project/tests/test_collision_filter_continue.py",
+      "size": 5508,
+      "sha256": "59f3af09c9e13775a0f777cd6796f684169973323ee35801b2e6109cd8c24007"
+    },
+    {
+      "path": "thor_project/tests/test_command_prefix.py",
+      "size": 3508,
+      "sha256": "1e6e6bf8adae20e84f5aa0883d23fb8badb5911ea6ac4dec67e50863ee58ab66"
+    },
+    {
+      "path": "thor_project/tests/test_constrained_trajectory_lab.py",
+      "size": 8605,
+      "sha256": "d0fb2fbe17564a9089a0d41b0b51ba6cb314ead7cc93998da895b95645281b92"
+    },
+    {
+      "path": "thor_project/tests/test_continuous_trajectory.py",
+      "size": 10665,
+      "sha256": "60e202a20ef7eb97b1211e3f050c4e6943f3480428fb0357440d39ad7bc1560a"
+    },
+    {
+      "path": "thor_project/tests/test_contracts.py",
+      "size": 5654,
+      "sha256": "e12de37de5ea799957c96afb7b4cd1e6fe69d7d6e6bd17b4462286dc2131258a"
+    },
+    {
+      "path": "thor_project/tests/test_control_api.py",
+      "size": 117091,
+      "sha256": "6455744f66b07a9a5f2483dc5ceaf8cea428dd8d3ae485dc298d89dda6af6d08"
+    },
+    {
+      "path": "thor_project/tests/test_control_timing_attribution.py",
+      "size": 5523,
+      "sha256": "163799930631251a5c5800443a90669ef93397483fc8f2674698b16d2ccd1d41"
+    },
+    {
+      "path": "thor_project/tests/test_coordinated_trajectory_lab.py",
+      "size": 11024,
+      "sha256": "bd1b61b5d4b27afb77c14ed0545bb47093d59f582aff5accb764c81cd89ccfbe"
+    },
+    {
+      "path": "thor_project/tests/test_damped_arm_tracking.py",
+      "size": 7230,
+      "sha256": "d95adbb53ee0d358881fd79eea78e4e1a71c8159a16bd69ad169870812769ec2"
+    },
+    {
+      "path": "thor_project/tests/test_dataset_trajectory_limits.py",
+      "size": 6505,
+      "sha256": "824c98bf2c0d359f043a477345a15178a3f642904e0dc7d921ade9604b7e9554"
+    },
+    {
+      "path": "thor_project/tests/test_deployctl.py",
+      "size": 40499,
+      "sha256": "52f2b3709a16b11ebae2b9312fc1bab7a0805ef37887957c70997fcd6d82bc95"
+    },
+    {
+      "path": "thor_project/tests/test_deployment_limit_compatibility.py",
+      "size": 3610,
+      "sha256": "098cb35afebba1365f55bd421540b9ec722e403961acebd2120c1d43b0e287e3"
+    },
+    {
+      "path": "thor_project/tests/test_effector_device_position.py",
+      "size": 11552,
+      "sha256": "04c725f78cb8a179cfb4afad810833d1339cfbf4dc645eda16a2b3ebad001b7e"
+    },
+    {
+      "path": "thor_project/tests/test_fixed_horizon_projection.py",
+      "size": 3257,
+      "sha256": "ecc917f481a530f57a71f7c136025d35bc81829dc369fe52fb4d0dbc28dec43a"
+    },
+    {
+      "path": "thor_project/tests/test_fixed_stride2.py",
+      "size": 6505,
+      "sha256": "fc711125e483b3867c8b5c921d33cc92ed42544dab8f00a8f199962d7e57a33b"
+    },
+    {
+      "path": "thor_project/tests/test_fixed_time_interpolation.py",
+      "size": 1955,
+      "sha256": "2d6af2bd92511ae2eacb746e01adf59ee4a1bb4e5c88659f65d52e40f6073a40"
+    },
+    {
+      "path": "thor_project/tests/test_frontend_cpu.py",
+      "size": 544,
+      "sha256": "43cf24d11768f1d34d8226a6c6ef6292fdd78f13c41e03d5bdfd2f9a40ac0f87"
+    },
+    {
+      "path": "thor_project/tests/test_g2_crsb_custom_dahuan_urdf.py",
+      "size": 5522,
+      "sha256": "8b1b797904f38808f0aceee1bc13b920286854ff4171f2500092cfb889c60cce"
+    },
+    {
+      "path": "thor_project/tests/test_gripper_step_benchmark.py",
+      "size": 2920,
+      "sha256": "5b207bd1cda7accdad35a02b92bc63856f2d3979a966e130fc8166bcf78a2b3a"
+    },
+    {
+      "path": "thor_project/tests/test_hitl_contract.py",
+      "size": 976,
+      "sha256": "4bf2a4774616cd75018fa70b7464236842ccf6ef50622b3f7626e23978524e3f"
+    },
+    {
+      "path": "thor_project/tests/test_hitl_dds_runtime.py",
+      "size": 21804,
+      "sha256": "c5bf0764915201fa8df2b74c80d5bd286a59d045d9987ea21bca0383b87daa14"
+    },
+    {
+      "path": "thor_project/tests/test_hitl_dispatch_ledger.py",
+      "size": 11515,
+      "sha256": "8ea18619d044e4afaf9bd0ad8496eb2cfdeeddfbd865780b6cea7bbf7ca77285"
+    },
+    {
+      "path": "thor_project/tests/test_hitl_g2_dds.py",
+      "size": 21643,
+      "sha256": "c5ddfb9c4154716be03f408e310da72750674904dd2235fd9dfdd1942596425c"
+    },
+    {
+      "path": "thor_project/tests/test_hitl_runtime.py",
+      "size": 51198,
+      "sha256": "4855b66715ace28eb6f6ade3e250715e59ab6414dec0514d1647dfc5ff3396ef"
+    },
+    {
+      "path": "thor_project/tests/test_hitl_service.py",
+      "size": 4164,
+      "sha256": "7ba5d5ec9aeea3bc5a64f7e8e1f3fe4ba847392beb2e1cac4e2bd301ec900941"
+    },
+    {
+      "path": "thor_project/tests/test_hitl_sidecar.py",
+      "size": 20911,
+      "sha256": "382e402b5d16215dad7ca51caf2ba336a5fd35ac125b15d223886bce5d6e8ed7"
+    },
+    {
+      "path": "thor_project/tests/test_hitl_tablet_start.py",
+      "size": 7388,
+      "sha256": "5947fe6dc7c5776d808ac224fd178e5da1c1f2a943ff28e092b22b80ebf1a375"
+    },
+    {
+      "path": "thor_project/tests/test_inference_frame_writer.py",
+      "size": 1448,
+      "sha256": "4fe170c04eb3e5e2b9452690363a67a00835d93afe9a3f8bf9ae467ffcf7f4bd"
+    },
+    {
+      "path": "thor_project/tests/test_integrated_simulator.py",
+      "size": 12732,
+      "sha256": "d2b0fa435bdce924b786c411d39d6d962d7e6acf3480dc67ec710361a34e0a2a"
+    },
+    {
+      "path": "thor_project/tests/test_interarm_capsule_v2.py",
+      "size": 4598,
+      "sha256": "98810b16654307f1c0141c769d0d9ddd5aef09900d50756d9af1420e06d4ccbe"
+    },
+    {
+      "path": "thor_project/tests/test_lazy_trajectory_preview.py",
+      "size": 3528,
+      "sha256": "5e7db41002b7191c0f1f1feea4253af6c69576e14699eefda2fa592c5026aed1"
+    },
+    {
+      "path": "thor_project/tests/test_legacy_rolling_geometry.py",
+      "size": 5951,
+      "sha256": "75b57d22c019b2e3f94cafd01cf2a6a234d9091a4140fd64ad93515003d50d4c"
+    },
+    {
+      "path": "thor_project/tests/test_module_boundaries.py",
+      "size": 1398,
+      "sha256": "1c35cdf3c547a133dcbda69b9dacb2d78cf4622798da12d89ff2563a851e14c2"
+    },
+    {
+      "path": "thor_project/tests/test_nexus_branding.py",
+      "size": 1182,
+      "sha256": "1fa233cda4a2a4a1f67f5d1c88149cef62c8ef2a9bc73fe9dfaca5f050307257"
+    },
+    {
+      "path": "thor_project/tests/test_page_frequency.py",
+      "size": 2820,
+      "sha256": "98584383182a9a8bb79fa42160088e00599e4cd3bc0602b9a8d702157aeae374"
+    },
+    {
+      "path": "thor_project/tests/test_pi05_command_prefix.py",
+      "size": 2448,
+      "sha256": "c480c6d922147b022659c5060c12514a7f55d82d1fe8bba3dc1f2848ed7ea97d"
+    },
+    {
+      "path": "thor_project/tests/test_realtime_cadence.py",
+      "size": 8794,
+      "sha256": "ece15db39f83110dcc701549308fb1a401c5ada8384e20687941413bf47c0e62"
+    },
+    {
+      "path": "thor_project/tests/test_reset_timing.py",
+      "size": 1804,
+      "sha256": "6cc0c2f603f1d00e2d1ce291c3e69a92e76a8f229759b80737b9efa77828cdf8"
+    },
+    {
+      "path": "thor_project/tests/test_response_windows.py",
+      "size": 2439,
+      "sha256": "2ad3ce4f87d021cb43c68034178744c43bfa6c1f59716f6100206bcf95c4f4ce"
+    },
+    {
+      "path": "thor_project/tests/test_rolling_readonly_summary.py",
+      "size": 9968,
+      "sha256": "f420b03872641b4f53c851edf3c75e3ee2a2c9c98dffcfc4887449db60f38c91"
+    },
+    {
+      "path": "thor_project/tests/test_rolling_safety.py",
+      "size": 10361,
+      "sha256": "7e5b12c3b497d719d8878415e5d2ee480afcd8abfb187ad6c080fe9fb4376d20"
+    },
+    {
+      "path": "thor_project/tests/test_rolling_trajectory_lab.py",
+      "size": 11700,
+      "sha256": "7c44173331f51f6166ef27b6fd42b8b1a4a63875561c6ea3b987cf6136f9a682"
+    },
+    {
+      "path": "thor_project/tests/test_safety_layer.py",
+      "size": 86635,
+      "sha256": "f669bfaf741958dbb8e4d23e7ceb867c5a334333a3a7389ea1220f9b878a87dc"
+    },
+    {
+      "path": "thor_project/tests/test_safety_profiles.py",
+      "size": 10748,
+      "sha256": "473bdb588ed8e35958688debd5acbf0897acebc6d0657731d7ff9a35709e07da"
+    },
+    {
+      "path": "thor_project/tests/test_sampled_escape.py",
+      "size": 5722,
+      "sha256": "6834e84f64ed2d038eff90373d7e7cd835cce6dca087c390ce1cdb6d23e5c06f"
+    },
+    {
+      "path": "thor_project/tests/test_segmented_rolling_queue.py",
+      "size": 26239,
+      "sha256": "3b88f6e46dfed0a4a872a2225936ebdaee18ea87d9cdc0614649a66d01898f9e"
+    },
+    {
+      "path": "thor_project/tests/test_sorting_api.py",
+      "size": 37805,
+      "sha256": "5a407593200d58767c1ff2c519ee81d659b11017eb247b801fb23dfbb46cf0c0"
+    },
+    {
+      "path": "thor_project/tests/test_static_ui.py",
+      "size": 28357,
+      "sha256": "3f1b02ac17bdb48f565ad441503a72740a1c28409928916a97a575355f8d6c3d"
+    },
+    {
+      "path": "thor_project/tests/test_timing_audit.py",
+      "size": 1407,
+      "sha256": "d114a6c39e8a70da4aa16c8c7ac452f9d1a38226a8911f1c101fafc03407b6dc"
+    },
+    {
+      "path": "thor_project/tests/test_trajectory_path_refinement.py",
+      "size": 5752,
+      "sha256": "05a36acea18951a0251ef0216b570bec32e8accfdea1a11b52958c4eb31d94e3"
+    },
+    {
+      "path": "thor_project/tests/test_unified_sites.py",
+      "size": 6014,
+      "sha256": "e5dff028bfe00f67b7ac9ec47f226c642dd935aa737643c74a6043c62cd1af10"
+    },
+    {
+      "path": "thor_project/tests/test_urdf_viewer.py",
+      "size": 3775,
+      "sha256": "bcbd73cbb2843ebc65f5fd1e2429518a6f76a4449605aff38208f7180a8a5eb1"
+    },
+    {
+      "path": "thor_project/tests/test_workstation.py",
+      "size": 18221,
+      "sha256": "a45300320106867c78156ce0383ced77af9a3cbc525b7bcc8209e908966f1e3c"
+    },
+    {
+      "path": "thor_project/tests/vision/test_control_api_presence_ingest.py",
+      "size": 7816,
+      "sha256": "e09eae7200286eb7e41b7f9aac9a6d5961a34330949336f95a73a867d13d8726"
+    },
+    {
+      "path": "thor_project/tests/vision/test_control_plane_presence_gate.py",
+      "size": 4748,
+      "sha256": "e935e13054c8ac3d9778735f8721844bdd3d3a39c609d5f4cd2579af51a2006c"
+    },
+    {
+      "path": "thor_project/tests/vision/test_nexus_frame_stream.py",
+      "size": 6460,
+      "sha256": "3c9e0e012ca54edc7300c339cc436981cac986e42b9b29290f00496f35892c13"
+    },
+    {
+      "path": "thor_project/tests/vision/test_nexus_presence_sidecar.py",
+      "size": 4444,
+      "sha256": "0152aa8ff83d8002a65b8df38c06cb5cac286bb8dc76279cfca8e9e94d2c32ca"
+    },
+    {
+      "path": "thor_project/tests/vision/test_presence_control.py",
+      "size": 11754,
+      "sha256": "f247e7bca136107f7a631410367a655d874276819c578559169a60db1af25a99"
+    },
+    {
+      "path": "thor_project/tests/vision/test_presence_gate.py",
+      "size": 10051,
+      "sha256": "81787d224d0bd74e40b4c252ff1ceda745ccf0d627f5d928d0f783ad5c83d359"
+    },
+    {
+      "path": "thor_project/tests/vision/test_runtime.py",
+      "size": 13256,
+      "sha256": "f3b6847403acbe4630836447672e63c23e97225a9d78a181e2f4e5aac0047679"
+    },
+    {
+      "path": "thor_project/tests/vision/test_three_camera_presence.py",
+      "size": 2753,
+      "sha256": "1184634aa6d2995a617e11b377f9a8946410385582c1f13e3e0fe4118ec9ffb8"
+    },
+    {
+      "path": "thor_project/third_party/lerobot/pi05-deployment.patch",
+      "size": 11718,
+      "sha256": "8ddd844c1c2bbf1271dcd2b5ed831d0107116236085683253be34485ce567c95"
+    },
+    {
+      "path": "thor_project/third_party/lerobot/README.md",
+      "size": 534,
+      "sha256": "955cfe9a15c8d617853e07f9f45aa0b1115113dfbb2eca6abf4819241cd3bc44"
+    },
+    {
+      "path": "thor_project/third_party/lerobot/requirements-5090.lock",
+      "size": 1545,
+      "sha256": "74273dbae93aec38999cbce9966091da2685268ac60995657f249258982cdbc1"
+    },
+    {
+      "path": "thor_project/tools/analyze_deployment_limit_compatibility.py",
+      "size": 23694,
+      "sha256": "64cf5c9c8536e47d58317d74b0eb8f6a15859e013bd17405a23053f7fca24a66"
+    },
+    {
+      "path": "thor_project/tools/analyze_execution_trace.py",
+      "size": 10389,
+      "sha256": "3ec8f9c2d526b9d1f464aecafd493175f1f6c5e9ad050b1b94fe6afcd26ad5b7"
+    },
+    {
+      "path": "thor_project/tools/apply_contact_refined_surface.py",
+      "size": 8401,
+      "sha256": "888b17702240a6fd5806152605cf9d516cc006aca3060226c8601f81f7e395ed"
+    },
+    {
+      "path": "thor_project/tools/audit_dataset_boundaries_20260923.py",
+      "size": 2658,
+      "sha256": "3d7737e652adddf234ac7a0251ed21d50c506b1e9a98e1b9ae345fe5ec767145"
+    },
+    {
+      "path": "thor_project/tools/audit_dataset_followup_20260923.py",
+      "size": 6010,
+      "sha256": "ff93bebfb763eb3d0d9c633f1a254e461676fb3eea83bcb4e1466f4685b0a72f"
+    },
+    {
+      "path": "thor_project/tools/audit_dataset_media_20260923.py",
+      "size": 6237,
+      "sha256": "7c46b61afac7eb54af2d190cc6fa3f9e9562ce93af7886b506a13dbc907b284e"
+    },
+    {
+      "path": "thor_project/tools/audit_dataset_state_spikes_20260923.py",
+      "size": 2451,
+      "sha256": "6612c7d5c490f146974952369ba36364b2f84af8425b66483765615c4e54bd48"
+    },
+    {
+      "path": "thor_project/tools/audit_training_dataset_20260923.py",
+      "size": 15881,
+      "sha256": "77161799d8e555a1f4b9370e1bd06d0d9feda8ab3fa3a62cdd3e0f1354e76eb8"
+    },
+    {
+      "path": "thor_project/tools/benchmark_certified_braking.py",
+      "size": 5487,
+      "sha256": "8156f24c50db6b7deef1aadc0d0193482143a050624c7cd4097f89d5fd156b5c"
+    },
+    {
+      "path": "thor_project/tools/benchmark_lazy_preview.py",
+      "size": 3468,
+      "sha256": "bbd4cc952d145c19696f1396add084a94f96a26f56e63447080f4044aa82b3cc"
+    },
+    {
+      "path": "thor_project/tools/benchmark_rolling_control.py",
+      "size": 6372,
+      "sha256": "8c46015712e9d02b519cc3441ffc1a2d4d134b6bf776d807b0d81036cd9a80da"
+    },
+    {
+      "path": "thor_project/tools/build_clean_training_dataset_20260923.py",
+      "size": 24483,
+      "sha256": "5ea2130947921aae72d9c4efb9bf05ff6a7df4d17534f072c3bcce0b3d64aaa4"
+    },
+    {
+      "path": "thor_project/tools/build_g2_browser_model.py",
+      "size": 9524,
+      "sha256": "6886041393c5acd99be143b87ffacafdc5315016de66ca5396d98f043766552f"
+    },
+    {
+      "path": "thor_project/tools/build_g2_crsb_custom_dahuan_urdf.py",
+      "size": 10183,
+      "sha256": "291a026bb7cf0f0788a402228e5d6ac1aa900cb1df604bb5ca867d9948d3929d"
+    },
+    {
+      "path": "thor_project/tools/build_g2_dahuan_canonical_urdf.py",
+      "size": 5336,
+      "sha256": "2bc074bb1d4af5a5733a6443a35fe5f0b7cab0c54b51c7a83a8870d88309b4e2"
+    },
+    {
+      "path": "thor_project/tools/build_g2_dahuan_safety_urdf.py",
+      "size": 4398,
+      "sha256": "dbc42a777b5357415583782e4576d0bd8eaee9d30537145a4bc90380afcecbbb"
+    },
+    {
+      "path": "thor_project/tools/build_g2_interarm_capsules.py",
+      "size": 11441,
+      "sha256": "8b1d60237eb30fcd5bccd45a88cd4ba73fb5985932521a5d8d6f3bdb7a8eed95"
+    },
+    {
+      "path": "thor_project/tools/build_g2_readonly_v2_profile.py",
+      "size": 3489,
+      "sha256": "d2158afd25b5765547ed87167176464e61f4db0b70ce784f501358208823fb7a"
+    },
+    {
+      "path": "thor_project/tools/capture_g2_contact_pose.py",
+      "size": 6666,
+      "sha256": "93dbc0014dacc9fbd238728a638c01a368e8b4840c8038da4c8ada1e9ad181e9"
+    },
+    {
+      "path": "thor_project/tools/check_escape_snapshot.py",
+      "size": 2209,
+      "sha256": "d034bec8adf6eb582043b5ca1fd7d8b89cf70bd4de6fdb378b5905da19174420"
+    },
+    {
+      "path": "thor_project/tools/check_rolling_near_table.py",
+      "size": 4370,
+      "sha256": "b4657a918cb63ed90e15ae981512f5c9882110de8ff6f92435804b9cfff5baab"
+    },
+    {
+      "path": "thor_project/tools/compare_fixed_horizon_episode.py",
+      "size": 13177,
+      "sha256": "eb299b5017261b88db714e92d5270fe31a5a094a8369f426f451b1b022f10c21"
+    },
+    {
+      "path": "thor_project/tools/compare_fixed_time_interpolation.py",
+      "size": 17159,
+      "sha256": "825761dcdaf00cd62b5ba3294013b698a82053433c3e56c47dd36e8ef873ff9d"
+    },
+    {
+      "path": "thor_project/tools/damped_queue_replay.py",
+      "size": 6228,
+      "sha256": "19c778044b25d221082cc528af9c9b48a4233e0bc405152252534060138818ee"
+    },
+    {
+      "path": "thor_project/tools/diagnose_pi05_chunk_jitter.py",
+      "size": 6932,
+      "sha256": "dd6b2bded4d7e62ba31166bc41eeaea96381d47880b9dbf41252f3f2d90ce32a"
+    },
+    {
+      "path": "thor_project/tools/generate_collision_support_vertices.py",
+      "size": 2965,
+      "sha256": "a2d671017d68bc9ea14f8bb651223c6c5de96beb38f971e0c5adc136de0865b6"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/.gitignore",
+      "size": 507,
+      "sha256": "e4424597936a2a948c135abfa8e84f97e831e2dd9a58af0296d336fe2e69a819"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/assets/g2/G2_omnipicker/G2_dahuan_safety.urdf",
+      "size": 32515,
+      "sha256": "4bd24596d4452aefcd5c58b36b450faac9b10f944efc1cd86c17586af05e81f3"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/assets/g2/G2_omnipicker/G2_omnipicker_fixed_dual.urdf",
+      "size": 67256,
+      "sha256": "eb782de0b6f1faf1fcddfb5e2f7004a39e350c4f297ca51a56003ce8f9ad8319"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/assets/g2/G2_omnipicker/G2_omnipicker_safety_geometry.urdf",
+      "size": 46160,
+      "sha256": "4586e0212dc137c2d9afbc911c21f191c69e6c98f38e2edfe32c8656034d480a"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/assets/g2/G2_omnipicker/G2_omnipicker_visual.urdf",
+      "size": 44157,
+      "sha256": "e66ad093999c4d9675902def559e5a3a7a42c4ed0cfe5ab2f3efd3b087582814"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/assets/g2/G2_omnipicker/LICENSE",
+      "size": 16725,
+      "sha256": "7974b7355e0e25611d24b3471d38fcaf7697b70f6b6343f6282ee76abd351d39"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/assets/g2/G2_omnipicker/manifest.json",
+      "size": 7306,
+      "sha256": "5426afd5ee0c5e82ddef500884142b786b25540b7cee7102224f6c0a57a449ea"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/assets/g2/G2_omnipicker/SOURCE.json",
+      "size": 766,
+      "sha256": "10e56b59929107b769d0d4b6f7fbad952dd9733492358bd2bfe9a55a0fb8f183"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/assets/g2/G2_omnipicker/source_manifest.json",
+      "size": 631,
+      "sha256": "744b345a21290f2743758f51c152e886ac3a44fafb78b79fb5fac0a173831fbd"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/assets/g2/G2_omnipicker/URDF_VIEWER_README.md",
+      "size": 1576,
+      "sha256": "926740cc3eb0b247b6eb585eec67ee12958b2c25c22c21e49da93886a74e3c9a"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/assets/g2/README.md",
+      "size": 1189,
+      "sha256": "b05244d657fb8ec38435c1e306c341e257eaf61e2ec44ab4f4c7ea6762ab220b"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/configs/camera_presets.json",
+      "size": 695,
+      "sha256": "901acd65ddc44985d1c110f04432a474e4327eea2ed5305406c426149cea8ec1"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/configs/g2_work_surface.simulation.json",
+      "size": 415,
+      "sha256": "e575871daf0d1384f0f5c6e91bf7383510375cd5c494841fa624de106a4e0b37"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/docs/01-\u603b\u4f53\u65b9\u6848.md",
+      "size": 3266,
+      "sha256": "b0ecc0827900b2193e173f563428bffea02f0c303f64439a6243de87feb73c0f"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/docs/02-\u7cfb\u7edf\u67b6\u6784\u4e0e\u901a\u4fe1\u6d41\u7a0b.md",
+      "size": 4712,
+      "sha256": "dc274a2e694c8d480c939ba86513a6301068b0752c788fb40dd379c56d7a3547"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/docs/03-\u5206\u9636\u6bb5\u5b9e\u65bd\u4e0e\u9a8c\u6536.md",
+      "size": 4120,
+      "sha256": "e8bc3a21e9123a0a0cdddf9ddf5690bece6470f1904458cc6b367d3ac5575d83"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/docs/04-\u5b89\u5168\u9694\u79bb\u4e0e\u771f\u673a\u8fb9\u754c.md",
+      "size": 2709,
+      "sha256": "dfc84ca5fc1c2f1d04246edafe822f2ea67e3ba0736b4ac9e7f44084dce686ea"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/docs/05-Nexus\u5e73\u53f0\u5173\u7cfb\u4e0e\u8fb9\u754c.md",
+      "size": 5579,
+      "sha256": "d4003757d0931657bf03c5450e35df08cb909e92b3b052a725fc026db55ed079"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/docs/06-\u914d\u7f6e\u4e0e\u6570\u636e\u534f\u8bae.md",
+      "size": 2939,
+      "sha256": "3ff40a91631172c4e425becb6dfc0a1b888abdf6cb9d9b41a56cf2456b5d870b"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/docs/07-\u51b3\u7b56\u8bb0\u5f55.md",
+      "size": 3178,
+      "sha256": "fd650998ddf3e336d364d16494f6c3bedd172b94542e8f77ea4818548f6ee3d2"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/docs/08-\u73b0\u6709\u5b89\u5168\u57fa\u7ebf\u4e0e\u4eff\u771f\u5bf9\u7167.md",
+      "size": 3638,
+      "sha256": "4cae08b02fe71386a89094b3ba6c7c0c34f962d93207982712ddb0bc3e407c0c"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/docs/09-\u9636\u6bb51\u5b9e\u73b0\u8bb0\u5f55.md",
+      "size": 2571,
+      "sha256": "0ab9c51edf1ff89746cf74ee605620533667aed0f3048c466b21f8824e713c6d"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/docs/10-\u9636\u6bb52\u5b89\u5168\u8f68\u8ff9\u53ef\u89c6\u5316\u65b9\u6848.md",
+      "size": 4469,
+      "sha256": "1f4c324a806b1ad973bcc60e6bbdf7bba37be9f67aa606862c5c6927d4617197"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/docs/11-\u6570\u636e\u96c6Episode\u56de\u653e\u5b9e\u73b0\u8bb0\u5f55.md",
+      "size": 7339,
+      "sha256": "01f9fc1597f04bd79ad3ed409804ebfe5708d0b49f517cbb5eda2458060fab31"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/docs/12-\u65b0G2\u5b8c\u6574\u5939\u94b3URDF\u68c0\u67e5\u4e0e\u5207\u6362.md",
+      "size": 5778,
+      "sha256": "5f6afa150ea5ef9816443db6c90d27028015a853b7957b7bddab760924b7dd66"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/frontend/README.md",
+      "size": 799,
+      "sha256": "1b4094f79b5c60358fb6ce08ef93e9aa9987d63eb79a940b0e61f7f338276400"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/pyproject.toml",
+      "size": 1003,
+      "sha256": "62ad24dbdc4835916d261f1d874929a42850ff3611707da69b4dffe2494a565e"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/README.md",
+      "size": 6597,
+      "sha256": "ce99c0efc74cb84398c687865dd9cf3057c1e93ab65ff4de11f3a66a89d12024"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/scenarios/README.md",
+      "size": 814,
+      "sha256": "0e45d2f3dc6a255988f27f67ce916738a04a3800c376cbb872553673d33f194a"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/scripts/drive_replay_frames.mjs",
+      "size": 6338,
+      "sha256": "61f71caa4a34ba0ab5a5d7f6fc25883eb1696df6019b59554b2fdf631969ae2a"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/src/nexus_simulator/__init__.py",
+      "size": 101,
+      "sha256": "996fbe5b16d8999deb130d78b21bb21cc460c549953fe5288873992def1ab012"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/src/nexus_simulator/assets.py",
+      "size": 5642,
+      "sha256": "35a7c26d1663f4f3e77b2cd90bbbbffdb103ad81dd4edef29289e9194d0d96f1"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/src/nexus_simulator/cli.py",
+      "size": 4469,
+      "sha256": "2acc23e475566c555d7bbaca529b8af3cd0c907d673e16caf4222e1f57740a43"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/src/nexus_simulator/config.py",
+      "size": 5426,
+      "sha256": "5596f27ffdf332dfa0fc7c7c2e58710ff608ae0614328a036a1428b1b7d91c83"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/src/nexus_simulator/dataset.py",
+      "size": 11212,
+      "sha256": "7ea3f942dac7300fc6e32b8c113ea37ed4680a01e6abfd7363f496c8bc58b12f"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/src/nexus_simulator/meshcat_scene.py",
+      "size": 12196,
+      "sha256": "cddb5a62c382371a633e2ce64d484786e16e3365bced32e64f362fc63311e3cd"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/src/nexus_simulator/model.py",
+      "size": 11790,
+      "sha256": "0ac68bf761bc4a67241e8e2a69d69bb7b1f39dbe1c0e80498f0a5f5077d02fb3"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/src/nexus_simulator/model_variants.py",
+      "size": 9147,
+      "sha256": "b27329bb19c8119501e6658dc608e9e39079155ad68bd2116e912eb966a9e20e"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/src/nexus_simulator/safety_reference.py",
+      "size": 9307,
+      "sha256": "1031fffb9e8dcb81cebaa61f4977e52510b0f6285580a1c21f51895d3f07d90a"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/src/nexus_simulator/server.py",
+      "size": 24595,
+      "sha256": "89aa09a7b3863fa331fbeedc2090f9bee6e938178326e3833c1706ae54d00c95"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/src/nexus_simulator/static/app.js",
+      "size": 22444,
+      "sha256": "56078e2cdf67f3987eef2dc7a27586686cda0f6d28900f7920075bef622af55c"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/src/nexus_simulator/static/favicon.svg",
+      "size": 209,
+      "sha256": "8432f811d081094bf857d8afba5293a06a1f2466c8e9476cd24440a05a2329f5"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/src/nexus_simulator/static/index.html",
+      "size": 7351,
+      "sha256": "c4343fefad8abd25a6332cc6d7dfb17cc0efacc521886a52f179fbbde4d20b15"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/src/nexus_simulator/static/styles.css",
+      "size": 14827,
+      "sha256": "07780bd81f2aba89febf43e6624decc6f9f3aa669559bd846243221d7f439e78"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/src/nexus_simulator/static/viewer.css",
+      "size": 585,
+      "sha256": "c393e6d32413dc64516a4882aba43bb84c4fbc51b5eb960c3b085cb04aed12da"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/src/nexus_simulator/static/viewer.html",
+      "size": 460,
+      "sha256": "9bb70224a69e40db9a7c5b5034b5efcefa9e98d5e544f8f5c181dce7df5d36db"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/src/nexus_simulator/static/viewer.js",
+      "size": 3475,
+      "sha256": "1b108cb741d1ca03f0e3356bed32d7dd0f38cb59efce796860d01eb76a4bb4a8"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/tests/test_assets.py",
+      "size": 1790,
+      "sha256": "de5344998359dcbf132130e371cbada35f2b9b8417bdd8d7c2db561b48a323ae"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/tests/test_dataset_replay.py",
+      "size": 4654,
+      "sha256": "96d624c24b5c26fad3da169de56ad82304b7be9e8860744e59f20f6f8e3a3b2b"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/tests/test_hardware_isolation.py",
+      "size": 1723,
+      "sha256": "15f01688b938e81494351d8d567f1fe9b2fcf018e058227e0cfb49458ef3e7a7"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/tests/test_meshcat_scene.py",
+      "size": 3437,
+      "sha256": "888f8e547dae9da547183890184723bd481a817e884f4f03379d375026631278"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/tests/test_model.py",
+      "size": 2242,
+      "sha256": "2d1421fad06bff238ed550296719d417eacdf509699eb2209868f03f8c279b7b"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/tests/test_model_variants.py",
+      "size": 6134,
+      "sha256": "840d97ad829587350d9b19c2ff706211868102a5ee744ca194dc015327f48798"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/tests/test_native_dataset_replay.py",
+      "size": 2889,
+      "sha256": "f98153590eb5a96e8bf3ced8fc78d7d257e42609fe8edff95714e6733640751d"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/tests/test_simulation_config.py",
+      "size": 2112,
+      "sha256": "c45d8904716b73f02df43c5e6ca2d2c6544bc4e2eec62adc4e800c138c640c83"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/tests/test_simulation_state.py",
+      "size": 5239,
+      "sha256": "7d6a3f3851f190dcd0362086d6cc1455cdf5a688dbb231f47e5d87fe8d673077"
+    },
+    {
+      "path": "thor_project/tools/offline_simulator/tests/test_static_ui.py",
+      "size": 1398,
+      "sha256": "a2aa4fd87b8f561eebc2d523d1c284a67cedd4d867a09105f4a097ddfa724325"
+    },
+    {
+      "path": "thor_project/tools/pi05/analyze_action_trace.py",
+      "size": 19857,
+      "sha256": "18a172ba18ccdf27e8de918328c1307f87cdbd193aafa144f2cf36d16143e298"
+    },
+    {
+      "path": "thor_project/tools/pi05/analyze_request_timing.py",
+      "size": 5919,
+      "sha256": "6d0bf01a7243d726f152fbfeb6f29f83eef0e3a4e1db82be5340425327de02cf"
+    },
+    {
+      "path": "thor_project/tools/pi05/diagnose_robot_link.sh",
+      "size": 2617,
+      "sha256": "b9f72660cab7a3f81f9080c562ee8e7a5bd774619538186c43dd74c6c29e094a"
+    },
+    {
+      "path": "thor_project/tools/pi05/diagnose_server_load.sh",
+      "size": 1467,
+      "sha256": "43c0d40511c24669f7bb8338ff6a0270a609196d7fca449601f04229cbd3779f"
+    },
+    {
+      "path": "thor_project/tools/pi05/evaluate_action_smoothing.py",
+      "size": 9532,
+      "sha256": "e5eea4d7ec4335b5220a22ab2d96e5d4836674d7558c6217a88f5abfbaa4fb6a"
+    },
+    {
+      "path": "thor_project/tools/replay_sampled_safety_failure.py",
+      "size": 3554,
+      "sha256": "b1333f894365e508144dba575e82333618c356baa39b9d4373c24ec298ad5081"
+    },
+    {
+      "path": "thor_project/tools/rtc_prefix_ab.py",
+      "size": 11487,
+      "sha256": "7e10ef4bde527d4fabd973aae005cc31f6713c1f0beafa70a81d0e96adfb6a66"
+    },
+    {
+      "path": "thor_project/tools/run_rolling_readonly_check.py",
+      "size": 4305,
+      "sha256": "647c287d344fb22fb7f2e8b26d4456ee20233cc25e309699e2131aaf3af45ee7"
+    },
+    {
+      "path": "thor_project/tools/sorting_mock_server.py",
+      "size": 3618,
+      "sha256": "27cf983a24ac54b30b7f7eb2cf178ade872342e97c5b86d60cbfb49a5ee59001"
+    },
+    {
+      "path": "thor_project/tools/summarize_handoff_acceptance.py",
+      "size": 3930,
+      "sha256": "0acec723bc7e38036531848275b925aada860b5928a97c72e503cccddf2e155b"
+    },
+    {
+      "path": "thor_project/tools/summarize_rolling_control.py",
+      "size": 2070,
+      "sha256": "3c0df713a286ba283f89774a9187a5736eb30aa8ffd99b5ecf5286918e94fa24"
+    },
+    {
+      "path": "thor_project/tools/summarize_rolling_readonly.py",
+      "size": 17618,
+      "sha256": "caa8b0fffa8b887be7fc2e266ae2c36286d7782b41f02ee57d49f4e86994424b"
+    },
+    {
+      "path": "thor_project/tools/trajectory_lab/__init__.py",
+      "size": 79,
+      "sha256": "4fdf8ae14bd403ee0a56458087104a22265763bf33b8d611710844d1addb6443"
+    },
+    {
+      "path": "thor_project/tools/trajectory_lab/chunk_join.py",
+      "size": 5124,
+      "sha256": "3465964fd249416dea341ed56c4c4e27c6c1250f3bcd6e21051279f376a962f0"
+    },
+    {
+      "path": "thor_project/tools/trajectory_lab/clean_replay_compare.py",
+      "size": 12953,
+      "sha256": "c499c68a9d13646bdc043874d10227c9cddfe73a58bf1fa88311a8785a85ab4b"
+    },
+    {
+      "path": "thor_project/tools/trajectory_lab/constrained.py",
+      "size": 10300,
+      "sha256": "bcf0d23f35e4098b1ad91425b6d5a28051b923f48f6546c105131a02b1225fa2"
+    },
+    {
+      "path": "thor_project/tools/trajectory_lab/dataset_limits.py",
+      "size": 7573,
+      "sha256": "92f9a158daa32d91a49246f68ffe59988345e76705819a355abd6f73686fb80b"
+    },
+    {
+      "path": "thor_project/tools/trajectory_lab/executor.py",
+      "size": 5679,
+      "sha256": "ade4f66fad994dc82641765bf74850e02a82d7516eb7a53d0e7d6b0c053bb014"
+    },
+    {
+      "path": "thor_project/tools/trajectory_lab/profiles/dh_30hz_20260914.offline.json",
+      "size": 3199,
+      "sha256": "ce0f0f337d39e7a793f20801bd4b3a6412970a844f494215b98aa28701c3bddc"
+    },
+    {
+      "path": "thor_project/tools/trajectory_lab/README.md",
+      "size": 5683,
+      "sha256": "8f0079840bd8b92d232525c9a4d110354306a88ad7e33fdab933ae9329f2736a"
+    },
+    {
+      "path": "thor_project/tools/trajectory_lab/replay.py",
+      "size": 16724,
+      "sha256": "2eee1dfccba3503f26ab332c833e1ea8a92de029105a786cb3d822d35c57ce9d"
+    },
+    {
+      "path": "thor_project/tools/trajectory_lab/response_windows.py",
+      "size": 6991,
+      "sha256": "691581cb9c338eee7fef9d822f405bb4efd1393e71e8905b0fd696f1540fb7f3"
+    },
+    {
+      "path": "thor_project/tools/trajectory_lab/rolling.py",
+      "size": 7588,
+      "sha256": "e5f5feb3204ef92e68f80035a5b6dd2b1bb59fe014339c4e254c6f9cc9bc18e9"
+    },
+    {
+      "path": "thor_project/tools/trajectory_lab/rolling_replay.py",
+      "size": 14932,
+      "sha256": "7d267f268984c93abf2d799308175b4d31f2779cb780b803051c30c1adb21b64"
+    },
+    {
+      "path": "thor_project/tools/trajectory_lab/timing_audit.py",
+      "size": 7640,
+      "sha256": "a2d2b1fdab0be1ee493b24ca461eb9edf0cceb85b452ee4602b20fcb9df3e5ef"
+    },
+    {
+      "path": "thor_project/tools/trajectory_lab/trajectory.py",
+      "size": 21418,
+      "sha256": "44bf05ba7495dbec68f9c4c39fde82068ffac33d1def02dcd004cfe8d0194397"
+    },
+    {
+      "path": "thor_project/tools/verify_async_handoff.py",
+      "size": 2774,
+      "sha256": "62a033d411612a44c278e5ad350e2de115da8e7936a9448f9f141405908c40ae"
+    },
+    {
+      "path": "thor_project/tools/verify_lingbot_loader.py",
+      "size": 2767,
+      "sha256": "52399a18e5f65ac11cdba48676c5d6d56f5ff4869af1d039db988275ba73b7ac"
+    },
+    {
+      "path": "thor_project/tools/verify_pi05_loader.py",
+      "size": 2591,
+      "sha256": "1cc6d4fff7cd5f37a974cb3291741b8818248745e9b6ef71ad569e1781df59eb"
+    },
+    {
+      "path": "thor_project/uv.lock",
+      "size": 139385,
+      "sha256": "55230928949975ee335f728164413e441c8f497da1b4eb958dd90bb706193b8a"
+    }
+  ],
+  "excluded_categories": [
+    "vendored third-party library source",
+    "installed dependencies, environments, caches and binary packages",
+    "model checkpoints, recordings and datasets",
+    "robot binary geometry assets (DAE/STL/FBX)",
+    "historical and reconstructed duplicate robot bundles",
+    "machine-local deploy.toml and alignment.toml",
+    "full-archive manifests and original archive instructions"
+  ],
+  "notes": [
+    "Dependency declarations and the project-specific LeRobot patch are retained as text.",
+    "Robot URDF, geometry metadata, original licenses and source references are retained; external meshes are required to use the corresponding tools.",
+    "This manifest covers copied original project files; newly authored root documentation and GitHub metadata are outside this capture manifest."
+  ]
+}
