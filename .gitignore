@@ -1,6 +1,60 @@
-# Project-local Python environment
+# Local environments and caches
 .venv/
-
-# Python-generated files
+.pi05-venv/
+.vision-venv/
+venv/
 __pycache__/
 *.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Third-party implementations and installed dependency artifacts
+/thor_project/third_party/lerobot/source/
+node_modules/
+*.whl
+*.tar.gz
+
+# Models, recordings, datasets, and generated deployment outputs
+/models/
+/datasets/
+/recordings/
+/robot_bundle/
+/robot_bundle_from_current_source/
+/thor_project/models/
+/thor_project/runtime/
+/thor_project/.runtime/
+/thor_project/dist/
+/thor_project/build/
+/thor_project/outputs/
+*.safetensors
+*.pt
+*.pth
+*.onnx
+*.bag
+*.mp4
+*.h265
+*.h5
+
+# Binary robot geometry is acquired separately.
+*.dae
+*.DAE
+*.stl
+*.STL
+*.fbx
+*.FBX
+*.glb
+
+# Machine-local configuration and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.token
+/thor_project/deploy.toml
+/thor_project/alignment.toml
+
+# Operating-system noise
+.DS_Store
+Thumbs.db

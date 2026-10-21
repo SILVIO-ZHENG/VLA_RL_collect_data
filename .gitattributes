@@ -1,0 +1,9 @@
+# Preserve the captured source bytes, including original line endings.
+* -text
+/.gitattributes text eol=lf
+/.gitignore text eol=lf
+/.python-version text eol=lf
+/README.md text eol=lf
+/THIRD_PARTY_NOTICES.md text eol=lf
+/SOURCE_EXPORT.json text eol=lf
+/docs/*.md text eol=lf
